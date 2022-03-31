@@ -15,11 +15,11 @@ ofstream printFile;
 
 class Employee {
 public:
-    string employeeNum; //»ç¿ø¹øÈ£
-    string name; //¼º¸í
-    string cl; //°æ·Â°³¹ß´Ü°è
-    string phoneNum; //ÀüÈ­¹øÈ£
-    string birthday; //»ı³â¿ùÀÏ
+    string employeeNum; //ì‚¬ì›ë²ˆí˜¸
+    string name; //ì„±ëª…
+    string cl; //ê²½ë ¥ê°œë°œë‹¨ê³„
+    string phoneNum; //ì „í™”ë²ˆí˜¸
+    string birthday; //ìƒë…„ì›”ì¼
     string certi; //CERTI
 };
 
@@ -43,14 +43,14 @@ int add_employee(string s) {
 
     vector<string> strs = split(s, ',');
 
-    if (strs.size() != 10) //Á¤»ó µ¥ÀÌÅÍ ¼ö
+    if (strs.size() != 10) //ì •ìƒ ë°ì´í„° ìˆ˜
         return -1;
 
     for (int i = 1; i < strs.size(); i++) {
-        if (strs[i] == " ") { //¿É¼Ç ºóÄ­
+        if (strs[i] == " ") { //ì˜µì…˜ ë¹ˆì¹¸
             continue;
         }
-        else if (strs[i] == "") { //null Á¤º¸
+        else if (strs[i] == "") { //null ì •ë³´
             return -1;
         }
         else {
@@ -60,7 +60,7 @@ int add_employee(string s) {
     }
 
     for (int i = 0; i < list.size(); i++) {
-        if (employeeInfo[0] == list[i]->employeeNum) {//Áßº¹µÇ´Â »ç¹ø
+        if (employeeInfo[0] == list[i]->employeeNum) {//ì¤‘ë³µë˜ëŠ” ì‚¬ë²ˆ
             //cout << "ERROR::same employee number!!" << endl;
             return -1;
         }
