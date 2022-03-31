@@ -1,4 +1,4 @@
-#include <vector>
+ï»¿#include <vector>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -115,12 +115,13 @@ string sch(string s)
 	return result;
 }
 
+/*
 int main()
 {
-	//add ºÎºĞ ´ëÃ¼
-	Employee classEmployee0 = { "1700000","È« ±æµ¿","CL2","010-1111-2222","19900302","ADV" };
-	Employee classEmployee1 = { "1700001","È« ±æÈÆ","CL3","010-1111-2233","19900302","PRO" };
-	Employee classEmployee2 = { "1700002","È« ±æ¼ø","CL2","010-1111-2244","19900306","ADV" };
+	//add ë¶€ë¶„ ëŒ€ì²´
+	Employee classEmployee0 = { "1700000","í™ ê¸¸ë™","CL2","010-1111-2222","19900302","ADV" };
+	Employee classEmployee1 = { "1700001","í™ ê¸¸í›ˆ","CL3","010-1111-2233","19900302","PRO" };
+	Employee classEmployee2 = { "1700002","í™ ê¸¸ìˆœ","CL2","010-1111-2244","19900306","ADV" };
 
 	list.push_back(&classEmployee0);
 	list.push_back(&classEmployee1);
@@ -130,4 +131,4 @@ int main()
 	cout << sch("SCH,,,,birthday,19900302") << endl;
 
 	return 0;
-}
+}*/
