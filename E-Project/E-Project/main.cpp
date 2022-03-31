@@ -119,6 +119,9 @@ void mod(CmdParam cmdParam) {
 }
 
 bool isValid(char* buf) {
+    for (int i = 0; buf[i]; i++) {
+        if (buf[i] == '/') return false;
+    }
     return true;
 }
 
