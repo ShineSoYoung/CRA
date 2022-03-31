@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <iostream>
 #include <fstream>
 
@@ -12,6 +12,8 @@ using namespace std;
 
 ifstream readFile;
 ofstream printFile;
+
+string columnName[6] = { "employeeNum", "name", "cl", "phoneNum", "birthday", "certi" };
 
 class Employee {
 public:
@@ -79,6 +81,91 @@ int add_employee(string s) {
     return 0;
 }
 
+string sch_employee(string s)
+{
+    Employee employee;
+    string result;
+    string searchColumn, searchStr;
+    int resultCnt = 0;
+    int idx = 0;
+    int found = 0;
+    int foundColumnNum;
+
+    vector<string> strs = split(s, ',');
+
+    searchColumn = strs[4];
+    searchStr = strs[5];
+
+    for (int i = 0; i < list.size(); i++)
+    {
+        found = 0;
+        for (int j = 0; j < 6; j++)
+        {
+            if (searchColumn == columnName[j])
+            {
+                found = 1;
+                foundColumnNum = j;
+                break;
+            }
+        }
+        if (found == 1)
+        {
+            switch (foundColumnNum)
+            {
+            case 0:	// employeeNum
+                if (list[i]->employeeNum == searchStr)
+                {
+                    resultCnt++;
+                }
+                break;
+            case 1:	// name
+                if (list[i]->name == searchStr)
+                {
+                    resultCnt++;
+                }
+                break;
+            case 2:	// cl
+                if (list[i]->cl == searchStr)
+                {
+                    resultCnt++;
+                }
+                break;
+            case 3:	// phoneNum
+                if (list[i]->phoneNum == searchStr)
+                {
+                    resultCnt++;
+                }
+                break;
+            case 4:	// birthday
+                if (list[i]->birthday == searchStr)
+                {
+                    resultCnt++;
+                }
+                break;
+            case 5:	// certi
+                if (list[i]->certi == searchStr)
+                {
+                    resultCnt++;
+                }
+                break;
+            }
+        }
+    }
+
+    result += "SCH,";
+
+    if (resultCnt == 0)
+    {
+        result += "NONE";
+    }
+    else
+    {
+        result += to_string(resultCnt);
+    }
+    result += '\0';
+    cout << result;
+    return result;
+}
 
 void add(char* buf) {
     add_employee(buf);
@@ -90,6 +177,7 @@ void del(char* buf) {
 }
 
 void sch(char* buf) {
+    printf("%s\n", sch_employee(buf));
     printf("%s(line:%d)\n", __func__, __LINE__);
 }
 
