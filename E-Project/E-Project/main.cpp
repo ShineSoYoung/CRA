@@ -2,6 +2,10 @@
 #include <iostream>
 #include <fstream>
 
+#include <vector>
+#include <sstream>
+#include <string>
+
 #define DBG 1
 
 using namespace std;
@@ -11,15 +15,73 @@ ofstream printFile;
 
 class Employee {
 public:
-    string employeeNum; //»ç¿ø¹øÈ£
-    string name; //¼º¸í
-    string cl; //°æ·Â°³¹ß´Ü°è
-    string phoneNum; //ÀüÈ­¹øÈ£
-    string birthday; //»ı³â¿ùÀÏ
+    string employeeNum; //ì‚¬ì›ë²ˆí˜¸
+    string name; //ì„±ëª…
+    string cl; //ê²½ë ¥ê°œë°œë‹¨ê³„
+    string phoneNum; //ì „í™”ë²ˆí˜¸
+    string birthday; //ìƒë…„ì›”ì¼
     string certi; //CERTI
 };
 
+vector<Employee*> list;
+
+vector<string> split(string str, char Delimiter) {
+    istringstream iss(str);
+    string buffer;
+    vector<string> result;
+
+    while (getline(iss, buffer, Delimiter)) {
+        result.push_back(buffer);
+    }
+    return result;
+}
+
+int add_employee(string s) {
+
+    string employeeInfo[10];
+    int idx = 0;
+
+    vector<string> strs = split(s, ',');
+
+    if (strs.size() != 10) //ì •ìƒ ë°ì´í„° ìˆ˜
+        return -1;
+
+    for (int i = 1; i < strs.size(); i++) {
+        if (strs[i] == " ") { //ì˜µì…˜ ë¹ˆì¹¸
+            continue;
+        }
+        else if (strs[i] == "") { //null ì •ë³´
+            return -1;
+        }
+        else {
+            employeeInfo[idx] = strs[i];
+            idx++;
+        }
+    }
+
+    for (int i = 0; i < list.size(); i++) {
+        if (employeeInfo[0] == list[i]->employeeNum) {//ì¤‘ë³µë˜ëŠ” ì‚¬ë²ˆ
+            //cout << "ERROR::same employee number!!" << endl;
+            return -1;
+        }
+    }
+
+    Employee* e = new Employee();
+    e->employeeNum = employeeInfo[0];
+    e->name = employeeInfo[1];
+    e->cl = employeeInfo[2];
+    e->phoneNum = employeeInfo[3];
+    e->birthday = employeeInfo[4];
+    e->certi = employeeInfo[5];
+
+    list.push_back(e);
+
+    return 0;
+}
+
+
 void add(char* buf) {
+    add_employee(buf);
     printf("%s(line:%d)\n", __func__, __LINE__);
 }
 
