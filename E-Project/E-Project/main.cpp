@@ -3,6 +3,16 @@
 
 using namespace std;
   
+class Employee {
+public:
+    string employeeNum;
+    string name;
+    string cl;
+    string phoneNum;
+    string birthday;
+    string certi;
+};
+
 int main()
 {
     cout << "HelloWorld\n";
