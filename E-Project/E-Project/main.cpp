@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <iostream>
 #include <fstream>
 
@@ -12,6 +12,27 @@ using namespace std;
 
 ifstream readFile;
 ofstream printFile;
+
+enum class CmdType {
+    ADD,
+    DEL,
+    SCH,
+    MOD,
+};
+
+class CmdParam {
+public:
+    CmdType cmd;
+    bool printFlag; // -p
+    bool firstNameFlag; // -f
+    bool lastNameFlag; // -l
+    bool midNumFlag; // -m
+    bool lastNumFlag; // -l
+    bool yearFlag; // -y
+    bool monthFlag; // -m
+    bool dateFlag; // -d
+    vector<string> strs;
+};
 
 class Employee {
 public:
@@ -80,39 +101,53 @@ int add_employee(string s) {
 }
 
 
-void add(char* buf) {
-    add_employee(buf);
+void add(CmdParam cmdParam) {
+    //add_employee(buf);
     printf("%s(line:%d)\n", __func__, __LINE__);
 }
 
-void del(char* buf) {
+void del(CmdParam cmdParam) {
     printf("%s(line:%d)\n", __func__, __LINE__);
 }
 
-void sch(char* buf) {
+void sch(CmdParam cmdParam) {
     printf("%s(line:%d)\n", __func__, __LINE__);
 }
 
-void mod(char* buf) {
+void mod(CmdParam cmdParam) {
     printf("%s(line:%d)\n", __func__, __LINE__);
+}
+
+bool isValid(char* buf) {
+    return true;
+}
+
+CmdParam getCmdParam(char* buf) {
+    CmdParam cmdParam;
+    return cmdParam;
 }
 
 void manager(char* buf) {
-    if (buf[0] == 'A' && buf[1] == 'D' && buf[2] == 'D') {
+    if (isValid(buf) == false) {
+        return;
+    }
+
+    CmdParam cmdParam = getCmdParam(buf);
+    if (cmdParam.cmd == CmdType::ADD) {
         /* ADD */
-        add(buf);
+        add(cmdParam);
     }
-    else if (buf[0] == 'D' && buf[1] == 'E' && buf[2] == 'L') {
+    else if (cmdParam.cmd == CmdType::DEL) {
         /* DEL */
-        del(buf);
+        del(cmdParam);
     }
-    else if (buf[0] == 'S' && buf[1] == 'C' && buf[2] == 'H') {
+    else if (cmdParam.cmd == CmdType::SCH) {
         /* SCH */
-        sch(buf);
+        sch(cmdParam);
     }
-    else if (buf[0] == 'M' && buf[1] == 'O' && buf[2] == 'D') {
+    else if (cmdParam.cmd == CmdType::MOD) {
         /* MOD */
-        mod(buf);
+        mod(cmdParam);
     }
 }
 
