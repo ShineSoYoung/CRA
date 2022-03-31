@@ -189,6 +189,10 @@ void manager(char* buf) {
     }
 }
 
+void printFlie(string str) {
+    printFile << str << endl;
+}
+
 int main(int argc, char* argv[])
 {
     string inputFileName;
@@ -208,8 +212,6 @@ int main(int argc, char* argv[])
             char buf[256] = { 0, };
             readFile.getline(buf, 256);
             manager(buf);
-
-            printFile << buf << endl;
         }
     }
 
