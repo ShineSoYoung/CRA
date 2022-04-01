@@ -1,7 +1,7 @@
 ﻿#include <stdio.h>
 #include <iostream>
 #include <fstream>
-
+#include <map>
 #include <vector>
 #include <sstream>
 #include <string>
@@ -18,6 +18,24 @@ enum class CmdType {
     DEL,
     SCH,
     MOD,
+};
+
+enum {
+    EMPLOYEE_NUM,
+    NAME,
+    CARRER_LEVEL,
+    PHONE_NUM,
+    BIRTH_DAY,
+    CERTI
+};
+
+map<string, int> columnMap{
+    {"employeeNum", EMPLOYEE_NUM },
+    {"name", NAME},
+    {"cl", CARRER_LEVEL},
+    {"phoneNum", PHONE_NUM},
+    {"birthday", BIRTH_DAY},
+    {"certi", CERTI},
 };
 
 class CmdParam {
@@ -116,6 +134,214 @@ void deleteFoundEntry(vector<Employee*> findArray)
             }
         }
     }
+}
+
+void modFoundEntry(vector<Employee*> findArray, string changeColumn, string changeValue)
+{
+    int targetColumnNum = columnMap.find(changeColumn)->second;
+    for (Employee* em : findArray)
+    {
+        for (int i = 0; i < list.size(); i++)
+        {
+            if (list[i]->employeeNum == em->employeeNum)
+            {
+                switch (targetColumnNum)
+                {
+                case NAME:
+                    list[i]->name = changeValue;
+                    break;
+                case CARRER_LEVEL:
+                    list[i]->cl = changeValue;
+                    break;
+                case PHONE_NUM:
+                    list[i]->phoneNum = changeValue;
+                    break;
+                case BIRTH_DAY:
+                    list[i]->birthday = changeValue;
+                    break;
+                case CERTI:
+                    list[i]->certi = changeValue;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+string mod_empolyee(CmdParam command)
+{
+    string result = "";
+    vector<Employee*> findArray;
+
+    if ("employeeNum" == command.strs[0])
+    {
+        for (Employee* em : list)
+        {
+            if (em->employeeNum == command.strs[1])
+            {
+                findArray.push_back(em);
+            }
+        }
+    }
+    else if ("name" == command.strs[0])
+    {
+        if (command.firstNameFlag)
+        {
+            for (Employee* em : list)
+            {
+                vector<string> splitedName = split(em->name, ' ');
+                if (splitedName[0] == command.strs[1])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+        else if (command.lastNameFlag)
+        {
+            for (Employee* em : list)
+            {
+                vector<string> splitedName = split(em->name, ' ');
+                if (splitedName[1] == command.strs[1])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+        else
+        {
+            for (Employee* em : list)
+            {
+                if (em->name == command.strs[1])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+    }
+
+    else if ("cl" == command.strs[0])
+    {
+        for (Employee* em : list)
+        {
+            if (em->cl == command.strs[1])
+            {
+                findArray.push_back(em);
+            }
+        }
+    }
+    else if ("phoneNum" == command.strs[0])
+    {
+        if (command.midNumFlag)
+        {
+            for (Employee* em : list)
+            {
+                vector<string> splitedPhoneNum = split(em->phoneNum, '-');
+                if (splitedPhoneNum[1] == command.strs[1])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+        else if (command.lastNumFlag)
+        {
+            for (Employee* em : list)
+            {
+                vector<string> splitedPhoneNum = split(em->phoneNum, '-');
+                if (splitedPhoneNum[2] == command.strs[1])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+        else
+        {
+            for (Employee* em : list)
+            {
+                if (em->phoneNum == command.strs[1])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+    }
+    else if ("birthday" == command.strs[0])
+    {
+        if (command.yearFlag)
+        {
+            for (Employee* em : list)
+            {
+                if (em->birthday.substr(0, 4) == command.strs[1])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+        else if (command.monthFlag)
+        {
+            for (Employee* em : list)
+            {
+                if (em->birthday.substr(4, 2) == command.strs[1])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+        else if (command.dateFlag)
+        {
+            for (Employee* em : list)
+            {
+                if (em->birthday.substr(6, 2) == command.strs[1])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+        else
+        {
+            for (Employee* em : list)
+            {
+                if (em->birthday == command.strs[1])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+    }
+    else if ("certi" == command.strs[0])
+    {
+        for (Employee* em : list)
+        {
+            if (em->certi == command.strs[1])
+            {
+                findArray.push_back(em);
+            }
+        }
+    }
+
+    if (findArray.size() == 0)
+    {
+        result = "MOD,NONE\n";
+    }
+    else
+    {
+        if (command.printFlag)
+        {
+            for (Employee* em : findArray)
+            {
+                result += ("MOD," + em->employeeNum + "," + em->name + "," +
+                    em->cl + "," + em->phoneNum + "," + em->birthday + "," +
+                    em->certi + "\n");
+            }
+            modFoundEntry(findArray, command.strs[2], command.strs[3]);
+        }
+        else
+        {
+            modFoundEntry(findArray, command.strs[2], command.strs[3]);
+            result += ("MOD," + to_string(findArray.size()) + "\n");
+        }
+    }
+
+    return result;
 }
 
 string delete_empolyee(CmdParam command)
