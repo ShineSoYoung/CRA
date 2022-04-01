@@ -378,7 +378,7 @@ string mod_empolyee(CmdParam command)
 }
 
 void add(CmdParam cmdParam) {
-    //add_employee(buf);
+    add_employee(cmdParam);
     printf("%s(line:%d)\n", __func__, __LINE__);
 }
 
