@@ -49,28 +49,24 @@ vector<string> split(string str, char Delimiter) {
     return result;
 }
 
-int add_employee(string s) {
+int add_employee(CmdParam command) {
 
     string employeeInfo[10];
     int idx = 0;
 
-    vector<string> strs = split(s, ',');
+    for (int i = 0; i < command.strs.size(); i++) {
 
-    if (strs.size() != 10) //정상 데이터 수
-        return -1;
-
-    for (int i = 1; i < strs.size(); i++) {
-        if (strs[i] == " ") { //옵션 빈칸
-            continue;
-        }
-        else if (strs[i] == "") { //null 정보
+        if (command.strs[i] == "") { //null 정보
             return -1;
         }
         else {
-            employeeInfo[idx] = strs[i];
+            employeeInfo[idx] = command.strs[i];
             idx++;
         }
     }
+
+    if (idx != 6) //정상 데이터 수
+        return -1;
 
     for (int i = 0; i < list.size(); i++) {
         if (employeeInfo[0] == list[i]->employeeNum) {//중복되는 사번
