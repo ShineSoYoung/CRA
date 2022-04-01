@@ -6,6 +6,9 @@
 #include <sstream>
 #include <string>
 
+#include "commandClassType.h"
+#include "searchEngine.h"
+
 #define DBG 1
 
 using namespace std;
@@ -14,13 +17,6 @@ string columnName[6] = { "employeeNum", "name", "cl", "phoneNum", "birthday", "c
 
 ifstream readFile;
 ofstream printFile;
-
-enum class CmdType {
-    ADD,
-    DEL,
-    SCH,
-    MOD,
-};
 
 enum {
     EMPLOYEE_NUM,
@@ -38,30 +34,6 @@ map<string, int> columnMap{
     {"phoneNum", PHONE_NUM},
     {"birthday", BIRTH_DAY},
     {"certi", CERTI},
-};
-
-class CmdParam {
-public:
-    CmdType cmd;
-    bool printFlag; // -p
-    bool firstNameFlag; // -f
-    bool lastNameFlag; // -l
-    bool midNumFlag; // -m
-    bool lastNumFlag; // -l
-    bool yearFlag; // -y
-    bool monthFlag; // -m
-    bool dateFlag; // -d
-    vector<string> strs;
-};
-
-class Employee {
-public:
-    string employeeNum; //사원번호
-    string name; //성명
-    string cl; //경력개발단계
-    string phoneNum; //전화번호
-    string birthday; //생년월일
-    string certi; //CERTI
 };
 
 vector<Employee*> list;
@@ -428,142 +400,16 @@ string mod_empolyee(CmdParam command)
     return result;
 }
 
-string delete_empolyee(CmdParam command)
+string printDeleteResult(vector<Employee*> findArray, bool printoption)
 {
     string result = "";
-    vector<Employee*> findArray;
-
-    if ("name" == command.strs[0])
-    {
-        if (command.firstNameFlag)
-        {
-            for (Employee* em : list)
-            {
-                vector<string> splitedName = split(em->name, ' ');
-                if (splitedName[0] == command.strs[1])
-                {
-                    findArray.push_back(em);
-                }
-            }
-        }
-        else if (command.lastNameFlag)
-        {
-            for (Employee* em : list)
-            {
-                vector<string> splitedName = split(em->name, ' ');
-                if (splitedName[1] == command.strs[1])
-                {
-                    findArray.push_back(em);
-                }
-            }
-        }
-        else
-        {
-            for (Employee* em : list)
-            {
-                if (em->name == command.strs[1])
-                {
-                    findArray.push_back(em);
-                }
-            }
-        }
-    }
-    else if ("cl" == command.strs[0])
-    {
-        for (Employee* em : list)
-        {
-            if (em->cl == command.strs[1])
-            {
-                findArray.push_back(em);
-            }
-        }
-    }
-    else if ("phoneNum" == command.strs[0])
-    {
-        if (command.midNumFlag)
-        {
-            for (Employee* em : list)
-            {
-                vector<string> splitedPhoneNum = split(em->phoneNum, '-');
-                if (splitedPhoneNum[1] == command.strs[1])
-                {
-                    findArray.push_back(em);
-                }
-            }
-        }
-        else if (command.lastNumFlag)
-        {
-            for (Employee* em : list)
-            {
-                vector<string> splitedPhoneNum = split(em->phoneNum, '-');
-                if (splitedPhoneNum[2] == command.strs[1])
-                {
-                    findArray.push_back(em);
-                }
-            }
-        }
-        else
-        {
-            for (Employee* em : list)
-            {
-                if (em->phoneNum == command.strs[1])
-                {
-                    findArray.push_back(em);
-                }
-            }
-        }
-    }
-    else if ("birthday" == command.strs[0])
-    {
-        if (command.yearFlag)
-        {
-            for (Employee* em : list)
-            {
-                if (em->birthday.substr(0, 4) == command.strs[1])
-                {
-                    findArray.push_back(em);
-                }
-            }
-        }
-        else if (command.monthFlag)
-        {
-            for (Employee* em : list)
-            {
-                if (em->birthday.substr(4, 2) == command.strs[1])
-                {
-                    findArray.push_back(em);
-                }
-            }
-        }
-        else if (command.dateFlag)
-        {
-            for (Employee* em : list)
-            {
-                if (em->birthday.substr(6, 2) == command.strs[1])
-                {
-                    findArray.push_back(em);
-                }
-            }
-        }
-        else
-        {
-            for (Employee* em : list)
-            {
-                if (em->birthday == command.strs[1])
-                {
-                    findArray.push_back(em);
-                }
-            }
-        }
-    }
-
     if (findArray.size() == 0)
     {
-        result = "DEL,NONE\n";
+        result += "DEL,NONE\n";
     }
     else
     {
-        if (command.printFlag)
+        if (printoption)
         {
             for (Employee* em : findArray)
             {
@@ -571,14 +417,31 @@ string delete_empolyee(CmdParam command)
                     em->cl + "," + em->phoneNum + "," + em->birthday + "," +
                     em->certi + "\n");
             }
-            deleteFoundEntry(findArray);
         }
         else
         {
-            deleteFoundEntry(findArray);
             result += ("DEL," + to_string(findArray.size()) + "\n");
         }
     }
+    return result;
+}
+
+string delete_empolyee(CmdParam command)
+{
+    string result = "";
+    vector<bool> optionlist;
+    optionlist.push_back(command.firstNameFlag);
+    optionlist.push_back(command.lastNameFlag);
+    optionlist.push_back(command.midNumFlag);
+    optionlist.push_back(command.lastNumFlag);
+    optionlist.push_back(command.yearFlag);
+    optionlist.push_back(command.monthFlag);
+    optionlist.push_back(command.dateFlag);
+
+    searchEngine engine;
+    vector<Employee*> findArray = engine.search(list, command.strs[0], command.strs[1], optionlist);
+    result += printDeleteResult(findArray, command.printFlag);
+    deleteFoundEntry(findArray);
 
     return result;
 }
