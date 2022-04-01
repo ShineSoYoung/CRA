@@ -9,7 +9,7 @@
 class resultPrinter
 {
 public:
-    virtual string printFinalResult(vector<Employee*> findArray) = 0;
+    virtual string printFinalResult(string cmd, vector<Employee*> findArray) = 0;
 private:
 
 };
@@ -17,9 +17,9 @@ private:
 class defaultResultPrinter : public resultPrinter
 {
 public:
-    virtual string printFinalResult(vector<Employee*> findArray) override
+    virtual string printFinalResult(string cmd, vector<Employee*> findArray) override
     {
-        return ("DEL," + to_string(findArray.size()) + "\n");
+        return (cmd + to_string(findArray.size()) + "\n");
     }
 private:
 };
@@ -27,12 +27,12 @@ private:
 class detailResultPrinter : public resultPrinter
 {
 public:
-    virtual string printFinalResult(vector<Employee*> findArray) override
+    virtual string printFinalResult(string cmd, vector<Employee*> findArray) override
     {
         string result = "";
         for (Employee* em : findArray)
         {
-            result += ("DEL," + em->employeeNum + "," + em->name + "," +
+            result += (cmd + em->employeeNum + "," + em->name + "," +
                 em->cl + "," + em->phoneNum + "," + em->birthday + "," +
                 em->certi + "\n");
         }
@@ -44,9 +44,9 @@ private:
 class noResultPrinter : public resultPrinter
 {
 public:
-    virtual string printFinalResult(vector<Employee*> findArray) override
+    virtual string printFinalResult(string cmd, vector<Employee*> findArray) override
     {
-        return "DEL,NONE\n";
+        return cmd + "NONE\n";
     }
 private:
 

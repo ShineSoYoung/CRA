@@ -2,6 +2,8 @@
 #include "../E-Project/main.cpp"
 #include "../E-Project/deleteCommand.h"
 #include "../E-Project/addCommand.h"
+#include "../E-Project/modifyCommand.h"
+
 
 class AddTest : public ::testing::Test
 {
@@ -66,7 +68,8 @@ protected:
         }
         list.clear();
     }
-protected:
+
+    modifyCommand modCmd;
 };
 
 TEST_F(ModTest, mod_with_name) {
@@ -74,10 +77,10 @@ TEST_F(ModTest, mod_with_name) {
     EXPECT_EQ(list[0]->name, "KYUMOK KIM");
     EXPECT_EQ(list[1]->name, "SEUNGWOO HYUN");
 
-    string result = mod_empolyee(CmdParam{ CmdType::MOD,false,false,false,false,false,false,false,false,{"employeeNum", "18050301", "phoneNum", "010-0000-0000"}});
+    string result = modCmd.modify_employee(list, CmdParam{ CmdType::MOD,false,false,false,false,false,false,false,false,{"employeeNum", "18050301", "phoneNum", "010-0000-0000"}});
     EXPECT_EQ(result, "MOD,1\n");
 
-    result = mod_empolyee(CmdParam{ CmdType::MOD,false,false,false,false,false,false,false,false,{"name", "SEUNGWOO HYUN", "certi", "EX"} });
+    result = modCmd.modify_employee(list, CmdParam{ CmdType::MOD,false,false,false,false,false,false,false,false,{"name", "SEUNGWOO HYUN", "certi", "EX"} });
     EXPECT_EQ(result, "MOD,1\n");
 }
 

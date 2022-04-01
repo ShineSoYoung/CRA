@@ -13,7 +13,7 @@ public:
         searchEngine engine;
         vector<Employee*> findArray = engine.search(list, command.strs[0], command.strs[1], makeOptionList(command));
         selectPrinter(findArray, command.printFlag);
-        string result = printer->printFinalResult(findArray);
+        string result = printer->printFinalResult("DEL,", findArray);
         deleteFoundEntry(list, findArray);
         releasePrinter();
         return result;
