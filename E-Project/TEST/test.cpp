@@ -288,3 +288,36 @@ TEST_F(DeleteTest, delete_with_birthday_option_d) {
     EXPECT_EQ(list.size(), 1);
     EXPECT_EQ(list[0]->name, "JAY HELLO");
 }
+
+class SchTest : public ::testing::Test
+{
+public:
+protected:
+    virtual void SetUp() override
+    {
+        list.push_back(new Employee{ "1700000","홍 길동","CL2","010-1111-2222","19900302","ADV" });
+        list.push_back(new Employee{ "1700001","홍 길훈","CL3","010-1111-2233","19900302","PRO" });
+        list.push_back(new Employee{ "1700002","홍 길순","CL2","010-1111-2244","19900306","ADV" });
+    }
+    virtual void TearDown() override
+    {
+        for (Employee* em : list)
+        {
+            delete em;
+        }
+        list.clear();
+    }
+};
+
+TEST_F(SchTest, SearchBirthDay) {
+    EXPECT_EQ(sch_employee(CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"birthday","19900302"} }), "SCH,2");
+    EXPECT_EQ(sch_employee(CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"birthday","19900306"} }), "SCH,1");
+}
+
+TEST_F(SchTest, SearchNone) {
+    EXPECT_EQ(sch_employee(CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"name","이순신"} }), "SCH,NONE");
+    EXPECT_EQ(sch_employee(CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"phoneNum","013-2222-3333"} }), "SCH,NONE");
+    EXPECT_EQ(sch_employee(CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"cl","CL6"} }), "SCH,NONE");
+    EXPECT_EQ(sch_employee(CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"certi","GOLD"} }), "SCH,NONE");
+    EXPECT_EQ(sch_employee(CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"birthday","15930303"} }), "SCH,NONE");
+}
