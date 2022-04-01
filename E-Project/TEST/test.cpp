@@ -64,20 +64,6 @@ protected:
     }
 protected:
 };
-//
-//class CmdParam {
-//public:
-//    CmdType cmd;
-//    bool printFlag; // -p
-//    bool firstNameFlag; // -f
-//    bool lastNameFlag; // -l
-//    bool midNumFlag; // -m
-//    bool lastNumFlag; // -l
-//    bool yearFlag; // -y
-//    bool monthFlag; // -m
-//    bool dateFlag; // -d
-//    vector<string> strs;
-//};
 
 TEST_F(DeleteTest, delete_with_name) {
     EXPECT_EQ(list.size(), 2);
