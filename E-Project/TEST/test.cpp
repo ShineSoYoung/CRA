@@ -44,6 +44,40 @@ TEST_F(AddTest, NullAddCase) {
 	EXPECT_EQ(add_employee("ADD, , , ,17111236,VSID TVO,CL1,010-3669-1077,20120718,"), -1);
 }
 
+class ModTest : public ::testing::Test
+{
+public:
+protected:
+    virtual void SetUp() override
+    {
+        list.push_back(new Employee{ "18050301","KYUMOK KIM","CL2","010-9777-6055","19980906","PRO" });
+        list.push_back(new Employee{ "18050302","SEUNGWOO HYUN","CL3","010-1111-2233","19900302","PRO" });
+    }
+
+    virtual void TearDown() override
+    {
+        for (Employee* em : list)
+        {
+            delete em;
+        }
+        list.clear();
+    }
+protected:
+};
+
+TEST_F(ModTest, mod_with_name) {
+    EXPECT_EQ(list.size(), 2);
+    EXPECT_EQ(list[0]->name, "KYUMOK KIM");
+    EXPECT_EQ(list[1]->name, "SEUNGWOO HYUN");
+
+    string result = mod_empolyee(CmdParam{ CmdType::MOD,false,false,false,false,false,false,false,false,{"employeeNum", "18050301", "phoneNum", "010-0000-0000"}});
+    EXPECT_EQ(result, "MOD,1\n");
+
+    result = mod_empolyee(CmdParam{ CmdType::MOD,false,false,false,false,false,false,false,false,{"name", "SEUNGWOO HYUN", "certi", "EX"} });
+    EXPECT_EQ(result, "MOD,1\n");
+}
+
+
 class DeleteTest : public ::testing::Test
 {
 public:
