@@ -44,6 +44,40 @@ TEST_F(AddTest, NullAddCase) {
 	EXPECT_EQ(add_employee("ADD, , , ,17111236,VSID TVO,CL1,010-3669-1077,20120718,"), -1);
 }
 
+class ModTest : public ::testing::Test
+{
+public:
+protected:
+    virtual void SetUp() override
+    {
+        list.push_back(new Employee{ "18050301","KYUMOK KIM","CL2","010-9777-6055","19980906","PRO" });
+        list.push_back(new Employee{ "18050302","SEUNGWOO HYUN","CL3","010-1111-2233","19900302","PRO" });
+    }
+
+    virtual void TearDown() override
+    {
+        for (Employee* em : list)
+        {
+            delete em;
+        }
+        list.clear();
+    }
+protected:
+};
+
+TEST_F(ModTest, mod_with_name) {
+    EXPECT_EQ(list.size(), 2);
+    EXPECT_EQ(list[0]->name, "KYUMOK KIM");
+    EXPECT_EQ(list[1]->name, "SEUNGWOO HYUN");
+
+    string result = mod_empolyee(CmdParam{ CmdType::MOD,false,false,false,false,false,false,false,false,{"employeeNum", "18050301", "phoneNum", "010-0000-0000"}});
+    EXPECT_EQ(result, "MOD,1\n");
+
+    result = mod_empolyee(CmdParam{ CmdType::MOD,false,false,false,false,false,false,false,false,{"name", "SEUNGWOO HYUN", "certi", "EX"} });
+    EXPECT_EQ(result, "MOD,1\n");
+}
+
+
 class DeleteTest : public ::testing::Test
 {
 public:
@@ -287,4 +321,37 @@ TEST_F(DeleteTest, delete_with_birthday_option_d) {
     EXPECT_EQ(result, "DEL,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO\n");
     EXPECT_EQ(list.size(), 1);
     EXPECT_EQ(list[0]->name, "JAY HELLO");
+}
+
+class SchTest : public ::testing::Test
+{
+public:
+protected:
+    virtual void SetUp() override
+    {
+        list.push_back(new Employee{ "1700000","홍 길동","CL2","010-1111-2222","19900302","ADV" });
+        list.push_back(new Employee{ "1700001","홍 길훈","CL3","010-1111-2233","19900302","PRO" });
+        list.push_back(new Employee{ "1700002","홍 길순","CL2","010-1111-2244","19900306","ADV" });
+    }
+    virtual void TearDown() override
+    {
+        for (Employee* em : list)
+        {
+            delete em;
+        }
+        list.clear();
+    }
+};
+
+TEST_F(SchTest, SearchBirthDay) {
+    EXPECT_EQ(sch_employee(CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"birthday","19900302"} }), "SCH,2");
+    EXPECT_EQ(sch_employee(CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"birthday","19900306"} }), "SCH,1");
+}
+
+TEST_F(SchTest, SearchNone) {
+    EXPECT_EQ(sch_employee(CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"name","이순신"} }), "SCH,NONE");
+    EXPECT_EQ(sch_employee(CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"phoneNum","013-2222-3333"} }), "SCH,NONE");
+    EXPECT_EQ(sch_employee(CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"cl","CL6"} }), "SCH,NONE");
+    EXPECT_EQ(sch_employee(CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"certi","GOLD"} }), "SCH,NONE");
+    EXPECT_EQ(sch_employee(CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"birthday","15930303"} }), "SCH,NONE");
 }
