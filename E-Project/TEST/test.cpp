@@ -4,7 +4,7 @@
 #include "../E-Project/addCommand.h"
 #include "../E-Project/modifyCommand.h"
 #include "../E-Project/searchCommand.h"
-
+#include <initializer_list>
 
 class AddTest : public ::testing::Test
 {
@@ -341,7 +341,7 @@ TEST_F(DeleteTest, delete_with_name_option_l) {
     EXPECT_EQ(list.size(), 2);
 
     result = delCmd.delete_employee(list, CmdParam{ CmdType::DEL,true,false,true,false,false,false,false,false,{"name", "HELLO"} });
-    EXPECT_EQ(result, "DEL,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO\nDEL,12345678,JAY HELLO,CL3,010-1234-1234,19901231,EX\n");
+    EXPECT_EQ(result, "DEL,12345678,JAY HELLO,CL3,010-1234-1234,19901231,EX\nDEL,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO\n");
     EXPECT_EQ(list.size(), 0);
 }
 
@@ -582,4 +582,66 @@ TEST(IO_Test, InputTest_getCmdParam) {
     strs.push_back("ADV");
     fake.set(CmdType::ADD, false, false, false, false, false, false, false, false, strs);
     EXPECT_EQ(true, (cmd == fake));
+}
+
+
+class PrintTest : public ::testing::Test
+{
+public:
+protected:
+    virtual void SetUp() override
+    {
+        list.push_back(new Employee{ "15123099","VXIHXOTH" "JHOP","CL3","010-3112-2609","19771211","ADV" });
+        list.push_back(new Employee{ "17112609", "FB NTAWR", "CL4", "010-5645-6122", "19861203", "PRO" });
+        list.push_back(new Employee{ "18115040", "TTETHU HBO","CL3","010-4581-2050","20080718", "ADV" });
+        list.push_back(new Employee{ "88114052", "NQ LVARW","CL4","010-4528-3059","19911021", "PRO" });
+        list.push_back(new Employee{ "19129568", "SRERLALH HMEF", "CL2","010-3091-9521","19640910", "PRO" });
+        list.push_back(new Employee{ "17111236", "VSID TVO", "CL1","010-3669-1077","20120718", "PRO" });
+        list.push_back(new Employee{ "18117906", "TWU QSOLT", "CL4","010-6672-7186","20030413", "PRO" });
+        list.push_back(new Employee{ "08123556", "WN XV", "CL1","010-7986-5047","20100614", "PRO" });
+        list.push_back(new Employee{ "02117175", "SBILHUT LDEXRI", "CL4","010-2814-1699", "19950704","ADV" });
+        list.push_back(new Employee{ "03113260", "HH LTUPF","CL2", "010-5798-5383", "19791018", "PRO" });
+    }
+    virtual void TearDown() override
+    {
+        for (Employee* em : list)
+        {
+            delete em;
+        }
+        list.clear();
+        delete default_print;
+        delete detail_print;
+        delete no_print;
+    }
+
+    resultPrinter* default_print = new defaultResultPrinter();
+    resultPrinter* detail_print = new detailResultPrinter();
+    resultPrinter* no_print = new noResultPrinter();
+
+};
+
+TEST_F(PrintTest, DefaultPrintCase) {
+
+    EXPECT_EQ(default_print->printFinalResult("MOD,", list), "MOD,10\n");
+    EXPECT_EQ(default_print->printFinalResult("SCH,", list), "SCH,10\n");
+    EXPECT_EQ(default_print->printFinalResult("DEL,", list), "DEL,10\n");
+}
+
+TEST_F(PrintTest, DetailPrintCase) {
+
+    string str = "";
+    str += "MOD,88114052,NQ LVARW,CL4,010-4528-3059,19911021,PRO\n";
+    str += "MOD,02117175,SBILHUT LDEXRI,CL4,010-2814-1699,19950704,ADV\n";
+    str += "MOD,03113260,HH LTUPF,CL2,010-5798-5383,19791018,PRO\n";
+    str += "MOD,08123556,WN XV,CL1,010-7986-5047,20100614,PRO\n";
+    str += "MOD,15123099,VXIHXOTHJHOP,CL3,010-3112-2609,19771211,ADV\n";
+
+    EXPECT_EQ(detail_print->printFinalResult("MOD,", list), str);
+}
+
+TEST_F(PrintTest, NonePrintCase) {
+
+    EXPECT_EQ(no_print->printFinalResult("MOD,", list), "MOD,NONE\n");
+    EXPECT_EQ(no_print->printFinalResult("SCH,", list), "SCH,NONE\n");
+    EXPECT_EQ(no_print->printFinalResult("DEL,", list), "DEL,NONE\n");
 }

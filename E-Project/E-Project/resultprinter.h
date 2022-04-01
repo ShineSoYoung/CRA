@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <algorithm>
 
 #include "commandClassType.h"
 
@@ -13,6 +14,21 @@ public:
 private:
 
 };
+
+bool compareEmployeeNum(const Employee* e1, const Employee* e2)
+{
+    string s1 = e1->employeeNum;
+    string s2 = e2->employeeNum;
+
+    int num1 = stoi(s1.substr(0, 2));
+    int num2 = stoi(s2.substr(0, 2));
+
+    if (num1 == num2)
+        return s1 < s2;
+    else
+        return ((num1 + 100 - 69) % 100) < ((num2 + 100 - 69) % 100);
+}
+
 
 class defaultResultPrinter : public resultPrinter
 {
@@ -29,13 +45,25 @@ class detailResultPrinter : public resultPrinter
 public:
     virtual string printFinalResult(string cmd, vector<Employee*> findArray) override
     {
+        int cnt = 0;
         string result = "";
+
+        std::sort(findArray.begin(), findArray.end(), compareEmployeeNum);
+
         for (Employee* em : findArray)
         {
+
             result += (cmd + em->employeeNum + "," + em->name + "," +
                 em->cl + "," + em->phoneNum + "," + em->birthday + "," +
                 em->certi + "\n");
+
+            
+            cnt++;
+            if (cnt >= 5)
+                break;
+                
         }
+
         return result;
     }
 private:
