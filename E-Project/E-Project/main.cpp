@@ -12,8 +12,6 @@
 
 using namespace std;
 
-string columnName[6] = { "employeeNum", "name", "cl", "phoneNum", "birthday", "certi" };
-
 ifstream readFile;
 ofstream printFile;
 
@@ -69,87 +67,6 @@ int add_employee(CmdParam command) {
     return 0;
 }
 
-string sch_employee(CmdParam command)
-{
-    Employee employee;
-    string result;
-    string searchColumn, searchStr;
-    int resultCnt = 0;
-    int found = 0;
-    int foundColumnNum;
-
-    searchColumn = command.strs[0];
-    searchStr = command.strs[1];
-
-    for (int i = 0; i < list.size(); i++)
-    {
-        found = 0;
-        for (int j = 0; j < 6; j++)
-        {
-            if (searchColumn == columnName[j])
-            {
-                found = 1;
-                foundColumnNum = j;
-                break;
-            }
-        }
-        if (found == 1)
-        {
-            switch (foundColumnNum)
-            {
-            case 0:	// employeeNum
-                if (list[i]->employeeNum == searchStr)
-                {
-                    resultCnt++;
-                }
-                break;
-            case 1:	// name
-                if (list[i]->name == searchStr)
-                {
-                    resultCnt++;
-                }
-                break;
-            case 2:	// cl
-                if (list[i]->cl == searchStr)
-                {
-                    resultCnt++;
-                }
-                break;
-            case 3:	// phoneNum
-                if (list[i]->phoneNum == searchStr)
-                {
-                    resultCnt++;
-                }
-                break;
-            case 4:	// birthday
-                if (list[i]->birthday == searchStr)
-                {
-                    resultCnt++;
-                }
-                break;
-            case 5:	// certi
-                if (list[i]->certi == searchStr)
-                {
-                    resultCnt++;
-                }
-                break;
-            }
-        }
-    }
-
-    result += "SCH,";
-
-    if (resultCnt == 0)
-    {
-        result += "NONE";
-    }
-    else
-    {
-        result += to_string(resultCnt);
-    }
-    return result;
-}
-
 void add(CmdParam cmdParam) {
     add_employee(cmdParam);
     printf("%s(line:%d)\n", __func__, __LINE__);
@@ -160,6 +77,7 @@ void del(CmdParam cmdParam) {
 }
 
 void sch(CmdParam cmdParam) {
+    
     printf("%s(line:%d)\n", __func__, __LINE__);
 }
 
