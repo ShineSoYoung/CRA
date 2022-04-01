@@ -100,13 +100,6 @@ int add_employee(string s) {
     return 0;
 }
 
-const int COMMAND_TYPE = 0;
-const int COMMAND_OPTION_1 = 1;
-const int COMMAND_OPTION_2 = 2;
-const int COMMAND_OPTION_3 = 3;
-const int COMMAND_COLUMN = 4;
-const int COMMAND_VALUE = 5;
-
 void deleteFoundEntry(vector<Employee*> findArray)
 {
     for (Employee* em : findArray)
@@ -125,138 +118,128 @@ void deleteFoundEntry(vector<Employee*> findArray)
     }
 }
 
-string deleteEmpolyee(string command)
+string delete_empolyee(CmdParam command)
 {
     string result = "";
-    bool printoption = false;
     vector<Employee*> findArray;
-    vector<string> parsedCommand = split(command, ',');
-    if (parsedCommand[COMMAND_TYPE] != "DEL")
-    {
-        result += "FAIL :: command error";
-    }
-    if (parsedCommand[COMMAND_OPTION_1] == "-p")
-    {
-        printoption = true;
-    }
 
-    if ("name" == parsedCommand[COMMAND_COLUMN])
+    if ("name" == command.strs[0])
     {
-        if ("-f" == parsedCommand[COMMAND_OPTION_2])
+        if (command.firstNameFlag)
         {
             for (Employee* em : list)
             {
                 vector<string> splitedName = split(em->name, ' ');
-                if (splitedName[0] == parsedCommand[COMMAND_VALUE])
+                if (splitedName[0] == command.strs[1])
                 {
                     findArray.push_back(em);
                 }
             }
         }
-        else if ("-l" == parsedCommand[COMMAND_OPTION_2])
+        else if (command.lastNameFlag)
         {
             for (Employee* em : list)
             {
                 vector<string> splitedName = split(em->name, ' ');
-                if (splitedName[1] == parsedCommand[COMMAND_VALUE])
+                if (splitedName[1] == command.strs[1])
                 {
                     findArray.push_back(em);
                 }
             }
         }
-        else if (" " == parsedCommand[COMMAND_OPTION_2])
+        else
         {
             for (Employee* em : list)
             {
-                if (em->name == parsedCommand[COMMAND_VALUE])
+                if (em->name == command.strs[1])
                 {
                     findArray.push_back(em);
                 }
             }
         }
     }
-    else if ("cl" == parsedCommand[COMMAND_COLUMN])
+    else if ("cl" == command.strs[0])
     {
         for (Employee* em : list)
         {
-            if (em->cl == parsedCommand[COMMAND_VALUE])
+            if (em->cl == command.strs[1])
             {
                 findArray.push_back(em);
             }
         }
     }
-    else if ("phoneNum" == parsedCommand[COMMAND_COLUMN])
+    else if ("phoneNum" == command.strs[0])
     {
-        if ("-m" == parsedCommand[COMMAND_OPTION_2])
+        if (command.midNumFlag)
         {
             for (Employee* em : list)
             {
                 vector<string> splitedPhoneNum = split(em->phoneNum, '-');
-                if (splitedPhoneNum[1] == parsedCommand[COMMAND_VALUE])
+                if (splitedPhoneNum[1] == command.strs[1])
                 {
                     findArray.push_back(em);
                 }
             }
         }
-        else if ("-l" == parsedCommand[COMMAND_OPTION_2])
+        else if (command.lastNumFlag)
         {
             for (Employee* em : list)
             {
                 vector<string> splitedPhoneNum = split(em->phoneNum, '-');
-                if (splitedPhoneNum[2] == parsedCommand[COMMAND_VALUE])
+                if (splitedPhoneNum[2] == command.strs[1])
                 {
                     findArray.push_back(em);
                 }
             }
         }
-        else if (" " == parsedCommand[COMMAND_OPTION_2])
+        else
         {
             for (Employee* em : list)
             {
-                if (em->phoneNum == parsedCommand[COMMAND_VALUE])
+                if (em->phoneNum == command.strs[1])
                 {
                     findArray.push_back(em);
                 }
             }
         }
     }
-    else if ("birthday" == parsedCommand[COMMAND_COLUMN])
+    else if ("birthday" == command.strs[0])
     {
-        if ("-y" == parsedCommand[COMMAND_OPTION_2])
+        if (command.yearFlag)
         {
             for (Employee* em : list)
             {
-                if (em->birthday.substr(0, 4) == parsedCommand[COMMAND_VALUE])
+                if (em->birthday.substr(0, 4) == command.strs[1])
                 {
                     findArray.push_back(em);
                 }
             }
         }
-        else if ("-m" == parsedCommand[COMMAND_OPTION_2])
+        else if (command.monthFlag)
         {
             for (Employee* em : list)
             {
-                if (em->birthday.substr(4, 2) == parsedCommand[COMMAND_VALUE])
+                if (em->birthday.substr(4, 2) == command.strs[1])
                 {
                     findArray.push_back(em);
                 }
             }
         }
-        else if ("-d" == parsedCommand[COMMAND_OPTION_2])
+        else if (command.dateFlag)
         {
             for (Employee* em : list)
             {
-                if (em->birthday.substr(6, 2) == parsedCommand[COMMAND_VALUE])
+                if (em->birthday.substr(6, 2) == command.strs[1])
                 {
                     findArray.push_back(em);
                 }
             }
         }
-        else if (" " == parsedCommand[COMMAND_OPTION_2])
+        else
         {
             for (Employee* em : list)
             {
-                if (em->birthday == parsedCommand[COMMAND_VALUE])
+                if (em->birthday == command.strs[1])
                 {
                     findArray.push_back(em);
                 }
@@ -270,7 +253,7 @@ string deleteEmpolyee(string command)
     }
     else
     {
-        if (printoption)
+        if (command.printFlag)
         {
             for (Employee* em : findArray)
             {
@@ -378,12 +361,10 @@ void manager(char* buf) {
     }
 }
 
-=======
 void printFlie(string str) {
     printFile << str << endl;
 }
-
-
+#if 0
 int main(int argc, char* argv[])
 {
     string inputFileName;
@@ -408,3 +389,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+#endif
