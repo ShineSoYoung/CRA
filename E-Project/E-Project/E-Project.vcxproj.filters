@@ -18,9 +18,6 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="searchEngine.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="searchEngine.h">
@@ -30,6 +27,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="compareMachine.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="resultprinter.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="deleteCommand.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

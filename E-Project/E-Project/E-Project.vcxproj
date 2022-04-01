@@ -144,6 +144,8 @@
   <ItemGroup>
     <ClInclude Include="commandClassType.h" />
     <ClInclude Include="compareMachine.h" />
+    <ClInclude Include="deleteCommand.h" />
+    <ClInclude Include="resultprinter.h" />
     <ClInclude Include="searchEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

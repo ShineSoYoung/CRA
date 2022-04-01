@@ -173,25 +173,6 @@ string sch_employee(CmdParam command)
     return result;
 }
 
-
-void deleteFoundEntry(vector<Employee*> findArray)
-{
-    for (Employee* em : findArray)
-    {
-        for (vector<Employee*>::iterator it = list.begin(); it != list.end();)
-        {
-            if ((*it)->employeeNum == em->employeeNum)
-            {
-                it = list.erase(it);
-            }
-            else
-            {
-                ++it;
-            }
-        }
-    }
-}
-
 void modFoundEntry(vector<Employee*> findArray, string changeColumn, string changeValue)
 {
     int targetColumnNum = columnMap.find(changeColumn)->second;
@@ -396,52 +377,6 @@ string mod_empolyee(CmdParam command)
             result += ("MOD," + to_string(findArray.size()) + "\n");
         }
     }
-
-    return result;
-}
-
-string printDeleteResult(vector<Employee*> findArray, bool printoption)
-{
-    string result = "";
-    if (findArray.size() == 0)
-    {
-        result += "DEL,NONE\n";
-    }
-    else
-    {
-        if (printoption)
-        {
-            for (Employee* em : findArray)
-            {
-                result += ("DEL," + em->employeeNum + "," + em->name + "," +
-                    em->cl + "," + em->phoneNum + "," + em->birthday + "," +
-                    em->certi + "\n");
-            }
-        }
-        else
-        {
-            result += ("DEL," + to_string(findArray.size()) + "\n");
-        }
-    }
-    return result;
-}
-
-string delete_empolyee(CmdParam command)
-{
-    string result = "";
-    vector<bool> optionlist;
-    optionlist.push_back(command.firstNameFlag);
-    optionlist.push_back(command.lastNameFlag);
-    optionlist.push_back(command.midNumFlag);
-    optionlist.push_back(command.lastNumFlag);
-    optionlist.push_back(command.yearFlag);
-    optionlist.push_back(command.monthFlag);
-    optionlist.push_back(command.dateFlag);
-
-    searchEngine engine;
-    vector<Employee*> findArray = engine.search(list, command.strs[0], command.strs[1], optionlist);
-    result += printDeleteResult(findArray, command.printFlag);
-    deleteFoundEntry(findArray);
 
     return result;
 }

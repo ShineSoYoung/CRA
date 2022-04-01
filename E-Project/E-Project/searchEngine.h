@@ -18,6 +18,7 @@ public:
         {
             if (compare->isSatifiedEntry(em, value)) findArray.push_back(em);
         }
+        releaseCompareMachine();
         return findArray;
     }
 private:
@@ -84,6 +85,11 @@ private:
         {
             compare = new ComparemachineWithCerti();
         }
+    }
+
+    void releaseCompareMachine()
+    {
+        delete compare;
     }
 
     Comparemachine* compare;
