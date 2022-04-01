@@ -120,6 +120,7 @@ void manager(char* buf) {
 void printFlie(string str) {
     printFile << str << endl;
 }
+
 #if 0
 int main(int argc, char* argv[])
 {

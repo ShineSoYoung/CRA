@@ -7,6 +7,7 @@
 using namespace std;
 
 enum class CmdType {
+    UNKHOWN,
     ADD,
     DEL,
     SCH,
@@ -15,6 +16,44 @@ enum class CmdType {
 
 class CmdParam {
 public:
+    CmdParam() {
+        cmd = CmdType::UNKHOWN;
+        printFlag = false;
+        firstNameFlag = false;
+        lastNameFlag = false;
+        midNumFlag = false;
+        lastNumFlag = false;
+        yearFlag = false;
+        monthFlag = false;
+        dateFlag = false;
+        strs.clear();
+    }
+    void set(CmdType _cmd, bool pf, bool fstName, bool lastName,
+        bool midNum, bool lastNum, bool y, bool m, bool d,
+        vector<string> _strs) {
+        cmd = _cmd, printFlag = pf, firstNameFlag = fstName, lastName = lastName,
+            midNumFlag = midNum, lastNumFlag = lastName,
+            yearFlag = y, monthFlag = m, dateFlag = d,
+            strs = _strs;
+    }
+
+    bool operator == (const CmdParam& comp) {
+        if (cmd != comp.cmd) return false;
+        else if (printFlag != comp.printFlag) return false;
+        else if (firstNameFlag != comp.firstNameFlag) return false;
+        else if (lastNameFlag != comp.lastNameFlag) return false;
+        else if (midNumFlag != comp.midNumFlag) return false;
+        else if (lastNumFlag != comp.lastNumFlag) return false;
+        else if (yearFlag != comp.yearFlag) return false;
+        else if (monthFlag != comp.monthFlag) return false;
+        else if (dateFlag != comp.dateFlag) return false;
+        else if (strs.size() != comp.strs.size()) return false;
+        for (int i = 0; i < strs.size(); i++) {
+            if (strs.at(i) != comp.strs.at(i)) return false;
+        }
+        return true;
+    }
+
     CmdType cmd;
     bool printFlag; // -p
     bool firstNameFlag; // -f
