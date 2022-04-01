@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <iostream>
 #include <fstream>
 
@@ -80,6 +80,196 @@ int add_employee(string s) {
 }
 
 
+const int COMMAND_TYPE = 0;
+const int COMMAND_OPTION_1 = 1;
+const int COMMAND_OPTION_2 = 2;
+const int COMMAND_OPTION_3 = 3;
+const int COMMAND_COLUMN = 4;
+const int COMMAND_VALUE = 5;
+
+void deleteFoundEntry(vector<Employee*> findArray)
+{
+    for (Employee* em : findArray)
+    {
+        for (vector<Employee*>::iterator it = list.begin(); it != list.end();)
+        {
+            if ((*it)->employeeNum == em->employeeNum)
+            {
+                it = list.erase(it);
+            }
+            else
+            {
+                ++it;
+            }
+        }
+    }
+}
+
+string deleteEmpolyee(string command)
+{
+    string result = "";
+    bool printoption = false;
+    vector<Employee*> findArray;
+    vector<string> parsedCommand = split(command, ',');
+    if (parsedCommand[COMMAND_TYPE] != "DEL")
+    {
+        result += "FAIL :: command error";
+    }
+    if (parsedCommand[COMMAND_OPTION_1] == "-p")
+    {
+        printoption = true;
+    }
+
+    if ("name" == parsedCommand[COMMAND_COLUMN])
+    {
+        if ("-f" == parsedCommand[COMMAND_OPTION_2])
+        {
+            for (Employee* em : list)
+            {
+                vector<string> splitedName = split(em->name, ' ');
+                if (splitedName[0] == parsedCommand[COMMAND_VALUE])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+        else if ("-l" == parsedCommand[COMMAND_OPTION_2])
+        {
+            for (Employee* em : list)
+            {
+                vector<string> splitedName = split(em->name, ' ');
+                if (splitedName[1] == parsedCommand[COMMAND_VALUE])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+        else if (" " == parsedCommand[COMMAND_OPTION_2])
+        {
+            for (Employee* em : list)
+            {
+                if (em->name == parsedCommand[COMMAND_VALUE])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+    }
+    else if ("cl" == parsedCommand[COMMAND_COLUMN])
+    {
+        for (Employee* em : list)
+        {
+            if (em->cl == parsedCommand[COMMAND_VALUE])
+            {
+                findArray.push_back(em);
+            }
+        }
+    }
+    else if ("phoneNum" == parsedCommand[COMMAND_COLUMN])
+    {
+        if ("-m" == parsedCommand[COMMAND_OPTION_2])
+        {
+            for (Employee* em : list)
+            {
+                vector<string> splitedPhoneNum = split(em->phoneNum, '-');
+                if (splitedPhoneNum[1] == parsedCommand[COMMAND_VALUE])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+        else if ("-l" == parsedCommand[COMMAND_OPTION_2])
+        {
+            for (Employee* em : list)
+            {
+                vector<string> splitedPhoneNum = split(em->phoneNum, '-');
+                if (splitedPhoneNum[2] == parsedCommand[COMMAND_VALUE])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+        else if (" " == parsedCommand[COMMAND_OPTION_2])
+        {
+            for (Employee* em : list)
+            {
+                if (em->phoneNum == parsedCommand[COMMAND_VALUE])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+    }
+    else if ("birthday" == parsedCommand[COMMAND_COLUMN])
+    {
+        if ("-y" == parsedCommand[COMMAND_OPTION_2])
+        {
+            for (Employee* em : list)
+            {
+                if (em->birthday.substr(0, 4) == parsedCommand[COMMAND_VALUE])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+        else if ("-m" == parsedCommand[COMMAND_OPTION_2])
+        {
+            for (Employee* em : list)
+            {
+                if (em->birthday.substr(4, 2) == parsedCommand[COMMAND_VALUE])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+        else if ("-d" == parsedCommand[COMMAND_OPTION_2])
+        {
+            for (Employee* em : list)
+            {
+                if (em->birthday.substr(6, 2) == parsedCommand[COMMAND_VALUE])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+        else if (" " == parsedCommand[COMMAND_OPTION_2])
+        {
+            for (Employee* em : list)
+            {
+                if (em->birthday == parsedCommand[COMMAND_VALUE])
+                {
+                    findArray.push_back(em);
+                }
+            }
+        }
+    }
+
+    if (findArray.size() == 0)
+    {
+        result = "DEL,NONE\n";
+    }
+    else
+    {
+        if (printoption)
+        {
+            for (Employee* em : findArray)
+            {
+                result += ("DEL," + em->employeeNum + "," + em->name + "," +
+                    em->cl + "," + em->phoneNum + "," + em->birthday + "," +
+                    em->certi + "\n");
+            }
+            deleteFoundEntry(findArray);
+        }
+        else
+        {
+            deleteFoundEntry(findArray);
+            result += ("DEL," + to_string(findArray.size()) + "\n");
+        }
+    }
+
+    return result;
+}
+
 void add(char* buf) {
     add_employee(buf);
     printf("%s(line:%d)\n", __func__, __LINE__);
@@ -116,6 +306,7 @@ void manager(char* buf) {
     }
 }
 
+#if 0
 int main(int argc, char* argv[])
 {
     string inputFileName;
@@ -142,3 +333,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+#endif
