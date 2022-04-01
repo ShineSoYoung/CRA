@@ -8,13 +8,13 @@
 class deleteCommand
 {
 public:
-    string delete_employee(vector<Employee*> list, CmdParam command)
+    string delete_employee(vector<Employee*>& list, CmdParam command)
     {
         searchEngine engine;
         vector<Employee*> findArray = engine.search(list, command.strs[0], command.strs[1], makeOptionList(command));
         selectPrinter(findArray, command.printFlag);
         string result = printer->printFinalResult(findArray);
-        deleteFoundEntry(findArray);
+        deleteFoundEntry(list, findArray);
         releasePrinter();
         return result;
     }
@@ -27,7 +27,7 @@ private:
         else printer = new defaultResultPrinter();
     }
 
-    void deleteFoundEntry(vector<Employee*> findArray)
+    void deleteFoundEntry(vector<Employee*>& list, vector<Employee*> findArray)
     {
         for (Employee* em : findArray)
         {
