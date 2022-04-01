@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "../E-Project/main.cpp"
 #include "../E-Project/deleteCommand.h"
+#include "../E-Project/addCommand.h"
 
 class AddTest : public ::testing::Test
 {
@@ -18,31 +19,33 @@ protected:
         }
         list.clear();
     }
+
+    addCommand addCmd;
 };
 
 TEST_F(AddTest, BasicAddCase) {
 
-    EXPECT_EQ(add_employee(getCmdParam("ADD, , , ,15120999,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV")), 0);
-    EXPECT_EQ(add_employee(getCmdParam("ADD, , , ,17112609,FB NTAWR,CL4,010-5645-6122,19861203,PRO")), 0);
-    EXPECT_EQ(add_employee(getCmdParam("ADD, , , ,18115050,TTETHU HBO,CL3,010-4581-2050,20080718,ADV")), 0);
+    EXPECT_EQ(addCmd.add_employee(list, getCmdParam("ADD, , , ,15120999,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV")), 0);
+    EXPECT_EQ(addCmd.add_employee(list, getCmdParam("ADD, , , ,17112609,FB NTAWR,CL4,010-5645-6122,19861203,PRO")), 0);
+    EXPECT_EQ(addCmd.add_employee(list, getCmdParam("ADD, , , ,18115050,TTETHU HBO,CL3,010-4581-2050,20080718,ADV")), 0);
 }
 
 TEST_F(AddTest, SameAddCase) {
 
     //같은 사번
-    EXPECT_EQ(add_employee(getCmdParam("ADD, , , ,88114052,NQ LVARW,CL4,010-4528-0959,19911021,PRO")), 0);
-    EXPECT_EQ(add_employee(getCmdParam("ADD, , , ,88114052,SRERLALH HMEF,CL2,010-0991-9521,19640910,PRO")), -1);
+    EXPECT_EQ(addCmd.add_employee(list, getCmdParam("ADD, , , ,88114052,NQ LVARW,CL4,010-4528-0959,19911021,PRO")), 0);
+    EXPECT_EQ(addCmd.add_employee(list, getCmdParam("ADD, , , ,88114052,SRERLALH HMEF,CL2,010-0991-9521,19640910,PRO")), -1);
 }
 
 TEST_F(AddTest, NullAddCase) {
 
     //비어있는 정보가 있는 경우
-    EXPECT_EQ(add_employee(getCmdParam("ADD, , , ,,VSID TVO,CL1,010-3669-1077,20120718,PRO")), -1);
-    EXPECT_EQ(add_employee(getCmdParam("ADD, , , ,17111236,,010-3669-1077,20120718,PRO")), -1);
-    EXPECT_EQ(add_employee(getCmdParam("ADD, , , ,17111236,VSID TVO,,010-3669-1077,20120718,PRO")), -1);
-    EXPECT_EQ(add_employee(getCmdParam("ADD, , , ,17111236,VSID TVO,CL1,,20120718,PRO")), -1);
-    EXPECT_EQ(add_employee(getCmdParam("ADD, , , ,17111236,VSID TVO,CL1,010-3669-1077,,PRO")), -1);
-    EXPECT_EQ(add_employee(getCmdParam("ADD, , , ,17111236,VSID TVO,CL1,010-3669-1077,20120718,")), -1);
+    EXPECT_EQ(addCmd.add_employee(list, getCmdParam("ADD, , , ,,VSID TVO,CL1,010-3669-1077,20120718,PRO")), -1);
+    EXPECT_EQ(addCmd.add_employee(list, getCmdParam("ADD, , , ,17111236,,010-3669-1077,20120718,PRO")), -1);
+    EXPECT_EQ(addCmd.add_employee(list, getCmdParam("ADD, , , ,17111236,VSID TVO,,010-3669-1077,20120718,PRO")), -1);
+    EXPECT_EQ(addCmd.add_employee(list, getCmdParam("ADD, , , ,17111236,VSID TVO,CL1,,20120718,PRO")), -1);
+    EXPECT_EQ(addCmd.add_employee(list, getCmdParam("ADD, , , ,17111236,VSID TVO,CL1,010-3669-1077,,PRO")), -1);
+    EXPECT_EQ(addCmd.add_employee(list, getCmdParam("ADD, , , ,17111236,VSID TVO,CL1,010-3669-1077,20120718,")), -1);
 }
 
 class ModTest : public ::testing::Test
