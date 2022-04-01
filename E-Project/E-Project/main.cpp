@@ -28,47 +28,8 @@ vector<string> split(string str, char Delimiter) {
     return result;
 }
 
-int add_employee(CmdParam command) {
-
-    string employeeInfo[10];
-    int idx = 0;
-
-    for (int i = 0; i < command.strs.size(); i++) {
-
-        if (command.strs[i] == "") { //null 정보
-            return -1;
-        }
-        else {
-            employeeInfo[idx] = command.strs[i];
-            idx++;
-        }
-    }
-
-    if (idx != 6) //정상 데이터 수
-        return -1;
-
-    for (int i = 0; i < list.size(); i++) {
-        if (employeeInfo[0] == list[i]->employeeNum) {//중복되는 사번
-            //cout << "ERROR::same employee number!!" << endl;
-            return -1;
-        }
-    }
-
-    Employee* e = new Employee();
-    e->employeeNum = employeeInfo[0];
-    e->name = employeeInfo[1];
-    e->cl = employeeInfo[2];
-    e->phoneNum = employeeInfo[3];
-    e->birthday = employeeInfo[4];
-    e->certi = employeeInfo[5];
-
-    list.push_back(e);
-
-    return 0;
-}
 
 void add(CmdParam cmdParam) {
-    add_employee(cmdParam);
     printf("%s(line:%d)\n", __func__, __LINE__);
 }
 
