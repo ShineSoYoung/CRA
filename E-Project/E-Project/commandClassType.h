@@ -16,6 +16,21 @@ enum class CmdType {
 
 class CmdParam {
 public:
+
+    CmdParam(CmdType cmd, bool printFlag, bool firstNameFlag, bool lastNameFlag, 
+        bool midNumFlag, bool lastNumFlag, bool yearFlag, bool monthFlag, bool dateFlag, vector<string> strs) {
+        this->cmd = cmd;
+        this->printFlag = printFlag;
+        this->firstNameFlag = firstNameFlag;
+        this->lastNameFlag = lastNameFlag;
+        this->midNumFlag = midNumFlag;
+        this->lastNumFlag = lastNumFlag;
+        this->yearFlag = yearFlag;
+        this->monthFlag = monthFlag;
+        this->dateFlag = dateFlag;
+        this->strs = strs;
+    }
+
     CmdParam() {
         cmd = CmdType::UNKHOWN;
         printFlag = false;
