@@ -5,15 +5,25 @@
 #include "resultprinter.h"
 #include "datamanager.h"
 
-class command
+class Command
 {
 public:
-    command()
-    {
-        printer = nullptr;
-    }
-
+    Command() {}
     virtual string processCommand(datamanager& DB, CmdParam command) = 0;
+protected:
+
+};
+
+
+class NoneOptionalCommand : public Command {
+public:
+    NoneOptionalCommand() :Command() {}
+};
+
+class OptionalCommand : public Command {
+
+public:
+    OptionalCommand() :Command(), printer(nullptr) {}
 protected:
     void selectPrinter(vector<Employee*> findArray, bool printoption)
     {
@@ -41,6 +51,7 @@ protected:
     }
 
     resultPrinter* printer;
+
 };
 
 #endif

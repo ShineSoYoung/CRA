@@ -4,7 +4,7 @@
 #include "commandClassType.h"
 #include "command.h"
 
-class modifyCommand : public command
+class modifyCommand : public OptionalCommand
 {
 public:
     virtual string processCommand(datamanager& DB, CmdParam command) override
