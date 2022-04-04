@@ -27,8 +27,7 @@ public:
     vector<string> strs;
 };
 
-class Employee {
-public:
+struct Employee {
     string employeeNum; //사원번호
     string name; //성명
     string cl; //경력개발단계

@@ -6,7 +6,6 @@
 #include <string>
 
 #include "commandClassType.h"
-#include "searchEngine.h"
 
 #define DBG 1
 
@@ -14,8 +13,6 @@ using namespace std;
 
 ifstream readFile;
 ofstream printFile;
-
-vector<Employee*> list;
 
 vector<string> split(string str, char Delimiter) {
     istringstream iss(str);

@@ -3,23 +3,22 @@
 #define __ADD_COMMAND__
 
 #include "commandClassType.h"
+#include "command.h"
 
-class addCommand
+class addCommand : public command
 {
 public:
-    int add_employee(vector<Employee*>& list, CmdParam command)
+    virtual string processCommand(CmdParam command) override
     {
         if (isValidAddCmd(command) == false)
-            return -1;
+            return "FAIL";
 
-        if (isSameEmployeeNum(list, command.strs[0]) == true)
-            return -1;
+        if (isSameEmployeeNum(command.strs[0]) == true)
+            return "FAIL";
 
-        addData(list, command);
-
-        return 0;
+        addData(command);
+        return "";
     }
-
 private:
 
     bool isValidAddCmd(CmdParam command) {
@@ -41,27 +40,24 @@ private:
         return true;
     }
 
-    bool isSameEmployeeNum(vector<Employee*>& list, string employeeNum)
+    bool isSameEmployeeNum(string employeeNum)
     {
-        for (int i = 0; i < list.size(); i++) {
-            if (employeeNum == list[i]->employeeNum) {//중복되는 사번
-                return true;
-            }
-        }
-        return false;
+        vector<bool> dummyOptionList;
+        vector<Employee*> findArray = DB.search_data("employeeNum", employeeNum, dummyOptionList);
+        return (0 < findArray.size());
     }
 
-    void addData(vector<Employee*>& list, CmdParam command)
+    void addData(CmdParam command)
     {
-        Employee* e = new Employee();
-        e->employeeNum = command.strs[0];
-        e->name = command.strs[1];
-        e->cl = command.strs[2];
-        e->phoneNum = command.strs[3];
-        e->birthday = command.strs[4];
-        e->certi = command.strs[5];
+        Employee e;
+        e.employeeNum = command.strs[0];
+        e.name = command.strs[1];
+        e.cl = command.strs[2];
+        e.phoneNum = command.strs[3];
+        e.birthday = command.strs[4];
+        e.certi = command.strs[5];
 
-        list.push_back(e);
+        DB.add_data(e);
     }
 
 };
