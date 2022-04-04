@@ -11,6 +11,10 @@ public:
 		io = new IoManager();
 	}
 
+	~EmployeeManager() {
+		delete io;
+	}
+
 	void setIoFiles() {
 		io->openIoFiles("input.txt", "output.txt");
 	}
@@ -42,6 +46,8 @@ public:
 				string result;
 				result = command->processCommand(DB, cmdParam);
 				if (!result.empty()) io->printStringToFile(result);
+
+				delete command;
 			}
 		}
 	}

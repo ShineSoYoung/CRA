@@ -16,6 +16,7 @@ int main(int argc, char* argv[])
     employeeManager->setIoFiles();
     //employeeManager->setIoFiles(argv[1], argv[2]);
     employeeManager->run();
+    delete employeeManager;
 
     return 0;
 }
