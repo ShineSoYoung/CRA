@@ -7,6 +7,8 @@
 
 #include "commandClassType.h"
 
+const int MAX_NUM_OF_PRINT_ENTRY = 5;
+
 class resultPrinter
 {
 public:
@@ -30,7 +32,6 @@ class detailResultPrinter : public resultPrinter
 public:
     virtual string printFinalResult(string cmd, vector<Employee*> findArray) override
     {
-        int cnt = 0;
         string result = "";
         auto compareEmployeeNum = [](const Employee * e1, const Employee * e2)
         {
@@ -48,18 +49,12 @@ public:
 
         std::sort(findArray.begin(), findArray.end(), compareEmployeeNum);
 
-        for (Employee* em : findArray)
+        for (int index = 0; index < MAX_NUM_OF_PRINT_ENTRY && index < findArray.size(); index++)
         {
-
+            Employee* em = findArray[index];
             result += (cmd + em->employeeNum + "," + em->name + "," +
                 em->cl + "," + em->phoneNum + "," + em->birthday + "," +
                 em->certi + "\n");
-
-            
-            cnt++;
-            if (cnt >= 5)
-                break;
-                
         }
 
         return result;
