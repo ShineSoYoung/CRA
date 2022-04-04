@@ -95,17 +95,17 @@ TEST_F(ModTest, mod_with_birthday_none_y) {
     EXPECT_EQ(result, "MOD,1\n");
 
     result = modCmd.processCommand(DB, CmdParam{ CmdType::MOD,false,false,false,false,false,true,false,false,{"birthday", "1999", "birthday", "19940101"} });
-    EXPECT_EQ(result, "MOD,5\n");
+    EXPECT_EQ(result, "MOD,4\n");
 
     result = modCmd.processCommand(DB, CmdParam{ CmdType::MOD,false,false,false,false,false,true,false,false,{"birthday", "1999", "birthday", "19940101"} });
     EXPECT_EQ(result, "MOD,NONE\n");
 }
 TEST_F(ModTest, mod_with_birthday_none_m) {
     string result = modCmd.processCommand(DB, CmdParam{ CmdType::MOD,false,false,false,false,false,false,true,false,{"birthday", "05", "birthday", "19990408"} });
-    EXPECT_EQ(result, "MOD,3\n");
+    EXPECT_EQ(result, "MOD,2\n");
 
     result = modCmd.processCommand(DB, CmdParam{ CmdType::MOD,false,false,false,false,false,false,true,false,{"birthday", "04", "birthday", "19941001"} });
-    EXPECT_EQ(result, "MOD,4\n");
+    EXPECT_EQ(result, "MOD,3\n");
 
     result = modCmd.processCommand(DB, CmdParam{ CmdType::MOD,false,false,false,false,false,false,true,false,{"birthday", "04", "name", "ZZ ZZ"} });
     EXPECT_EQ(result, "MOD,NONE\n");
@@ -116,10 +116,11 @@ TEST_F(ModTest, mod_with_certi_p_none) {
     string result = modCmd.processCommand(DB, CmdParam{ CmdType::MOD,true,false,false,false,false,false,false,false,{"certi", "PRO", "certi", "EX"} });
 
     string expectResult = "MOD,18000000,HARBANG KIM,CL2,010-3333-1111,19990208,PRO\n";
-    expectResult += "MOD,18011111,CHOI BUS,CL4,010-5555-1111,19990508,PRO\n";
+    expectResult += "MOD,18011111,CHOI HYBUSUN,CL4,010-5555-1111,19990508,PRO\n";
     expectResult += "MOD,18022222,TAXI CHOI,CL3,010-6666-1111,19990408,PRO\n";
-    expectResult += "MOD,18050301,NICE JIN,CL3,010-1111-2233,19990506,PRO\n";
-    expectResult += "MOD,18050302,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO\n";
+    expectResult += "MOD,18050301,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO\n";
+    expectResult += "MOD,18050302,SEUNGWOO HYUN,CL3,010-1111-2233,19900302,PRO\n";
+
 
     EXPECT_EQ(result, expectResult);
 }
@@ -177,7 +178,7 @@ protected:
 TEST_F(ModTest_with_P, mod_with_phoneNum_p_l) {
     string result = modCmd.processCommand(DB, CmdParam{ CmdType::MOD,true,false,false,false,true,false,false,false,{"phoneNum", "2233", "phoneNum", "010-0000-0000"} });
     string expectResult = "MOD,69010101,HARBANG HYUN,CL2,010-1234-2233,19990208,PRO\n";
-    expectResult += "MOD,18050301,NICE JIN,CL3,010-1111-2233,19990506,PRO\n";
+    expectResult += "MOD,18050302,SEUNGWOO HYUN,CL3,010-1111-2233,19900302,PRO\n";
 
     EXPECT_EQ(result, expectResult);
 }
@@ -187,7 +188,7 @@ TEST_F(ModTest_with_P, mod_with_birthday_p_d) {
 
     string expectResult = "MOD,69010101,HARBANG HYUN,CL2,010-1234-2233,19990208,PRO\n";
     expectResult += "MOD,18000000,HARBANG KIM,CL2,010-3333-1111,19990208,PRO\n";
-    expectResult += "MOD,18011111,CHOI BUS,CL4,010-5555-1111,19990508,PRO\n";
+    expectResult += "MOD,18011111,CHOI HYBUSUN,CL4,010-5555-1111,19990508,PRO\n";
     expectResult += "MOD,18022222,TAXI CHOI,CL3,010-6666-1111,19990408,PRO\n";
 
     EXPECT_EQ(result, expectResult);
