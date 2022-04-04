@@ -56,7 +56,7 @@ void manager(CmdParam cmdParam) {
     }
 }
 
-#if 1
+#if 0
 int main(int argc, char* argv[])
 {
     IoManager* io = new IoManager();
