@@ -22,7 +22,7 @@ public:
 
 private:
 
-    bool isValidModCmd(CmdParam command) {
+    bool isValidModCmd(ParcedCmd command) {
         if (command.strs[2] == "employeeNum")
             return false;
 
