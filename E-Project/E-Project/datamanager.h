@@ -20,17 +20,13 @@ enum class EmInfo {
     CERTI
 };
 
-union unionEmployee{
-    Employee structEmployee;
-    string stringArray[6];
-};
-
 class datamanager
 {
 public:
     datamanager()
     {
         employeeList.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
+        searchengine = searchEngine();
     }
 
     void add_data(Employee em)
@@ -62,8 +58,8 @@ public:
         int targetColumnNum = (int)columnMap.find(column)->second;
         for (Employee* em : modifyingdata)
         {
-            unionEmployee* unionEm = reinterpret_cast<unionEmployee*>(em);
-            unionEm->stringArray[targetColumnNum] = value;
+            string* emStringArray = reinterpret_cast<string*>(em);
+            emStringArray[targetColumnNum] = value;
         }
     }
     void delete_data(vector<Employee*> deletingdata)
