@@ -5,7 +5,6 @@
 #include "../E-Project/modifyCommand.h"
 #include "../E-Project/searchCommand.h"
 
-
 class AddTest : public ::testing::Test
 {
 public:
@@ -482,7 +481,8 @@ TEST_F(SchTest, sch_with_birthday_option_d) {
 }
 
 TEST(IO_Test, InputTest_getCmdParam) {
-    CmdParam cmd;
+    CmdParam cmd;+
+
     CmdParam fake;
     vector<string> strs;
     cmd = getCmdParam("ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV");
