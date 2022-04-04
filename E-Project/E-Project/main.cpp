@@ -1,19 +1,13 @@
 ﻿#include <stdio.h>
-#include <iostream>
-#include <fstream>
 #include <vector>
 #include <sstream>
 #include <string>
 
 #include "commandClassType.h"
 #include "searchEngine.h"
-
-#define DBG 1
+#include "ioManager.h"
 
 using namespace std;
-
-ifstream readFile;
-ofstream printFile;
 
 vector<Employee*> list;
 
@@ -46,59 +40,7 @@ void mod(CmdParam cmdParam) {
     printf("%s(line:%d)\n", __func__, __LINE__);
 }
 
-bool isValid(char* buf) {
-    for (int i = 0; buf[i]; i++) {
-        if (buf[i] == '/') return false;
-    }
-    return true;
-}
-
-void setFlag(string word, CmdParam& cmdParam) {
-    if (word == "ADD") cmdParam.cmd = CmdType::ADD;
-    else if (word == "DEL") cmdParam.cmd = CmdType::DEL;
-    else if (word == "MOD") cmdParam.cmd = CmdType::MOD;
-    else if (word == "SCH") cmdParam.cmd = CmdType::SCH;
-    else if (word == "-p") cmdParam.printFlag = true;
-    else if (word == "-f") cmdParam.firstNameFlag = true;
-    else if (word == "-l") {
-        cmdParam.lastNameFlag = true;
-        cmdParam.lastNumFlag = true;
-    } 
-    else if (word == "-m") cmdParam.midNumFlag = true;
-    else if (word == "-y") cmdParam.yearFlag = true;
-    else if (word == "-m") cmdParam.monthFlag = true;
-    else if (word == "-d") cmdParam.dateFlag = true;
-    else if (word == " ") {
-        ;
-    } 
-    else {
-        cmdParam.strs.push_back(word);
-        if (word == "name") cmdParam.lastNumFlag = false;
-        else if (word == "phoneNum") cmdParam.lastNameFlag = false;
-    }
-}
-
-CmdParam getCmdParam(char* buf) {
-    CmdParam cmdParam;
-    string tmp;
-    for (int i = 0; buf[i]; i++) {
-        if (buf[i] == ',') {
-            setFlag(tmp, cmdParam);
-            tmp.clear();
-        }
-        else tmp.push_back(buf[i]);
-    }
-    if (tmp.empty() == false) setFlag(tmp, cmdParam);
-
-    return cmdParam;
-}
-
-void manager(char* buf) {
-    if (isValid(buf) == false) {
-        return;
-    }
-
-    CmdParam cmdParam = getCmdParam(buf);
+void manager(CmdParam cmdParam) {
     if (cmdParam.cmd == CmdType::ADD) {
         /* ADD */
         add(cmdParam);
@@ -117,30 +59,16 @@ void manager(char* buf) {
     }
 }
 
-void printFlie(string str) {
-    printFile << str << endl;
-}
-
-#if 0
+#if 1
 int main(int argc, char* argv[])
 {
-    string inputFileName;
-    string outputFileName;
-    if (DBG) {
-        inputFileName = "input.txt";
-        outputFileName = "output.txt";
-    }
-    else {
-        inputFileName = argv[1];
-        outputFileName = argv[2];
-    }
-    readFile.open(inputFileName, ios::in);
-    printFile.open(outputFileName, ios::out);
-    if (readFile.is_open()) {
-        while (!readFile.eof()) {
-            char buf[256] = { 0, };
-            readFile.getline(buf, 256);
-            manager(buf);
+    IoManager* io = new IoManager();
+    io->openIoFile(argv[1], argv[2]);
+    
+    if (io->isInputFileOpen()) {
+        while (!io->isInputFileEnd()) {
+            CmdParam cmdParam = io->getInput();
+            manager(cmdParam);
         }
     }
 
