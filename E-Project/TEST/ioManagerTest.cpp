@@ -11,8 +11,8 @@ TEST(IO_Test, InputTest) {
     }
 
     CmdParam fake(CmdType::ADD, false, false, false, false, false, false, false, false, strs);
-    Parcer* parcer = new Parcer();
-    CmdParam cmd = parcer->parce("ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV");
+    Parser parser;
+    CmdParam cmd = parser.parse("ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV");
     
     EXPECT_EQ(true, (cmd == fake));
 }

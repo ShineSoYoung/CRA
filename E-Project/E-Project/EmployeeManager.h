@@ -36,7 +36,7 @@ public:
 				}
 
 				string result;
-				result = command->processCommand(cmdParam);
+				result = command->processCommand(DB, cmdParam);
 				io->printString(result);
 			}
 		}
@@ -45,4 +45,5 @@ public:
 private:
 	IoManager* io = nullptr;
 	command* command = nullptr;
+	datamanager DB;
 };

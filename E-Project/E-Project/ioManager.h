@@ -20,9 +20,9 @@ public:
 	}
 };
 
-class Parcer {
+class Parser {
 public:
-	CmdParam parce(char* buf) {
+	CmdParam parse(char* buf) {
 		CmdParam cmdParam;
 		string tmp;
 		for (int i = 0; buf[i]; i++) {
@@ -67,7 +67,7 @@ private:
 class IoManager {
 public:
 	IoManager() {
-		parcer = new Parcer();
+		parser = new Parser();
 		validator = new Validator();
 	}
 
@@ -93,7 +93,7 @@ public:
 		char buf[256] = { 0, };
 		inputFile.getline(buf, 256);	
 		if (validator->isValid(buf)) {
-			cmdParam = parcer->parce(buf);
+			cmdParam = parser->parse(buf);
 		}
 		return cmdParam;
 	}
@@ -101,7 +101,7 @@ public:
 private:
 	ifstream inputFile;
 	ofstream outputFile;
-	Parcer* parcer;
+	Parser* parser;
 	Validator* validator;
 };
 

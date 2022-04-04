@@ -8,15 +8,15 @@
 class addCommand : public command
 {
 public:
-    virtual string processCommand(CmdParam command) override
+    virtual string processCommand(datamanager& DB, CmdParam command) override
     {
         if (isValidAddCmd(command) == false)
             return "FAIL";
 
-        if (isSameEmployeeNum(command.strs[0]) == true)
+        if (isSameEmployeeNum(DB, command.strs[0]) == true)
             return "FAIL";
 
-        addData(command);
+        addData(DB, command);
         return "";
     }
 private:
@@ -40,14 +40,14 @@ private:
         return true;
     }
 
-    bool isSameEmployeeNum(string employeeNum)
+    bool isSameEmployeeNum(datamanager& DB, string employeeNum)
     {
         vector<bool> dummyOptionList;
         vector<Employee*> findArray = DB.search_data("employeeNum", employeeNum, dummyOptionList);
         return (0 < findArray.size());
     }
 
-    void addData(CmdParam command)
+    void addData(datamanager& DB, CmdParam command)
     {
         Employee e;
         e.employeeNum = command.strs[0];
