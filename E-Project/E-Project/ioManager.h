@@ -49,9 +49,11 @@ private:
 			cmdParam.lastNameFlag = true;
 			cmdParam.lastNumFlag = true;
 		}
-		else if (word == "-m") cmdParam.midNumFlag = true;
+		else if (word == "-m") {
+			cmdParam.midNumFlag = true;
+			cmdParam.monthFlag = true;
+		}
 		else if (word == "-y") cmdParam.yearFlag = true;
-		else if (word == "-m") cmdParam.monthFlag = true;
 		else if (word == "-d") cmdParam.dateFlag = true;
 		else if (word == " ") {
 			;
@@ -60,6 +62,9 @@ private:
 			cmdParam.strs.push_back(word);
 			if (word == "name") cmdParam.lastNumFlag = false;
 			else if (word == "phoneNum") cmdParam.lastNameFlag = false;
+
+			if (word == "phoneNum") cmdParam.monthFlag = false;
+			else if (word == "birthday") cmdParam.midNumFlag = false;
 		}
 	}
 };
