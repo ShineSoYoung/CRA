@@ -8,7 +8,12 @@
 class command
 {
 public:
-    virtual string processCommand(CmdParam command) = 0;
+    command()
+    {
+        printer = nullptr;
+    }
+
+    virtual string processCommand(datamanager& DB, CmdParam command) = 0;
 protected:
     void selectPrinter(vector<Employee*> findArray, bool printoption)
     {
@@ -36,7 +41,6 @@ protected:
     }
 
     resultPrinter* printer;
-    static datamanager DB;
 };
 
 #endif

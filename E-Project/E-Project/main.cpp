@@ -9,7 +9,7 @@
 
 using namespace std;
 
-#if 1
+#if 0
 int main(int argc, char* argv[])
 {
     EmployeeManager* employeeManager = new EmployeeManager();
