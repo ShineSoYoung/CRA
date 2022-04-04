@@ -9,7 +9,7 @@ class Command
 {
 public:
     Command() {}
-    virtual string processCommand(datamanager& DB, CmdParam command) = 0;
+    virtual string processCommand(datamanager& DB, ParcedCmd command) = 0;
 protected:
 
 };
@@ -32,7 +32,7 @@ protected:
         else printer = new defaultResultPrinter();
     }
 
-    vector<bool> makeOptionList(CmdParam command)
+    vector<bool> makeOptionList(ParcedCmd command)
     {
         vector<bool> optionlist;
         optionlist.push_back(command.firstNameFlag);

@@ -14,9 +14,9 @@ enum class CmdType {
     MOD,
 };
 
-class CmdParam {
+class ParcedCmd {
 public:
-    CmdParam() {
+    ParcedCmd() {
         cmd = CmdType::UNKHOWN;
         printFlag = false;
         firstNameFlag = false;
@@ -29,7 +29,7 @@ public:
         strs.clear();
     }
 
-    CmdParam(CmdType cmd, bool printFlag, bool firstNameFlag, bool lastNameFlag, 
+    ParcedCmd(CmdType cmd, bool printFlag, bool firstNameFlag, bool lastNameFlag, 
         bool midNumFlag, bool lastNumFlag, bool yearFlag, bool monthFlag, bool dateFlag, vector<string> strs) {
         this->cmd = cmd;
         this->printFlag = printFlag;
@@ -43,7 +43,7 @@ public:
         this->strs = strs;
     }
 
-    bool operator == (const CmdParam& comp) {
+    bool operator == (const ParcedCmd& comp) {
         if (cmd != comp.cmd) return false;
         else if (printFlag != comp.printFlag) return false;
         else if (firstNameFlag != comp.firstNameFlag) return false;

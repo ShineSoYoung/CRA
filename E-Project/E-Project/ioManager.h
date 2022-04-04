@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 
-#include "commandClassType.h"
+#include "parcedCommandType.h"
 
 using namespace std;
 
@@ -22,49 +22,49 @@ public:
 
 class Parser {
 public:
-	CmdParam parse(char* buf) {
-		CmdParam cmdParam;
+	ParcedCmd parse(char* buf) {
+		ParcedCmd parcedCmd;
 		string tmp;
 		for (int i = 0; buf[i]; i++) {
 			if (buf[i] == ',') {
-				setFlag(tmp, cmdParam);
+				setFlag(tmp, parcedCmd);
 				tmp.clear();
 			}
 			else tmp.push_back(buf[i]);
 		}
-		if (tmp.empty() == false) setFlag(tmp, cmdParam);
+		if (tmp.empty() == false) setFlag(tmp, parcedCmd);
 
-		return cmdParam;
+		return parcedCmd;
 	}
 
 private:
-	void setFlag(string word, CmdParam& cmdParam) {
-		if (word == "ADD") cmdParam.cmd = CmdType::ADD;
-		else if (word == "DEL") cmdParam.cmd = CmdType::DEL;
-		else if (word == "MOD") cmdParam.cmd = CmdType::MOD;
-		else if (word == "SCH") cmdParam.cmd = CmdType::SCH;
-		else if (word == "-p") cmdParam.printFlag = true;
-		else if (word == "-f") cmdParam.firstNameFlag = true;
+	void setFlag(string word, ParcedCmd& parcedCmd) {
+		if (word == "ADD") parcedCmd.cmd = CmdType::ADD;
+		else if (word == "DEL") parcedCmd.cmd = CmdType::DEL;
+		else if (word == "MOD") parcedCmd.cmd = CmdType::MOD;
+		else if (word == "SCH") parcedCmd.cmd = CmdType::SCH;
+		else if (word == "-p") parcedCmd.printFlag = true;
+		else if (word == "-f") parcedCmd.firstNameFlag = true;
 		else if (word == "-l") {
-			cmdParam.lastNameFlag = true;
-			cmdParam.lastNumFlag = true;
+			parcedCmd.lastNameFlag = true;
+			parcedCmd.lastNumFlag = true;
 		}
 		else if (word == "-m") {
-			cmdParam.midNumFlag = true;
-			cmdParam.monthFlag = true;
+			parcedCmd.midNumFlag = true;
+			parcedCmd.monthFlag = true;
 		}
-		else if (word == "-y") cmdParam.yearFlag = true;
-		else if (word == "-d") cmdParam.dateFlag = true;
+		else if (word == "-y") parcedCmd.yearFlag = true;
+		else if (word == "-d") parcedCmd.dateFlag = true;
 		else if (word == " ") {
 			;
 		}
 		else {
-			cmdParam.strs.push_back(word);
-			if (word == "name") cmdParam.lastNumFlag = false;
-			else if (word == "phoneNum") cmdParam.lastNameFlag = false;
+			parcedCmd.strs.push_back(word);
+			if (word == "name") parcedCmd.lastNumFlag = false;
+			else if (word == "phoneNum") parcedCmd.lastNameFlag = false;
 
-			if (word == "phoneNum") cmdParam.monthFlag = false;
-			else if (word == "birthday") cmdParam.midNumFlag = false;
+			if (word == "phoneNum") parcedCmd.monthFlag = false;
+			else if (word == "birthday") parcedCmd.midNumFlag = false;
 		}
 	}
 };
@@ -104,14 +104,14 @@ public:
 		cout << str;
 	}
 
-	CmdParam getDataByLine () {
-		CmdParam cmdParam;
+	ParcedCmd getDataByLine () {
+		ParcedCmd parcedCmd;
 		char buf[256] = { 0, };
 		inputFile.getline(buf, 256);	
 		if (validator->isValid(buf)) {
-			cmdParam = parser->parse(buf);
+			parcedCmd = parser->parse(buf);
 		}
-		return cmdParam;
+		return parcedCmd;
 	}
 
 private:

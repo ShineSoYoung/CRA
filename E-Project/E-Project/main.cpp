@@ -4,12 +4,12 @@
 #include <string>
 
 #include "EmployeeManager.h"
-#include "commandClassType.h"
+#include "parcedCommandType.h"
 #include "ioManager.h"
 
 using namespace std;
 
-#if 0
+#if 1
 int main(int argc, char* argv[])
 {
     EmployeeManager* employeeManager = new EmployeeManager();

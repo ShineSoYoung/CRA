@@ -5,7 +5,7 @@
 #include <string>
 #include <algorithm>
 
-#include "commandClassType.h"
+#include "parcedCommandType.h"
 
 const int MAX_NUM_OF_PRINT_ENTRY = 5;
 

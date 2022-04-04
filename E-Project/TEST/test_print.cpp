@@ -8,8 +8,8 @@
 #include "../E-Project/ioManager.h"
 
 TEST(IO_Test, InputTest_getCmdParam) {
-    CmdParam cmd;
-    CmdParam fake;
+    ParcedCmd cmd;
+    ParcedCmd fake;
     Parser parser;
     vector<string> strs;
     cmd = parser.parse("ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV");
@@ -30,16 +30,16 @@ public:
 protected:
     virtual void SetUp() override
     {
-        addCmd.processCommand(DB, CmdParam{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "15123099","VXIHXOTH" "JHOP","CL3","010-3112-2609","19771211","ADV" } });
-        addCmd.processCommand(DB, CmdParam{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "17112609", "FB NTAWR", "CL4", "010-5645-6122", "19861203", "PRO" } });
-        addCmd.processCommand(DB, CmdParam{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "18115040", "TTETHU HBO","CL3","010-4581-2050","20080718", "ADV" } });
-        addCmd.processCommand(DB, CmdParam{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "88114052", "NQ LVARW","CL4","010-4528-3059","19911021", "PRO" } });
-        addCmd.processCommand(DB, CmdParam{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "19129568", "SRERLALH HMEF", "CL2","010-3091-9521","19640910", "PRO" } });
-        addCmd.processCommand(DB, CmdParam{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "17111236", "VSID TVO", "CL1","010-3669-1077","20120718", "PRO" } });
-        addCmd.processCommand(DB, CmdParam{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "18117906", "TWU QSOLT", "CL4","010-6672-7186","20030413", "PRO" } });
-        addCmd.processCommand(DB, CmdParam{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "08123556", "WN XV", "CL1","010-7986-5047","20100614", "PRO" } });
-        addCmd.processCommand(DB, CmdParam{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "02117175", "SBILHUT LDEXRI", "CL4","010-2814-1699", "19950704","ADV" } });
-        addCmd.processCommand(DB, CmdParam{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "03113260", "HH LTUPF","CL2", "010-5798-5383", "19791018", "PRO" } });
+        addCmd.processCommand(DB, ParcedCmd{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "15123099","VXIHXOTH" "JHOP","CL3","010-3112-2609","19771211","ADV" } });
+        addCmd.processCommand(DB, ParcedCmd{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "17112609", "FB NTAWR", "CL4", "010-5645-6122", "19861203", "PRO" } });
+        addCmd.processCommand(DB, ParcedCmd{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "18115040", "TTETHU HBO","CL3","010-4581-2050","20080718", "ADV" } });
+        addCmd.processCommand(DB, ParcedCmd{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "88114052", "NQ LVARW","CL4","010-4528-3059","19911021", "PRO" } });
+        addCmd.processCommand(DB, ParcedCmd{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "19129568", "SRERLALH HMEF", "CL2","010-3091-9521","19640910", "PRO" } });
+        addCmd.processCommand(DB, ParcedCmd{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "17111236", "VSID TVO", "CL1","010-3669-1077","20120718", "PRO" } });
+        addCmd.processCommand(DB, ParcedCmd{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "18117906", "TWU QSOLT", "CL4","010-6672-7186","20030413", "PRO" } });
+        addCmd.processCommand(DB, ParcedCmd{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "08123556", "WN XV", "CL1","010-7986-5047","20100614", "PRO" } });
+        addCmd.processCommand(DB, ParcedCmd{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "02117175", "SBILHUT LDEXRI", "CL4","010-2814-1699", "19950704","ADV" } });
+        addCmd.processCommand(DB, ParcedCmd{ CmdType::ADD,false,false,false,false,true,false,false,false,{  "03113260", "HH LTUPF","CL2", "010-5798-5383", "19791018", "PRO" } });
     }
     virtual void TearDown() override
     {
