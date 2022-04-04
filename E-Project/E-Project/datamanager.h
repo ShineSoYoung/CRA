@@ -22,15 +22,6 @@ union unionEmployee{
     string stringArray[6];
 };
 
-map<string, int> columnMap{
-    {"employeeNum", EMPLOYEE_NUM },
-    {"name", NAME},
-    {"cl", CARRER_LEVEL},
-    {"phoneNum", PHONE_NUM},
-    {"birthday", BIRTH_DAY},
-    {"certi", CERTI},
-};
-
 class datamanager
 {
 public:
@@ -52,6 +43,14 @@ public:
     }
     void modify_data(vector<Employee*> modifyingdata, string column, string value)
     {
+        map<string, int> columnMap{
+            {"employeeNum", EMPLOYEE_NUM },
+            {"name", NAME},
+            {"cl", CARRER_LEVEL},
+            {"phoneNum", PHONE_NUM},
+            {"birthday", BIRTH_DAY},
+            {"certi", CERTI},
+        };
         int targetColumnNum = columnMap.find(column)->second;
         for (Employee* em : modifyingdata)
         {
