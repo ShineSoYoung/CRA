@@ -148,6 +148,7 @@
     <ClInclude Include="compareMachine.h" />
     <ClInclude Include="datamanager.h" />
     <ClInclude Include="deleteCommand.h" />
+    <ClInclude Include="ioManager.h" />
     <ClInclude Include="modifyCommand.h" />
     <ClInclude Include="resultprinter.h" />
     <ClInclude Include="searchCommand.h" />

@@ -243,18 +243,21 @@ public:
 protected:
     virtual void SetUp() override
     {
-        addCmd.processCommand(getCmdParam("ADD, , , ,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO"));
-        addCmd.processCommand(getCmdParam("ADD, , , ,12345678,JAY HELLO,CL3,010-1234-1234,19901231,EX"));
+        Parcer p;
+        addCmd.processCommand(p.parce("ADD, , , ,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO"));
+        addCmd.processCommand(p.parce("ADD, , , ,12345678,JAY HELLO,CL3,010-1234-1234,19901231,EX"));
     }
 
     virtual void TearDown() override
     {
-        delCmd.processCommand(getCmdParam("DEL, , , ,employeeNum,18091234"));
-        delCmd.processCommand(getCmdParam("DEL, , , ,employeeNum,12345678"));
+        Parcer p;
+        delCmd.processCommand(p.parce("DEL, , , ,employeeNum,18091234"));
+        delCmd.processCommand(p.parce("DEL, , , ,employeeNum,12345678"));
     }
 
     addCommand addCmd;
     deleteCommand delCmd;
+    searchCommand schCmd;
 };
 
 TEST_F(DeleteTest, delete_with_name) {
@@ -263,6 +266,9 @@ TEST_F(DeleteTest, delete_with_name) {
 
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,false,false,false,false,false,false,false,false,{"name", "LALALA HELLO"} });
     EXPECT_EQ(result, "DEL,1\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 TEST_F(DeleteTest, delete_with_cl) {
@@ -271,6 +277,9 @@ TEST_F(DeleteTest, delete_with_cl) {
 
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,false,false,false,false,false,false,false,false,{"cl", "CL2"} });
     EXPECT_EQ(result, "DEL,1\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 TEST_F(DeleteTest, delete_with_phonenumber) {
@@ -279,6 +288,9 @@ TEST_F(DeleteTest, delete_with_phonenumber) {
 
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,false,false,false,false,false,false,false,false,{"phoneNum", "010-9876-4321"} });
     EXPECT_EQ(result, "DEL,1\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 TEST_F(DeleteTest, delete_with_birthday) {
@@ -287,6 +299,9 @@ TEST_F(DeleteTest, delete_with_birthday) {
 
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,false,false,false,false,false,false,false,false,{"birthday", "19890509"} });
     EXPECT_EQ(result, "DEL,1\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 TEST_F(DeleteTest, delete_with_name_option_p) {
@@ -295,6 +310,9 @@ TEST_F(DeleteTest, delete_with_name_option_p) {
 
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"name", "LALALA HELLO"} });
     EXPECT_EQ(result, "DEL,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 TEST_F(DeleteTest, delete_with_cl_option_p) {
@@ -303,6 +321,9 @@ TEST_F(DeleteTest, delete_with_cl_option_p) {
 
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"cl", "CL2"} });
     EXPECT_EQ(result, "DEL,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 TEST_F(DeleteTest, delete_with_phonenumber_option_p) {
@@ -311,6 +332,9 @@ TEST_F(DeleteTest, delete_with_phonenumber_option_p) {
 
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"phoneNum", "010-9876-4321"} });
     EXPECT_EQ(result, "DEL,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 TEST_F(DeleteTest, delete_with_birthday_option_p) {
@@ -319,6 +343,9 @@ TEST_F(DeleteTest, delete_with_birthday_option_p) {
 
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"birthday", "19890509"} });
     EXPECT_EQ(result, "DEL,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 TEST_F(DeleteTest, delete_with_name_option_f) {
@@ -327,6 +354,9 @@ TEST_F(DeleteTest, delete_with_name_option_f) {
     
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,false,true,false,false,false,false,false,false,{"name", "LALALA"} });
     EXPECT_EQ(result, "DEL,1\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 TEST_F(DeleteTest, delete_with_name_option_l) {
@@ -335,6 +365,9 @@ TEST_F(DeleteTest, delete_with_name_option_l) {
 
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,true,false,true,false,false,false,false,false,{"name", "HELLO"} });
     EXPECT_EQ(result, "DEL,12345678,JAY HELLO,CL3,010-1234-1234,19901231,EX\nDEL,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 TEST_F(DeleteTest, delete_with_phonenumber_option_m) {
@@ -343,6 +376,9 @@ TEST_F(DeleteTest, delete_with_phonenumber_option_m) {
 
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,true,false,false,false,false,{"phoneNum","9876"} });
     EXPECT_EQ(result, "DEL,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 TEST_F(DeleteTest, delete_with_phonenumber_option_l) {
@@ -351,6 +387,9 @@ TEST_F(DeleteTest, delete_with_phonenumber_option_l) {
 
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,true,false,false,false,{"phoneNum","4321"} });
     EXPECT_EQ(result, "DEL,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 TEST_F(DeleteTest, delete_with_birthday_option_y) {
@@ -359,6 +398,9 @@ TEST_F(DeleteTest, delete_with_birthday_option_y) {
     
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,true,false,false,{"birthday","1989"} });
     EXPECT_EQ(result, "DEL,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 TEST_F(DeleteTest, delete_with_birthday_option_m) {    
@@ -367,6 +409,9 @@ TEST_F(DeleteTest, delete_with_birthday_option_m) {
     
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,true,false,{"birthday","05"} });
     EXPECT_EQ(result, "DEL,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 TEST_F(DeleteTest, delete_with_birthday_option_d) {
@@ -375,6 +420,9 @@ TEST_F(DeleteTest, delete_with_birthday_option_d) {
 
     result = delCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,true,{"birthday","09"} });
     EXPECT_EQ(result, "DEL,18091234,LALALA HELLO,CL2,010-9876-4321,19890509,PRO\n");
+
+    result = schCmd.processCommand(CmdParam{ CmdType::DEL,true,false,false,false,false,false,false,false,{"employeeNum", "18091234"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
 
 class SchTest : public ::testing::Test
