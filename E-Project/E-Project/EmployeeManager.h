@@ -11,8 +11,12 @@ public:
 		io = new IoManager();
 	}
 
-	void setInputData(string inputFileName, string outputFileName) {
-		io->openIoFile(inputFileName, outputFileName);
+	void setIoFiles() {
+		io->openIoFiles("input.txt", "output.txt");
+	}
+
+	void setIoFiles(string inputFileName, string outputFileName) {
+		io->openIoFiles(inputFileName, outputFileName);
 	}
 
 	void run() {
@@ -37,7 +41,7 @@ public:
 
 				string result;
 				result = command->processCommand(DB, cmdParam);
-				io->printString(result);
+				if (!result.empty()) io->printStringToFile(result);
 			}
 		}
 	}

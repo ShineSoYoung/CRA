@@ -155,6 +155,15 @@
     <ClInclude Include="searchCommand.h" />
     <ClInclude Include="searchEngine.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="input.txt" />
+    <Text Include="official_sample_input.txt" />
+    <Text Include="official_sample_output.txt" />
+    <Text Include="output.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -71,7 +71,7 @@ public:
 		validator = new Validator();
 	}
 
-	void openIoFile(string inputFileName, string outputFileName) {
+	void openIoFiles(string inputFileName, string outputFileName) {
 		inputFile.open(inputFileName, ios::in);
 		outputFile.open(outputFileName, ios::out);
 	}
@@ -84,8 +84,12 @@ public:
 		return inputFile.eof();
 	}
 
+	void printStringToFile(string str) {
+		outputFile << str;
+	}
+
 	void printString(string str) {
-		outputFile << str << endl;
+		cout << str;
 	}
 
 	CmdParam getDataByLine () {

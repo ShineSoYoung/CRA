@@ -13,7 +13,8 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     EmployeeManager* employeeManager = new EmployeeManager();
-    employeeManager->setInputData(argv[1], argv[2]);
+    employeeManager->setIoFiles();
+    //employeeManager->setIoFiles(argv[1], argv[2]);
     employeeManager->run();
 
     return 0;
