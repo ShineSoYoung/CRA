@@ -49,9 +49,11 @@ private:
 			cmdParam.lastNameFlag = true;
 			cmdParam.lastNumFlag = true;
 		}
-		else if (word == "-m") cmdParam.midNumFlag = true;
+		else if (word == "-m") {
+			cmdParam.midNumFlag = true;
+			cmdParam.monthFlag = true;
+		}
 		else if (word == "-y") cmdParam.yearFlag = true;
-		else if (word == "-m") cmdParam.monthFlag = true;
 		else if (word == "-d") cmdParam.dateFlag = true;
 		else if (word == " ") {
 			;
@@ -60,6 +62,9 @@ private:
 			cmdParam.strs.push_back(word);
 			if (word == "name") cmdParam.lastNumFlag = false;
 			else if (word == "phoneNum") cmdParam.lastNameFlag = false;
+
+			if (word == "phoneNum") cmdParam.monthFlag = false;
+			else if (word == "birthday") cmdParam.midNumFlag = false;
 		}
 	}
 };
@@ -71,7 +76,7 @@ public:
 		validator = new Validator();
 	}
 
-	void openIoFile(string inputFileName, string outputFileName) {
+	void openIoFiles(string inputFileName, string outputFileName) {
 		inputFile.open(inputFileName, ios::in);
 		outputFile.open(outputFileName, ios::out);
 	}
@@ -84,8 +89,12 @@ public:
 		return inputFile.eof();
 	}
 
+	void printStringToFile(string str) {
+		outputFile << str;
+	}
+
 	void printString(string str) {
-		outputFile << str << endl;
+		cout << str;
 	}
 
 	CmdParam getDataByLine () {

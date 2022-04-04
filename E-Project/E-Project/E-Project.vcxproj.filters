@@ -57,4 +57,23 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="input.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="output.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="official_sample_input.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="official_sample_output.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig">
+      <Filter>리소스 파일</Filter>
+    </None>
+  </ItemGroup>
 </Project>
