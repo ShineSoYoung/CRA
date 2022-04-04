@@ -16,6 +16,18 @@ enum class CmdType {
 
 class CmdParam {
 public:
+    CmdParam() {
+        cmd = CmdType::UNKHOWN;
+        printFlag = false;
+        firstNameFlag = false;
+        lastNameFlag = false;
+        midNumFlag = false;
+        lastNumFlag = false;
+        yearFlag = false;
+        monthFlag = false;
+        dateFlag = false;
+        strs.clear();
+    }
 
     CmdParam(CmdType cmd, bool printFlag, bool firstNameFlag, bool lastNameFlag, 
         bool midNumFlag, bool lastNumFlag, bool yearFlag, bool monthFlag, bool dateFlag, vector<string> strs) {
@@ -29,27 +41,6 @@ public:
         this->monthFlag = monthFlag;
         this->dateFlag = dateFlag;
         this->strs = strs;
-    }
-
-    CmdParam() {
-        cmd = CmdType::UNKHOWN;
-        printFlag = false;
-        firstNameFlag = false;
-        lastNameFlag = false;
-        midNumFlag = false;
-        lastNumFlag = false;
-        yearFlag = false;
-        monthFlag = false;
-        dateFlag = false;
-        strs.clear();
-    }
-    void set(CmdType _cmd, bool pf, bool fstName, bool lastName,
-        bool midNum, bool lastNum, bool y, bool m, bool d,
-        vector<string> _strs) {
-        cmd = _cmd, printFlag = pf, firstNameFlag = fstName, lastName = lastName,
-            midNumFlag = midNum, lastNumFlag = lastName,
-            yearFlag = y, monthFlag = m, dateFlag = d,
-            strs = _strs;
     }
 
     bool operator == (const CmdParam& comp) {

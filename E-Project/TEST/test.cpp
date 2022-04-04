@@ -574,23 +574,6 @@ TEST_F(SchTest, sch_with_birthday_option_d) {
     EXPECT_EQ(result, "SCH,17000002,홍 길순,CL2,010-1111-2244,19900306,ADV\n");
 }
 
-TEST(IO_Test, InputTest_getCmdParam) {
-    CmdParam cmd;+
-
-    CmdParam fake;
-    vector<string> strs;
-    cmd = getCmdParam("ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV");
-    strs.push_back("15123099");
-    strs.push_back("VXIHXOTH JHOP");
-    strs.push_back("CL3");
-    strs.push_back("010-3112-2609");
-    strs.push_back("19771211");
-    strs.push_back("ADV");
-    fake.set(CmdType::ADD, false, false, false, false, false, false, false, false, strs);
-    EXPECT_EQ(true, (cmd == fake));
-}
-
-
 class PrintTest : public ::testing::Test
 {
 public:

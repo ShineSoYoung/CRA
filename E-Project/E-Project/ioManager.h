@@ -88,7 +88,7 @@ public:
 		outputFile << str << endl;
 	}
 
-	CmdParam getInput() {
+	CmdParam getDataByLine () {
 		CmdParam cmdParam;
 		char buf[256] = { 0, };
 		inputFile.getline(buf, 256);	
