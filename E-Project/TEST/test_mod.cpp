@@ -62,11 +62,12 @@ TEST_F(ModTest, mod_with_phoneNum_none_none) {
     EXPECT_EQ(result, "MOD,2\n");
 
 }
+
 TEST_F(ModTest, mod_with_birthday_none_none) {
     string result = modCmd.processCommand(DB, CmdParam{ CmdType::MOD,false,false,false,false,false,false,false,false,{"birthday", "19990506", "cl", "CL2"} });
-    EXPECT_EQ(result, "MOD,2\n");
+    EXPECT_EQ(result, "MOD,1\n");
 
-    result = modCmd.processCommand(DB, CmdParam{ CmdType::MOD,false,false,false,false,false,false,false,false,{"name", "NICE JIN", "birthday", "19990208"} });
+    result = modCmd.processCommand(DB, CmdParam{ CmdType::MOD,false,false,false,false,false,false,false,false,{"name", "HARBANG KIM", "birthday", "19990208"} });
 
     EXPECT_EQ(result, "MOD,1\n");
 }

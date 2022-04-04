@@ -8,7 +8,11 @@
 
 #include "searchEngine.h"
 
+const int MINIMUM_ENTRY_COUNT = 100000;
+const int EXTRA_ROOM_ENTRY_COUNT = 50000;
+
 enum class EmInfo{
+
     EMPLOYEE_NUM = 0,
     NAME,
     CARRER_LEVEL,
@@ -25,6 +29,11 @@ union unionEmployee{
 class datamanager
 {
 public:
+    datamanager()
+    {
+        employeeList.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
+    }
+
     void add_data(Employee em)
     {
         Employee* e = new Employee();
