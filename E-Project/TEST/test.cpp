@@ -152,26 +152,99 @@ TEST_F(ModTest, mod_with_birthday_none_m) {
     EXPECT_EQ(result, "MOD,NONE\n");
 }
 
-#if 0
 // [TBD] -p Option Test
 TEST_F(ModTest, mod_with_certi_p_none) {
+    string result = modCmd.modify_employee(list, CmdParam{ CmdType::MOD,true,false,false,false,false,false,false,false,{"certi", "PRO", "certi", "EX"} });
 
+    string expectResult = "MOD,18000000,HARBANG KIM,CL2,010-3333-1111,19990208,PRO\n";
+    expectResult += "MOD,18011111,CHOI BUS,CL4,010-5555-1111,19990508,PRO\n";
+    expectResult += "MOD,18022222,TAXI CHOI,CL3,010-6666-1111,19990408,PRO\n";
+    expectResult += "MOD,18050301,NICE JIN,CL3,010-1111-2233,19990506,PRO\n";
+    expectResult += "MOD,18050302,KYUMOK KIM,CL2,010-9777-6055,19980906,PRO\n";
+
+    EXPECT_EQ(result, expectResult);
+
+    EXPECT_EQ(list[5]->certi, "EX");
 }
 
-TEST_F(ModTest, mod_with_name_p_l) {
 
+TEST_F(ModTest, mod_with_name_p_l) {
+    string result = modCmd.modify_employee(list, CmdParam{ CmdType::MOD,true,false,true,false,false,false,false,false,{"name", "CHOI", "certi", "EX"} });
+    string expectResult = "MOD,18022222,TAXI CHOI,CL3,010-6666-1111,19990408,PRO\n";
+    expectResult += "MOD,19000000,SAM CHOI,CL1,010-3333-1111,19990506,PRO\n";
+
+    EXPECT_EQ(result, expectResult);
+
+    EXPECT_EQ(list[2]->certi, "EX");
+
+    EXPECT_EQ(list[4]->certi, "EX");
 }
 
 TEST_F(ModTest, mod_with_phoneNum_p_m) {
+    string result = modCmd.modify_employee(list, CmdParam{ CmdType::MOD,true,false,false,true,false,false,false,false,{"phoneNum", "3333", "birthday", "20000101"} });
+    string expectResult = "MOD,18000000,HARBANG KIM,CL2,010-3333-1111,19990208,PRO\n";
+    expectResult += "MOD,19000000,SAM CHOI,CL1,010-3333-1111,19990506,PRO\n";
 
-}
-TEST_F(ModTest, mod_with_phoneNum_p_l) {
+    EXPECT_EQ(result, expectResult);
 
-}
-TEST_F(ModTest, mod_with_birthday_p_d) {
+    EXPECT_EQ(list[2]->birthday, "20000101");
 
+    EXPECT_EQ(list[5]->birthday, "20000101");
 }
-#endif
+
+class ModTest_with_P : public ::testing::Test
+{
+public:
+protected:
+    virtual void SetUp() override
+    {
+        list.push_back(new Employee{ "18050302", "KYUMOK KIM","CL2","010-9777-6055","19980906","PRO" });
+        list.push_back(new Employee{ "18050301", "NICE JIN","CL3","010-1111-2233","19990506","PRO" });
+        list.push_back(new Employee{ "19000000", "SAM CHOI","CL1","010-3333-1111","19990506","PRO" });
+        list.push_back(new Employee{ "18011111", "CHOI BUS","CL4","010-5555-1111","19990508","PRO" });
+        list.push_back(new Employee{ "18022222", "TAXI CHOI","CL3","010-6666-1111","19990408","PRO" });
+        list.push_back(new Employee{ "18000000", "HARBANG KIM","CL2","010-3333-1111","19990208","PRO" });
+        list.push_back(new Employee{ "69010101", "HARBANG HYUN","CL2","010-1234-2233","19990208","PRO" });
+    }
+
+    virtual void TearDown() override
+    {
+        for (Employee* em : list)
+        {
+            delete em;
+        }
+        list.clear();
+    }
+
+    modifyCommand modCmd;
+};
+
+TEST_F(ModTest_with_P, mod_with_phoneNum_p_l) {
+    string result = modCmd.modify_employee(list, CmdParam{ CmdType::MOD,true,false,false,false,true,false,false,false,{"phoneNum", "2233", "phoneNum", "010-0000-0000"} });
+    string expectResult = "MOD,69010101,HARBANG HYUN,CL2,010-1234-2233,19990208,PRO\n";
+    expectResult += "MOD,18050301,NICE JIN,CL3,010-1111-2233,19990506,PRO\n";
+
+    EXPECT_EQ(result, expectResult);
+
+    EXPECT_EQ(list[1]->phoneNum, "010-0000-0000");
+    EXPECT_EQ(list[6]->phoneNum, "010-0000-0000");
+}
+
+TEST_F(ModTest_with_P, mod_with_birthday_p_d) {
+    string result = modCmd.modify_employee(list, CmdParam{ CmdType::MOD,true,false,false,false,false,false,false,true,{"birthday", "08", "name", "BALCK PINK"} });
+
+    string expectResult = "MOD,69010101,HARBANG HYUN,CL2,010-1234-2233,19990208,PRO\n";
+    expectResult += "MOD,18000000,HARBANG KIM,CL2,010-3333-1111,19990208,PRO\n";
+    expectResult += "MOD,18011111,CHOI BUS,CL4,010-5555-1111,19990508,PRO\n";
+    expectResult += "MOD,18022222,TAXI CHOI,CL3,010-6666-1111,19990408,PRO\n";
+
+    EXPECT_EQ(result, expectResult);
+
+    EXPECT_EQ(list[3]->name, "BALCK PINK");
+    EXPECT_EQ(list[4]->name, "BALCK PINK");
+    EXPECT_EQ(list[5]->name, "BALCK PINK");
+    EXPECT_EQ(list[6]->name, "BALCK PINK");
+}
 
 
 class DeleteTest : public ::testing::Test
