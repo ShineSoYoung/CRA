@@ -76,6 +76,11 @@ public:
 		validator = new Validator();
 	}
 
+	~IoManager() {
+		delete parser;
+		delete validator;
+	}
+
 	void openIoFiles(string inputFileName, string outputFileName) {
 		inputFile.open(inputFileName, ios::in);
 		outputFile.open(outputFileName, ios::out);
