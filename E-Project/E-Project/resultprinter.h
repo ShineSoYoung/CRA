@@ -15,21 +15,6 @@ private:
 
 };
 
-bool compareEmployeeNum(const Employee* e1, const Employee* e2)
-{
-    string s1 = e1->employeeNum;
-    string s2 = e2->employeeNum;
-
-    int num1 = stoi(s1.substr(0, 2));
-    int num2 = stoi(s2.substr(0, 2));
-
-    if (num1 == num2)
-        return s1 < s2;
-    else
-        return ((num1 + 100 - 69) % 100) < ((num2 + 100 - 69) % 100);
-}
-
-
 class defaultResultPrinter : public resultPrinter
 {
 public:
@@ -47,6 +32,19 @@ public:
     {
         int cnt = 0;
         string result = "";
+        auto compareEmployeeNum = [](const Employee * e1, const Employee * e2)
+        {
+            string s1 = e1->employeeNum;
+            string s2 = e2->employeeNum;
+
+            int num1 = stoi(s1.substr(0, 2));
+            int num2 = stoi(s2.substr(0, 2));
+
+            if (num1 == num2)
+                return s1 < s2;
+            else
+                return ((num1 + 100 - 69) % 100) < ((num2 + 100 - 69) % 100);
+        };
 
         std::sort(findArray.begin(), findArray.end(), compareEmployeeNum);
 
