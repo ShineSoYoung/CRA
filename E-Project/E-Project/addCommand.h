@@ -5,6 +5,8 @@
 #include "commandClassType.h"
 #include "command.h"
 
+const int validStringNum = 6;
+
 class addCommand : public NoneOptionalCommand
 {
 public:
@@ -33,7 +35,7 @@ private:
             }
         }
 
-        if (idx != 6) {
+        if (idx != validStringNum) {
             return false;
         }
 

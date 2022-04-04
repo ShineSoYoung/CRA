@@ -8,7 +8,7 @@
 
 #include "searchEngine.h"
 
-enum {
+enum class EmInfo{
     EMPLOYEE_NUM = 0,
     NAME,
     CARRER_LEVEL,
@@ -43,15 +43,15 @@ public:
     }
     void modify_data(vector<Employee*> modifyingdata, string column, string value)
     {
-        map<string, int> columnMap{
-            {"employeeNum", EMPLOYEE_NUM },
-            {"name", NAME},
-            {"cl", CARRER_LEVEL},
-            {"phoneNum", PHONE_NUM},
-            {"birthday", BIRTH_DAY},
-            {"certi", CERTI},
+        map<string, EmInfo> columnMap{
+            {"employeeNum", EmInfo::EMPLOYEE_NUM },
+            {"name", EmInfo::NAME},
+            {"cl", EmInfo::CARRER_LEVEL},
+            {"phoneNum", EmInfo::PHONE_NUM},
+            {"birthday", EmInfo::BIRTH_DAY},
+            {"certi", EmInfo::CERTI},
         };
-        int targetColumnNum = columnMap.find(column)->second;
+        int targetColumnNum = (int)columnMap.find(column)->second;
         for (Employee* em : modifyingdata)
         {
             unionEmployee* unionEm = reinterpret_cast<unionEmployee*>(em);
