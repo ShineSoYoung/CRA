@@ -2,62 +2,22 @@
 #define __DELETE_COMMAND__
 
 #include "commandClassType.h"
-#include "resultprinter.h"
-#include "searchEngine.h"
+#include "command.h"
 
-class deleteCommand
+class deleteCommand : public command
 {
 public:
-    string delete_employee(vector<Employee*>& list, CmdParam command)
+    virtual string processCommand(CmdParam command) override
     {
-        searchEngine engine;
-        vector<Employee*> findArray = engine.search(list, command.strs[0], command.strs[1], makeOptionList(command));
+        vector<Employee*> findArray = DB.search_data(command.strs[0], command.strs[1], makeOptionList(command));
         selectPrinter(findArray, command.printFlag);
         string result = printer->printFinalResult("DEL,", findArray);
-        deleteFoundEntry(list, findArray);
+        DB.delete_data(findArray);
         releasePrinter();
         return result;
     }
 
 private:
-    void selectPrinter(vector<Employee*> findArray, bool printoption)
-    {
-        if (findArray.size() == 0) printer = new noResultPrinter();
-        else if (printoption) printer = new detailResultPrinter();
-        else printer = new defaultResultPrinter();
-    }
-
-    void deleteFoundEntry(vector<Employee*>& list, vector<Employee*> findArray)
-    {
-        for (Employee* em : findArray)
-        {
-            for (vector<Employee*>::iterator it = list.begin(); it != list.end();)
-            {
-                if ((*it)->employeeNum == em->employeeNum) it = list.erase(it);
-                else ++it;
-            }
-        }
-    }
-
-    vector<bool> makeOptionList(CmdParam command)
-    {
-        vector<bool> optionlist;
-        optionlist.push_back(command.firstNameFlag);
-        optionlist.push_back(command.lastNameFlag);
-        optionlist.push_back(command.midNumFlag);
-        optionlist.push_back(command.lastNumFlag);
-        optionlist.push_back(command.yearFlag);
-        optionlist.push_back(command.monthFlag);
-        optionlist.push_back(command.dateFlag);
-        return optionlist;
-    }
-
-    void releasePrinter()
-    {
-        delete printer;
-    }
-
-    resultPrinter* printer;
 };
 
 #endif

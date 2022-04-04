@@ -4,12 +4,9 @@
 #include <string>
 
 #include "commandClassType.h"
-#include "searchEngine.h"
 #include "ioManager.h"
 
 using namespace std;
-
-vector<Employee*> list;
 
 vector<string> split(string str, char Delimiter) {
     istringstream iss(str);

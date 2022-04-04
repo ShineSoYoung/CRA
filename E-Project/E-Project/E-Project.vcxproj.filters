@@ -35,10 +35,19 @@
     <ClInclude Include="deleteCommand.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="datamanager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="addCommand.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="modifyCommand.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="searchCommand.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="command.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
