@@ -48,6 +48,6 @@ public:
 
 private:
 	IoManager* io = nullptr;
-	command* command = nullptr;
+	Command* command = nullptr;
 	datamanager DB;
 };
