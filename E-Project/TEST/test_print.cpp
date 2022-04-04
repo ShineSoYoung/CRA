@@ -7,7 +7,7 @@
 #include "../E-Project/datamanager.h"
 #include "../E-Project/ioManager.h"
 
-TEST(IO_Test, InputTest_getCmdParam) {
+TEST(IO_Test, InputTest_getParcedCmd) {
     ParcedCmd cmd;
     ParcedCmd fake;
     Parser parser;
