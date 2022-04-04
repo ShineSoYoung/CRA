@@ -79,6 +79,8 @@ public:
 	~IoManager() {
 		delete parser;
 		delete validator;
+		if (inputFile.is_open()) inputFile.close();
+		if (outputFile.is_open()) outputFile.close();
 	}
 
 	void openIoFiles(string inputFileName, string outputFileName) {
