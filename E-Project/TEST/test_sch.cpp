@@ -15,12 +15,26 @@ protected:
         addCmd.processCommand(DB, parser.parse("ADD, , , ,17000000,홍 길동,CL2,010-1111-2222,19900302,ADV"));
         addCmd.processCommand(DB, parser.parse("ADD, , , ,17000001,홍 길훈,CL3,010-1111-2233,19900302,PRO"));
         addCmd.processCommand(DB, parser.parse("ADD, , , ,17000002,홍 길순,CL2,010-1111-2244,19900306,ADV"));
+        addCmd.processCommand(DB, parser.parse("ADD, , , ,17000054,APKEWER JAG,CL1,010-3333-2243,19670504,ADV"));
+        addCmd.processCommand(DB, parser.parse("ADD, , , ,90020002,FDJKA GJKD,CL1,010-3333-2243,19780401,ADV"));
+        addCmd.processCommand(DB, parser.parse("ADD, , , ,17000002,ZXKWI QKW,CL1,010-3333-2243,19870426,ADV"));
+        addCmd.processCommand(DB, parser.parse("ADD, , , ,01000002,DSKFDSK FDS,CL1,010-3333-2243,19890416,ADV"));
+        addCmd.processCommand(DB, parser.parse("ADD, , , ,90000342,AGBDSFSD DS,CL1,010-3333-2243,19950416,ADV"));
+        addCmd.processCommand(DB, parser.parse("ADD, , , ,12000023,AS FDSFC,CL1,010-3333-2243,19970716,ADV"));
+        addCmd.processCommand(DB, parser.parse("ADD, , , ,12000012,AXCXZV DSFQW,CL1,010-3333-2243,19960116,ADV"));
     }
     virtual void TearDown() override
     {
         delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,17000000"));
         delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,17000001"));
         delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,17000002"));
+        delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,17000054"));
+        delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,90020002"));
+        delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,17000002"));
+        delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,01000002"));
+        delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,90000342"));
+        delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,12000023"));
+        delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,12000012"));
     }
 
     datamanager DB;
@@ -155,4 +169,14 @@ TEST_F(SchTest, sch_with_birthday_option_d) {
 
     result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,true,{"birthday","06"} });
     EXPECT_EQ(result, "SCH,17000002,홍 길순,CL2,010-1111-2244,19900306,ADV\n");
+}
+
+TEST_F(SchTest, sch_with_same_cl_option_p) {
+    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,false,{"cl","CL1"} });
+    EXPECT_EQ(result, "SCH,90000342,AGBDSFSD DS,CL1,010-3333-2243,19950416,ADV\nSCH,90020002,FDJKA GJKD,CL1,010-3333-2243,19780401,ADV\nSCH,01000002,DSKFDSK FDS,CL1,010-3333-2243,19890416,ADV\nSCH,12000012,AXCXZV DSFQW,CL1,010-3333-2243,19960116,ADV\nSCH,12000023,AS FDSFC,CL1,010-3333-2243,19970716,ADV\n");
+}
+
+TEST_F(SchTest, sch_with_same_certi_option_p) {
+    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,false,{"certi","ADV"} });
+    EXPECT_EQ(result, "SCH,90000342,AGBDSFSD DS,CL1,010-3333-2243,19950416,ADV\nSCH,90020002,FDJKA GJKD,CL1,010-3333-2243,19780401,ADV\nSCH,01000002,DSKFDSK FDS,CL1,010-3333-2243,19890416,ADV\nSCH,12000012,AXCXZV DSFQW,CL1,010-3333-2243,19960116,ADV\nSCH,12000023,AS FDSFC,CL1,010-3333-2243,19970716,ADV\n");
 }
