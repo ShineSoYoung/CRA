@@ -1,5 +1,4 @@
-﻿#include "pch.h"
-#include "../E-Project/main.cpp"
+﻿#include "gtest/gtest.h"
 #include "../E-Project/ioManager.h"
 #include "../E-Project/parsedCommandType.h"
 
