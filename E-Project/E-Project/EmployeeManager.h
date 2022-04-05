@@ -25,7 +25,7 @@ public:
 		io->openIoFiles("input.txt", "output.txt");
 	}
 
-	void setIoFiles(string inputFileName, string outputFileName) {
+	void setIoFiles(const char* inputFileName, const char* outputFileName) {
 		io->openIoFiles(inputFileName, outputFileName);
 	}
 
