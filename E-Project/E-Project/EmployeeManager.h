@@ -26,8 +26,11 @@ public:
 	void run() {
 		if (io->isInputFileOpen()) {
 			while (!io->isInputFileEnd()) {
-				ParcedCmd parcedCmd = io->getDataByLine();
+				char buf[256] = { 0, };
+				io->getDataByLine(buf, 256);
+				if (io->isValid(buf) == false) break;
 
+				ParcedCmd parcedCmd = io->getParcedCmd(buf);
 				switch (parcedCmd.cmd) {
 				case CmdType::ADD:
 					command = new addCommand();

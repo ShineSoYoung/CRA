@@ -13,6 +13,9 @@ using namespace std;
 class Validator {
 public:
 	bool isValid(char* buf) {
+		if (!buf[0]) {
+			return false;
+		}
 		for (int i = 0; buf[i]; i++) {
 			if (buf[i] == '/') return false;
 		}
@@ -104,14 +107,16 @@ public:
 		cout << str;
 	}
 
-	ParcedCmd getDataByLine () {
-		ParcedCmd parcedCmd;
-		char buf[256] = { 0, };
-		inputFile.getline(buf, 256);	
-		if (validator->isValid(buf)) {
-			parcedCmd = parser->parse(buf);
-		}
-		return parcedCmd;
+	void getDataByLine (char* buf, int n) {
+		inputFile.getline(buf, n);	
+	}
+
+	ParcedCmd getParcedCmd(char* buf) {
+		return parser->parse(buf);
+	}
+
+	bool isValid(char* buf) {
+		return validator->isValid(buf);
 	}
 
 private:
