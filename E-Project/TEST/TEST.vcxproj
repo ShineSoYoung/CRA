@@ -48,6 +48,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="test_sch.cpp" />
+    <ClCompile Include="test_stressful.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
