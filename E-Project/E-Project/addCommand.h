@@ -53,7 +53,7 @@ private:
 
     bool isSameEmployeeNum(datamanager& DB, string employeeNum)
     {
-        vector<bool> dummyOptionList;
+        optionList dummyOptionList = {false, false, false, false, false, false, false};
         vector<Employee*> findArray = DB.search_data("employeeNum", employeeNum, dummyOptionList);
         return (0 < findArray.size());
     }

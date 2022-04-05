@@ -17,7 +17,6 @@ public:
         selectPrinter(findArray, command.printFlag);
         string result = printer->printFinalResult("MOD,", findArray);
         DB.modify_data(findArray, command.strs[targetColumn], command.strs[targetValue]);
-        releasePrinter();
         return result;
     }
 

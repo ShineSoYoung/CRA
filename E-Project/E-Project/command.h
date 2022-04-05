@@ -34,31 +34,29 @@ public:
 protected:
     void selectPrinter(vector<Employee*> findArray, bool printoption)
     {
-        if (findArray.size() == 0) printer = new noResultPrinter();
-        else if (printoption) printer = new detailResultPrinter();
-        else printer = new defaultResultPrinter();
+        if (findArray.size() == 0) printer = &noPrinter;
+        else if (printoption) printer = &detailPrinter;
+        else printer = &defaultPrinter;
     }
 
-    vector<bool> makeOptionList(const ParsedCmd command)
+    optionList makeOptionList(const ParsedCmd command)
     {
-        vector<bool> optionlist;
-        optionlist.push_back(command.firstNameFlag);
-        optionlist.push_back(command.lastNameFlag);
-        optionlist.push_back(command.midNumFlag);
-        optionlist.push_back(command.lastNumFlag);
-        optionlist.push_back(command.yearFlag);
-        optionlist.push_back(command.monthFlag);
-        optionlist.push_back(command.dateFlag);
-        return optionlist;
-    }
-
-    void releasePrinter()
-    {
-        delete printer;
+        optionList list;
+        list.searchforFirstName = command.firstNameFlag;
+        list.searchforLastName = command.lastNameFlag;
+        list.searchforMiddlePhoneNumber = command.midNumFlag;
+        list.searchforLastPhoneNumber = command.lastNumFlag;
+        list.searchforBirthdayYear = command.yearFlag;
+        list.searchforBirthdayMonth = command.monthFlag;
+        list.searchforBirthdayDay = command.dateFlag;
+        return list;
     }
 
     resultPrinter* printer;
 
+    noResultPrinter noPrinter;
+    detailResultPrinter detailPrinter;
+    defaultResultPrinter defaultPrinter;
 };
 
 #endif
