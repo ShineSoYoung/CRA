@@ -25,50 +25,64 @@ public:
 
 class Parser {
 public:
-	ParsedCmd parse(char* buf) {
-		ParsedCmd ParsedCmd;
-		string tmp;
-		for (int i = 0; buf[i]; i++) {
-			if (buf[i] == ',') {
-				setFlag(tmp, ParsedCmd);
-				tmp.clear();
-			}
-			else tmp.push_back(buf[i]);
-		}
-		if (tmp.empty() == false) setFlag(tmp, ParsedCmd);
-
-		return ParsedCmd;
+	ParsedCmd parse(char* inputStr) {
+		vector<string> strs = split(inputStr);
+		return getParsedCmd(strs);
 	}
 
 private:
-	void setFlag(string word, ParsedCmd& ParsedCmd) {
-		if (word == "ADD") ParsedCmd.cmd = CmdType::ADD;
-		else if (word == "DEL") ParsedCmd.cmd = CmdType::DEL;
-		else if (word == "MOD") ParsedCmd.cmd = CmdType::MOD;
-		else if (word == "SCH") ParsedCmd.cmd = CmdType::SCH;
-		else if (word == "-p") ParsedCmd.printFlag = true;
-		else if (word == "-f") ParsedCmd.firstNameFlag = true;
-		else if (word == "-l") {
-			ParsedCmd.lastNameFlag = true;
-			ParsedCmd.lastNumFlag = true;
+	vector<string> split(char* str) {
+		vector<string> vstr;
+		string buf;
+		for (int i = 0; str[i]; i++) {
+			if (str[i] == ',') {
+				if (buf.empty()) buf += '_';
+				vstr.push_back(buf);
+				buf.clear();
+			}
+			else buf += str[i];
 		}
-		else if (word == "-m") {
-			ParsedCmd.midNumFlag = true;
-			ParsedCmd.monthFlag = true;
-		}
-		else if (word == "-y") ParsedCmd.yearFlag = true;
-		else if (word == "-d") ParsedCmd.dateFlag = true;
-		else if (word == " ") {
-			;
-		}
-		else {
-			ParsedCmd.strs.push_back(word);
-			if (word == "name") ParsedCmd.lastNumFlag = false;
-			else if (word == "phoneNum") ParsedCmd.lastNameFlag = false;
+		if (buf.empty() == false) vstr.push_back(buf);
+		return vstr;
+	}
 
-			if (word == "phoneNum") ParsedCmd.monthFlag = false;
-			else if (word == "birthday") ParsedCmd.midNumFlag = false;
+	void setFlagCmd(vector<string> strs, ParsedCmd* parcedCmd) {
+		string cmd = strs.at(0);
+		if (cmd == "ADD") parcedCmd->cmd = CmdType::ADD;
+		else if (cmd == "DEL") parcedCmd->cmd = CmdType::DEL;
+		else if (cmd == "MOD") parcedCmd->cmd = CmdType::MOD;
+		else if (cmd == "SCH") parcedCmd->cmd = CmdType::SCH;
+	}
+
+	void setFlagOpt(vector<string> strs, ParsedCmd* parcedCmd) {
+		string opt = strs.at(1);
+		if (opt == "-p") parcedCmd->printFlag = true;
+
+		opt = strs.at(2);
+		string word = strs.at(4);
+		if (word == "name") {
+			if (opt == "-f") parcedCmd->firstNameFlag = true;
+			else if (opt == "-l") parcedCmd->lastNameFlag = true;
 		}
+		else if (word == "phoneNum") {
+			if (opt == "-m") parcedCmd->midNumFlag = true;
+			else if (opt == "-l") parcedCmd->lastNumFlag = true;
+		}
+		else if (word == "birthday") {
+			if (opt == "-y") parcedCmd->yearFlag = true;
+			else if (opt == "-m") parcedCmd->monthFlag = true;
+			else if (opt == "-d") parcedCmd->dateFlag = true;
+		}
+	}
+
+	ParsedCmd getParsedCmd(vector<string> strs) {
+		ParsedCmd cmd;
+		setFlagCmd(strs, &cmd);
+		setFlagOpt(strs, &cmd);
+		for (int i = 4; i < strs.size(); i++) {
+			cmd.strs.push_back(strs.at(i));
+		}
+		return cmd;
 	}
 };
 
