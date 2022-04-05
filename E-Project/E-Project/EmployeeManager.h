@@ -5,10 +5,16 @@
 #include "searchCommand.h"
 #include "modifyCommand.h"
 
+const int MAX_NUM_OF_CMD = 5;
+
 class EmployeeManager {
 public:
 	EmployeeManager() {
 		io = new IoManager();
+		registerCmd(CmdType::ADD, &add);
+		registerCmd(CmdType::DEL, &del);
+		registerCmd(CmdType::SCH, &sch);
+		registerCmd(CmdType::MOD, &mod);
 	}
 
 	~EmployeeManager() {
@@ -31,32 +37,22 @@ public:
 				if (io->isValid(buf) == false) break;
 
 				ParsedCmd ParsedCmd = io->getParsedCmd(buf);
-				switch (ParsedCmd.cmd) {
-				case CmdType::ADD:
-					command = &add;
-					break;				
-				case CmdType::DEL:
-					command = &del;
-					break;				
-				case CmdType::SCH:
-					command = &sch;
-					break;				
-				case CmdType::MOD:
-					command = &mod;
-					break;
-				}
 
-				string result = "";
-				if (command->checkCommandIsValid(DB, ParsedCmd))
-					result = command->processCommand(DB, ParsedCmd);
+				string result;
+				result = command[(int)ParsedCmd.cmd]->processCommand(DB, ParsedCmd);
 				if (!result.empty()) io->printStringToFile(result);
 			}
 		}
 	}
 
 private:
+	void registerCmd(CmdType cmdType, Command* cmd)
+	{
+		command[(int)cmdType] = cmd;
+	}
+
 	IoManager* io = nullptr;
-	Command* command = nullptr;
+	Command* command[MAX_NUM_OF_CMD];
 	datamanager DB;
 
 	addCommand add;
