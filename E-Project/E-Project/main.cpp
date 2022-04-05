@@ -1,7 +1,5 @@
 ﻿#include "EmployeeManager.h"
 
-using namespace std;
-
 int main(int argc, char* argv[])
 {
     EmployeeManager* employeeManager = new EmployeeManager();
