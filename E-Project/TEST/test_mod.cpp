@@ -68,7 +68,6 @@ TEST_F(ModTest, mod_with_birthday_none_none) {
     EXPECT_EQ(result, "MOD,2\n");
 
     result = modCmd.processCommand(DB, ParcedCmd{ CmdType::MOD,false,false,false,false,false,false,false,false,{"name", "NICE JIN", "birthday", "19990208"} });
-
     EXPECT_EQ(result, "MOD,1\n");
 }
 
