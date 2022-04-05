@@ -5,6 +5,11 @@
 #include "resultprinter.h"
 #include "datamanager.h"
 
+const int findColumn = 0;
+const int findValue = 1;
+const int targetColumn = 2;
+const int targetValue = 3;
+
 class Command
 {
 public:

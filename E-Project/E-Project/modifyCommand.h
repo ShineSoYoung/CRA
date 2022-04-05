@@ -4,11 +4,6 @@
 #include "commandClassType.h"
 #include "command.h"
 
-const int findColumn = 0;
-const int findValue = 1;
-const int targetColumn = 2;
-const int targetValue = 3;
-
 class modifyCommand : public OptionalCommand
 {
 public:

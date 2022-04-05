@@ -9,7 +9,7 @@ class deleteCommand : public OptionalCommand
 public:
     virtual string processCommand(datamanager& DB, const CmdParam command) override
     {
-        vector<Employee*> findArray = DB.search_data(command.strs[0], command.strs[1], makeOptionList(command));
+        vector<Employee*> findArray = DB.search_data(command.strs[findColumn], command.strs[findValue], makeOptionList(command));
         selectPrinter(findArray, command.printFlag);
         string result = printer->printFinalResult("DEL,", findArray);
         DB.delete_data(findArray);
