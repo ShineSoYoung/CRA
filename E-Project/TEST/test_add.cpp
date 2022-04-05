@@ -3,6 +3,7 @@
 #include "../E-Project/searchCommand.h"
 #include "../E-Project/addCommand.h"
 #include "../E-Project/ioManager.h"
+#include "../E-Project/EmployeeManager.h"
 
 class AddTest : public ::testing::Test
 {
@@ -13,10 +14,10 @@ protected:
     }
     virtual void TearDown() override
     {
-        delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,15120999"));
-        delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,17112609"));
-        delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,18115050"));
-        delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,88114052"));
+        delCmd.processCommand(DB, parser.parse("DEL, , , ,cl,CL1"));
+        delCmd.processCommand(DB, parser.parse("DEL, , , ,cl,CL2"));
+        delCmd.processCommand(DB, parser.parse("DEL, , , ,cl,CL3"));
+        delCmd.processCommand(DB, parser.parse("DEL, , , ,cl,CL4"));
     }
 
     Parser parser;
@@ -61,3 +62,101 @@ TEST_F(AddTest, NullAddCase) {
     EXPECT_EQ(addCmd.checkCommandIsValid(DB, parser.parse("ADD, , , ,17111236,VSID TVO,CL1,010-3669-1077,20120718,")), false);
     EXPECT_EQ(schCmd.processCommand(DB, parser.parse("SCH, , , ,employeeNum,17111236")), "SCH,NONE\n");
 }
+
+class AddSampleSizeTest : public ::testing::Test
+{
+public:
+protected:
+    
+    virtual void SetUp() override
+    {
+        DB = new datamanager();
+    }
+    virtual void TearDown() override
+    {
+        inputFile.close();
+        delete DB;
+    }
+
+    void openInputFile(string inputFileName)
+    {
+        inputFile.open(inputFileName);
+        if (!inputFile.is_open()) {
+            cout << "file open fail" << endl;
+        }
+    }
+
+    int addDataInDB(void) 
+    {
+        int cnt = 0;
+
+        while (!inputFile.eof()) {
+            char buf[256] = { 0, };
+            inputFile.getline(buf, 256);
+            if (vlid.isValid(buf) == false) break;
+
+            ParsedCmd = parser.parse(buf);
+            string result = addCmd.processCommand(*DB, ParsedCmd);
+
+            if (result == "FAIL")
+                return -1;
+
+            cnt++;
+        }
+        return cnt;
+    }
+
+    ifstream inputFile;
+    Validator vlid;
+    Parser parser;
+    datamanager *DB;
+    addCommand addCmd;
+    searchCommand schCmd;
+    deleteCommand delCmd;
+    ParsedCmd ParsedCmd;
+};
+
+TEST_F(AddSampleSizeTest, SampleSize100) {
+
+    openInputFile("SampleSize100_input.txt");
+    int result = addDataInDB();
+    EXPECT_EQ(result, 100);
+}
+
+TEST_F(AddSampleSizeTest, SampleSize150) {
+
+    openInputFile("SampleSize150_input.txt");
+    int result = addDataInDB();
+    EXPECT_EQ(result, 150);
+}
+
+TEST_F(AddSampleSizeTest, SampleSize200) {
+
+    openInputFile("SampleSize200_input.txt");
+    int result = addDataInDB();
+    EXPECT_EQ(result, 200);
+}
+
+#if 0
+TEST_F(AddSampleSizeTest, SampleSize1000) {
+    openInputFile("SampleSize1000_input.txt");
+    int result = addDataInDB();
+    EXPECT_EQ(result, 1000);
+}
+#endif
+
+#if 0
+TEST_F(AddSampleSizeTest, SampleSize10000) {
+    openInputFile("SampleSize10000_input.txt");
+    int result = addDataInDB();
+    EXPECT_EQ(result, 10000);
+}
+#endif
+
+#if 0
+TEST_F(AddSampleSizeTest, SampleSize100000) {
+    openInputFile("SampleSize100000_input.txt");
+    int result = addDataInDB();
+    EXPECT_EQ(result, 100000);
+}
+#endif
