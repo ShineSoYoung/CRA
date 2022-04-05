@@ -14,6 +14,16 @@ enum class CmdType {
     MOD,
 };
 
+enum class EmInfo {
+
+    EMPLOYEE_NUM = 0,
+    NAME,
+    CARRER_LEVEL,
+    PHONE_NUM,
+    BIRTH_DAY,
+    CERTI
+};
+
 class CmdParam {
 public:
     CmdParam() {

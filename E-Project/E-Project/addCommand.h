@@ -13,7 +13,7 @@ public:
     virtual string processCommand(datamanager& DB, CmdParam command) override
     {
         if ((isValidAddCmd(command) == true) &&
-            (isSameEmployeeNum(DB, command.strs[0]) == false))
+            (isSameEmployeeNum(DB, command.strs[static_cast<int>(EmInfo::EMPLOYEE_NUM)]) == false))
             addData(DB, command);        
         return "";
     }
@@ -48,12 +48,12 @@ private:
     void addData(datamanager& DB, CmdParam command)
     {
         Employee e;
-        e.employeeNum = command.strs[0];
-        e.name = command.strs[1];
-        e.cl = command.strs[2];
-        e.phoneNum = command.strs[3];
-        e.birthday = command.strs[4];
-        e.certi = command.strs[5];
+        e.employeeNum = command.strs[static_cast<int>(EmInfo::EMPLOYEE_NUM)];
+        e.name = command.strs[static_cast<int>(EmInfo::NAME)];
+        e.cl = command.strs[static_cast<int>(EmInfo::CARRER_LEVEL)];
+        e.phoneNum = command.strs[static_cast<int>(EmInfo::PHONE_NUM)];
+        e.birthday = command.strs[static_cast<int>(EmInfo::BIRTH_DAY)];
+        e.certi = command.strs[static_cast<int>(EmInfo::CERTI)];
 
         DB.add_data(e);
     }

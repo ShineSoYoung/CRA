@@ -11,16 +11,6 @@
 const int MINIMUM_ENTRY_COUNT = 100000;
 const int EXTRA_ROOM_ENTRY_COUNT = 50000;
 
-enum class EmInfo{
-
-    EMPLOYEE_NUM = 0,
-    NAME,
-    CARRER_LEVEL,
-    PHONE_NUM,
-    BIRTH_DAY,
-    CERTI
-};
-
 class datamanager
 {
 public:
