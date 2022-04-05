@@ -22,7 +22,7 @@ public:
 private:
 
     bool isValidModCmd(const ParsedCmd command) {
-        if (command.strs[findColumn] == "employeeNum")
+        if (command.strs[targetColumn] == "employeeNum")
             return false;
 
         return true;
