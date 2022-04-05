@@ -7,7 +7,7 @@
 using namespace std;
 
 enum class CmdType {
-    UNKHOWN,
+    UNKNOWN,
     ADD,
     DEL,
     SCH,
@@ -38,7 +38,7 @@ struct optionList
 class ParsedCmd {
 public:
     ParsedCmd() {
-        cmd = CmdType::UNKHOWN;
+        cmd = CmdType::UNKNOWN;
         printFlag = false;
         firstNameFlag = false;
         lastNameFlag = false;
