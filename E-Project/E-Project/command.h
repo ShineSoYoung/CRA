@@ -37,17 +37,17 @@ protected:
         else printer = new defaultResultPrinter();
     }
 
-    vector<bool> makeOptionList(const ParsedCmd command)
+    optionList makeOptionList(const ParsedCmd command)
     {
-        vector<bool> optionlist;
-        optionlist.push_back(command.firstNameFlag);
-        optionlist.push_back(command.lastNameFlag);
-        optionlist.push_back(command.midNumFlag);
-        optionlist.push_back(command.lastNumFlag);
-        optionlist.push_back(command.yearFlag);
-        optionlist.push_back(command.monthFlag);
-        optionlist.push_back(command.dateFlag);
-        return optionlist;
+        optionList list;
+        list.searchforFirstName = command.firstNameFlag;
+        list.searchforLastName = command.lastNameFlag;
+        list.searchforMiddlePhoneNumber = command.midNumFlag;
+        list.searchforLastPhoneNumber = command.lastNumFlag;
+        list.searchforBirthdayYear = command.yearFlag;
+        list.searchforBirthdayMonth = command.monthFlag;
+        list.searchforBirthdayDay = command.dateFlag;
+        return list;
     }
 
     void releasePrinter()

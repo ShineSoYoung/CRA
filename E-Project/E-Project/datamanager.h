@@ -32,7 +32,7 @@ public:
 
         employeeList.push_back(e);
     }
-    vector<Employee*> search_data(const string column, const string value, vector<bool> optionlist)
+    vector<Employee*> search_data(const string column, const string value, const optionList optionlist)
     {
         return searchengine.search(employeeList, column, value, optionlist);
     }
