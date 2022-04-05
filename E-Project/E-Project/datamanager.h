@@ -12,7 +12,6 @@ typedef unordered_multimap<string, Employee*> EmployeeHashMap;
 typedef pair<EmployeeHashMap::iterator, EmployeeHashMap::iterator> EmployeeRange;
 
 const int MINIMUM_ENTRY_COUNT = 100000;
-const int EXTRA_ROOM_ENTRY_COUNT = 50000;
 
 const int BIRTHDAY_YEAR_OFFSET = 0;
 const int BIRTHDAY_YEAR_LENGTH = 4;
@@ -32,6 +31,19 @@ public:
     datamanager()
     {
         employeeList.reserve(MINIMUM_ENTRY_COUNT);
+        employeeNumberHashMap.reserve(MINIMUM_ENTRY_COUNT);
+        NameHashMap.reserve(MINIMUM_ENTRY_COUNT);
+        FirstNameHashMap.reserve(MINIMUM_ENTRY_COUNT);
+        LastNameHashMap.reserve(MINIMUM_ENTRY_COUNT);
+        CareerLevelHashMap.reserve(MINIMUM_ENTRY_COUNT);
+        PhoneNumberHashMap.reserve(MINIMUM_ENTRY_COUNT);
+        MiddlePhoneNumberHashMap.reserve(MINIMUM_ENTRY_COUNT);
+        LastPhoneNumberHashMap.reserve(MINIMUM_ENTRY_COUNT);
+        BirthdayHashMap.reserve(MINIMUM_ENTRY_COUNT);
+        BirthdayYearHashMap.reserve(MINIMUM_ENTRY_COUNT);
+        BirthdayMonthHashMap.reserve(MINIMUM_ENTRY_COUNT);
+        BirthdayDayHashMap.reserve(MINIMUM_ENTRY_COUNT);
+        CertiHashMap.reserve(MINIMUM_ENTRY_COUNT);
     }
 
     void add_data(const Employee em)
@@ -49,7 +61,7 @@ public:
     vector<Employee*> search_data(const string column, const string value, const optionList optionlist)
     {
         vector<Employee*> result;
-        EmployeeHashMap hashmap = selectHashMap(column, value, optionlist);
+        EmployeeHashMap& hashmap = selectHashMap(column, value, optionlist);
         EmployeeRange range = hashmap.equal_range(value);
         while (range.first != range.second)
         {
