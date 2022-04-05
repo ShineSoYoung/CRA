@@ -46,32 +46,32 @@ private:
 		return vstr;
 	}
 
-	void setFlagCmd(vector<string> strs, ParsedCmd* parcedCmd) {
+	void setFlagCmd(vector<string> strs, ParsedCmd* parsedCmd) {
 		string cmd = strs.at(0);
-		if (cmd == "ADD") parcedCmd->cmd = CmdType::ADD;
-		else if (cmd == "DEL") parcedCmd->cmd = CmdType::DEL;
-		else if (cmd == "MOD") parcedCmd->cmd = CmdType::MOD;
-		else if (cmd == "SCH") parcedCmd->cmd = CmdType::SCH;
+		if (cmd == "ADD") parsedCmd->cmd = CmdType::ADD;
+		else if (cmd == "DEL") parsedCmd->cmd = CmdType::DEL;
+		else if (cmd == "MOD") parsedCmd->cmd = CmdType::MOD;
+		else if (cmd == "SCH") parsedCmd->cmd = CmdType::SCH;
 	}
 
-	void setFlagOpt(vector<string> strs, ParsedCmd* parcedCmd) {
+	void setFlagOpt(vector<string> strs, ParsedCmd* parsedCmd) {
 		string opt = strs.at(1);
-		if (opt == "-p") parcedCmd->printFlag = true;
+		if (opt == "-p") parsedCmd->printFlag = true;
 
 		opt = strs.at(2);
 		string word = strs.at(4);
 		if (word == "name") {
-			if (opt == "-f") parcedCmd->firstNameFlag = true;
-			else if (opt == "-l") parcedCmd->lastNameFlag = true;
+			if (opt == "-f") parsedCmd->firstNameFlag = true;
+			else if (opt == "-l") parsedCmd->lastNameFlag = true;
 		}
 		else if (word == "phoneNum") {
-			if (opt == "-m") parcedCmd->midNumFlag = true;
-			else if (opt == "-l") parcedCmd->lastNumFlag = true;
+			if (opt == "-m") parsedCmd->midNumFlag = true;
+			else if (opt == "-l") parsedCmd->lastNumFlag = true;
 		}
 		else if (word == "birthday") {
-			if (opt == "-y") parcedCmd->yearFlag = true;
-			else if (opt == "-m") parcedCmd->monthFlag = true;
-			else if (opt == "-d") parcedCmd->dateFlag = true;
+			if (opt == "-y") parsedCmd->yearFlag = true;
+			else if (opt == "-m") parsedCmd->monthFlag = true;
+			else if (opt == "-d") parsedCmd->dateFlag = true;
 		}
 	}
 
