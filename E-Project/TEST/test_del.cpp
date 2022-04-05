@@ -233,7 +233,7 @@ protected:
         for (int i = 0; i < 24; i++)
         {
             string command = entry + to_string(i + base) + "\n";
-            strcpy(buf, command.c_str());
+            strcpy_s(buf, command.c_str());
             delCmd.processCommand(DB, parser.parse(buf));
         }
     }

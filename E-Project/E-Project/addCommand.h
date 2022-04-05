@@ -10,7 +10,7 @@ const int validStringNum = 6;
 class addCommand : public NoneOptionalCommand
 {
 public:
-    virtual string processCommand(datamanager& DB, CmdParam command) override
+    virtual string processCommand(datamanager& DB, const CmdParam command) override
     {
         if ((isValidAddCmd(command) == true) &&
             (isSameEmployeeNum(DB, command.strs[static_cast<int>(EmInfo::EMPLOYEE_NUM)]) == false))

@@ -4,18 +4,23 @@
 #include "commandClassType.h"
 #include "command.h"
 
+const int findColumn = 0;
+const int findValue = 1;
+const int targetColumn = 2;
+const int targetValue = 3;
+
 class modifyCommand : public OptionalCommand
 {
 public:
-    virtual string processCommand(datamanager& DB, CmdParam command) override
+    virtual string processCommand(datamanager& DB, const CmdParam command) override
     {
-        if (isValidModCmd(command) == false)
-            return "FAIL";
+        if (isValidModCmd(command) == false) 
+            return "";
 
-        vector<Employee*> findArray = DB.search_data(command.strs[0], command.strs[1], makeOptionList(command));
+        vector<Employee*> findArray = DB.search_data(command.strs[findColumn], command.strs[findValue], makeOptionList(command));
         selectPrinter(findArray, command.printFlag);
         string result = printer->printFinalResult("MOD,", findArray);
-        DB.modify_data(findArray, command.strs[2], command.strs[3]);
+        DB.modify_data(findArray, command.strs[targetColumn], command.strs[targetValue]);
         releasePrinter();
         return result;
     }
@@ -23,7 +28,7 @@ public:
 private:
 
     bool isValidModCmd(CmdParam command) {
-        if (command.strs[2] == "employeeNum")
+        if (command.strs[targetColumn] == "employeeNum")
             return false;
 
         return true;

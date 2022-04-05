@@ -9,7 +9,7 @@ class Command
 {
 public:
     Command() {}
-    virtual string processCommand(datamanager& DB, CmdParam command) = 0;
+    virtual string processCommand(datamanager& DB, const CmdParam command) = 0;
 protected:
 
 };
