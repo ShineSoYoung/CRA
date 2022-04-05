@@ -32,9 +32,9 @@ public:
 protected:
     void selectPrinter(vector<Employee*> findArray, bool printoption)
     {
-        if (findArray.size() == 0) printer = new noResultPrinter();
-        else if (printoption) printer = new detailResultPrinter();
-        else printer = new defaultResultPrinter();
+        if (findArray.size() == 0) printer = &noPrinter;
+        else if (printoption) printer = &detailPrinter;
+        else printer = &defaultPrinter;
     }
 
     optionList makeOptionList(const ParsedCmd command)
@@ -50,13 +50,11 @@ protected:
         return list;
     }
 
-    void releasePrinter()
-    {
-        delete printer;
-    }
-
     resultPrinter* printer;
 
+    noResultPrinter noPrinter;
+    detailResultPrinter detailPrinter;
+    defaultResultPrinter defaultPrinter;
 };
 
 #endif

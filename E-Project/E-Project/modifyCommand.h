@@ -16,14 +16,13 @@ public:
         selectPrinter(findArray, command.printFlag);
         string result = printer->printFinalResult("MOD,", findArray);
         DB.modify_data(findArray, command.strs[targetColumn], command.strs[targetValue]);
-        releasePrinter();
         return result;
     }
 
 private:
 
     bool isValidModCmd(const ParsedCmd command) {
-        if (command.strs[2] == "employeeNum")
+        if (command.strs[findColumn] == "employeeNum")
             return false;
 
         return true;

@@ -17,7 +17,6 @@ public:
         {
             if (compare->isSatifiedEntry(em, value)) findArray.push_back(em);
         }
-        releaseCompareMachine();
         return findArray;
     }
 private:
@@ -25,73 +24,87 @@ private:
     {
         if ("employeeNum" == column)
         {
-            compare = new ComparemachineWithEmployeeNumber();
+            compare = &employeeCompareMachine;
         }
         else if ("name" == column)
         {
             if (optionlist.searchforFirstName)
             {
-                compare = new ComparemachineWithFirstName();
+                compare = &firstNameComparemachine;
             }
             else if (optionlist.searchforLastName)
             {
-                compare = new ComparemachineWithLastName();
+                compare = &lastNameComparemachine;
             }
             else
             {
-                compare = new ComparemachineWithName();
+                compare = &nameComparemachine;
             }
         }
         else if ("cl" == column)
         {
-            compare = new ComparemachineWithCL();
+            compare = &careerLevelComparemachine;
         }
         else if ("phoneNum" == column)
         {
             if (optionlist.searchforMiddlePhoneNumber)
             {
-                compare = new ComparemachineWithPhoneNumberOnlyMiddle();
+                compare = &middlePhoneNumberComparemachine;
             }
             else if (optionlist.searchforLastPhoneNumber)
             {
-                compare = new ComparemachineWithPhoneNumberOnlyLast();
+                compare = &lastPhoneNumberComparemachine;
             }
             else
             {
-                compare = new ComparemachineWithPhoneNumber();
+                compare = &phoneNumberComparemachine;
             }
         }
         else if ("birthday" == column)
         {
             if (optionlist.searchforBirthdayYear)
             {
-                compare = new ComparemachineWithBirthdayOnlyYear();
+                compare = &birthdayYearComparemachine;
             }
             else if (optionlist.searchforBirthdayMonth)
             {
-                compare = new ComparemachineWithBirthdayOnlyMonth();
+                compare = &birthdayMonthComparemachine;
             }
             else if (optionlist.searchforBirthdayDay)
             {
-                compare = new ComparemachineWithBirthdayOnlyDay();
+                compare = &birthdayDayComparemachine;
             }
             else
             {
-                compare = new ComparemachineWithBirthday();
+                compare = &birthdayComparemachine;
             }
         }
         else if ("certi" == column)
         {
-            compare = new ComparemachineWithCerti();
+            compare = &certiComparemachine;
         }
     }
 
-    void releaseCompareMachine()
-    {
-        delete compare;
-    }
-
     Comparemachine* compare;
+
+    EmployeeNumberComparemachine employeeCompareMachine;
+
+    NameComparemachine nameComparemachine;
+    FirstNameComparemachine firstNameComparemachine;
+    LastNameComparemachine lastNameComparemachine;
+
+    CareerLevelComparemachine careerLevelComparemachine;
+
+    PhoneNumberComparemachine phoneNumberComparemachine;
+    MiddlePhoneNumberComparemachine middlePhoneNumberComparemachine;
+    LastPhoneNumberComparemachine lastPhoneNumberComparemachine;
+
+    BirthdayComparemachine birthdayComparemachine;
+    BirthdayYearComparemachine birthdayYearComparemachine;
+    BirthdayMonthComparemachine birthdayMonthComparemachine;
+    BirthdayDayComparemachine birthdayDayComparemachine;
+
+    CertiComparemachine certiComparemachine;
 };
 
 #endif
