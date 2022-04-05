@@ -9,7 +9,7 @@
 class searchEngine
 {
 public:
-    vector<Employee*> search(vector<Employee*> list, string column, string value, vector<bool> optionlist)
+    vector<Employee*> search(vector<Employee*> list, string column, string value, const optionList optionlist)
     {
         selectCompareMachine(column, optionlist);
         vector<Employee*> findArray;
@@ -17,81 +17,94 @@ public:
         {
             if (compare->isSatifiedEntry(em, value)) findArray.push_back(em);
         }
-        releaseCompareMachine();
         return findArray;
     }
 private:
-    void selectCompareMachine(string column, vector<bool>  optionlist)
+    void selectCompareMachine(string column, const optionList optionlist)
     {
         if ("employeeNum" == column)
         {
-            compare = new ComparemachineWithEmployeeNumber();
+            compare = &employeeCompareMachine;
         }
         else if ("name" == column)
         {
-            if (optionlist[0])
+            if (optionlist.searchforFirstName)
             {
-                compare = new ComparemachineWithFirstName();
+                compare = &firstNameComparemachine;
             }
-            else if (optionlist[1])
+            else if (optionlist.searchforLastName)
             {
-                compare = new ComparemachineWithLastName();
+                compare = &lastNameComparemachine;
             }
             else
             {
-                compare = new ComparemachineWithName();
+                compare = &nameComparemachine;
             }
         }
         else if ("cl" == column)
         {
-            compare = new ComparemachineWithCL();
+            compare = &careerLevelComparemachine;
         }
         else if ("phoneNum" == column)
         {
-            if (optionlist[2])
+            if (optionlist.searchforMiddlePhoneNumber)
             {
-                compare = new ComparemachineWithPhoneNumberOnlyMiddle();
+                compare = &middlePhoneNumberComparemachine;
             }
-            else if (optionlist[3])
+            else if (optionlist.searchforLastPhoneNumber)
             {
-                compare = new ComparemachineWithPhoneNumberOnlyLast();
+                compare = &lastPhoneNumberComparemachine;
             }
             else
             {
-                compare = new ComparemachineWithPhoneNumber();
+                compare = &phoneNumberComparemachine;
             }
         }
         else if ("birthday" == column)
         {
-            if (optionlist[4])
+            if (optionlist.searchforBirthdayYear)
             {
-                compare = new ComparemachineWithBirthdayOnlyYear();
+                compare = &birthdayYearComparemachine;
             }
-            else if (optionlist[5])
+            else if (optionlist.searchforBirthdayMonth)
             {
-                compare = new ComparemachineWithBirthdayOnlyMonth();
+                compare = &birthdayMonthComparemachine;
             }
-            else if (optionlist[6])
+            else if (optionlist.searchforBirthdayDay)
             {
-                compare = new ComparemachineWithBirthdayOnlyDay();
+                compare = &birthdayDayComparemachine;
             }
             else
             {
-                compare = new ComparemachineWithBirthday();
+                compare = &birthdayComparemachine;
             }
         }
         else if ("certi" == column)
         {
-            compare = new ComparemachineWithCerti();
+            compare = &certiComparemachine;
         }
     }
 
-    void releaseCompareMachine()
-    {
-        delete compare;
-    }
-
     Comparemachine* compare;
+
+    EmployeeNumberComparemachine employeeCompareMachine;
+
+    NameComparemachine nameComparemachine;
+    FirstNameComparemachine firstNameComparemachine;
+    LastNameComparemachine lastNameComparemachine;
+
+    CareerLevelComparemachine careerLevelComparemachine;
+
+    PhoneNumberComparemachine phoneNumberComparemachine;
+    MiddlePhoneNumberComparemachine middlePhoneNumberComparemachine;
+    LastPhoneNumberComparemachine lastPhoneNumberComparemachine;
+
+    BirthdayComparemachine birthdayComparemachine;
+    BirthdayYearComparemachine birthdayYearComparemachine;
+    BirthdayMonthComparemachine birthdayMonthComparemachine;
+    BirthdayDayComparemachine birthdayDayComparemachine;
+
+    CertiComparemachine certiComparemachine;
 };
 
 #endif

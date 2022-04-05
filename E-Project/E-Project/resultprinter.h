@@ -6,6 +6,9 @@
 #include <algorithm>
 
 const int MAX_NUM_OF_PRINT_ENTRY = 5;
+const int ENUM_OFFSET = 31;
+const int ENUM_CYCLE = 100;
+#define ENUM_ORDER(x) ((x + ENUM_OFFSET) % ENUM_CYCLE)
 
 class resultPrinter
 {
@@ -31,21 +34,7 @@ public:
     virtual string printFinalResult(string cmd, vector<Employee*> findArray) override
     {
         string result = "";
-        auto compareEmployeeNum = [](const Employee * e1, const Employee * e2)
-        {
-            string s1 = e1->employeeNum;
-            string s2 = e2->employeeNum;
-
-            int num1 = stoi(s1.substr(0, 2));
-            int num2 = stoi(s2.substr(0, 2));
-
-            if (num1 == num2)
-                return s1 < s2;
-            else
-                return ((num1 + 100 - 69) % 100) < ((num2 + 100 - 69) % 100);
-        };
-
-        std::sort(findArray.begin(), findArray.end(), compareEmployeeNum);
+        sortResult(findArray);
 
         for (int index = 0; index < MAX_NUM_OF_PRINT_ENTRY && index < findArray.size(); index++)
         {
@@ -58,6 +47,23 @@ public:
         return result;
     }
 private:
+
+    void sortResult(vector<Employee*>& findArray)
+    {
+        auto compareEmployeeNum = [](const Employee* e1, const Employee* e2)
+        {
+            int num1 = stoi(e1->employeeNum.substr(0, 2));
+            int num2 = stoi(e2->employeeNum.substr(0, 2));
+
+            if (num1 == num2)
+                return e1->employeeNum < e2->employeeNum;
+
+            return ENUM_ORDER(num1) < ENUM_ORDER(num2);
+        };
+
+        std::sort(findArray.begin(), findArray.end(), compareEmployeeNum);
+    }
+
 };
 
 class noResultPrinter : public resultPrinter

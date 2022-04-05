@@ -13,7 +13,6 @@ public:
         selectPrinter(findArray, command.printFlag);
         string result = printer->printFinalResult("DEL,", findArray);
         DB.delete_data(findArray);
-        releasePrinter();
         return result;
     }
 

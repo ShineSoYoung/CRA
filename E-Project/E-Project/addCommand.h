@@ -20,27 +20,25 @@ public:
 private:
 
     bool isValidAddCmd(const ParsedCmd command) {
-        int idx = 0;
-        for (int i = 0; i < command.strs.size(); i++) {
-
-            if (command.strs[i] == "") { //null 정보
+        if (command.strs.size() != validStringNum)
+            return false;
+        for (string data : command.strs) {
+            if (true == isEmptyData(data)) {
                 return false;
             }
-            else {
-                idx++;
-            }
-        }
-
-        if (idx != validStringNum) {
-            return false;
         }
 
         return true;
     }
 
+    bool isEmptyData(string data)
+    {
+        return data == "";
+    }
+
     bool isSameEmployeeNum(datamanager& DB, string employeeNum)
     {
-        vector<bool> dummyOptionList;
+        optionList dummyOptionList = {false, false, false, false, false, false, false};
         vector<Employee*> findArray = DB.search_data("employeeNum", employeeNum, dummyOptionList);
         return (0 < findArray.size());
     }

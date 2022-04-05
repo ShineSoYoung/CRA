@@ -12,7 +12,6 @@ public:
         vector<Employee*> findArray = DB.search_data(command.strs[findColumn], command.strs[findValue], makeOptionList(command));
         selectPrinter(findArray, command.printFlag);
         string result = printer->printFinalResult("SCH,", findArray);
-        releasePrinter();
         return result;
     }
 

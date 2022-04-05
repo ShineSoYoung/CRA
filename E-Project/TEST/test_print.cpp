@@ -1,5 +1,4 @@
-﻿
-#include "pch.h"
+﻿#include "gtest/gtest.h"
 #include "../E-Project/deleteCommand.h"
 #include "../E-Project/addCommand.h"
 #include "../E-Project/modifyCommand.h"
@@ -36,46 +35,34 @@ protected:
         delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,08123556"));
         delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,02117175"));
         delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,03113260"));
-        delete default_print;
-        delete detail_print;
-        delete no_print;
+
     }
 
     datamanager DB;
     Parser parser;
     addCommand addCmd;
     deleteCommand delCmd;
-    resultPrinter* default_print = new defaultResultPrinter();
-    resultPrinter* detail_print = new detailResultPrinter();
-    resultPrinter* no_print = new noResultPrinter();
+    searchCommand schCmd;
 
 };
 
-// list 접근 불가에 따른 변경 필요
-/*
 TEST_F(PrintTest, DefaultPrintCase) {
-
-    EXPECT_EQ(default_print->printFinalResult("MOD,", list), "MOD,10\n");
-    EXPECT_EQ(default_print->printFinalResult("SCH,", list), "SCH,10\n");
-    EXPECT_EQ(default_print->printFinalResult("DEL,", list), "DEL,10\n");
-}
-
-TEST_F(PrintTest, DetailPrintCase) {
-
-    string str = "";
-    str += "MOD,88114052,NQ LVARW,CL4,010-4528-3059,19911021,PRO\n";
-    str += "MOD,02117175,SBILHUT LDEXRI,CL4,010-2814-1699,19950704,ADV\n";
-    str += "MOD,03113260,HH LTUPF,CL2,010-5798-5383,19791018,PRO\n";
-    str += "MOD,08123556,WN XV,CL1,010-7986-5047,20100614,PRO\n";
-    str += "MOD,15123099,VXIHXOTHJHOP,CL3,010-3112-2609,19771211,ADV\n";
-
-    EXPECT_EQ(detail_print->printFinalResult("MOD,", list), str);
+    string result;
+    result = schCmd.processCommand(DB, ParsedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"cl","CL1"} });
+    EXPECT_EQ(result, "SCH,2\n");
 }
 
 TEST_F(PrintTest, NonePrintCase) {
-
-    EXPECT_EQ(no_print->printFinalResult("MOD,", list), "MOD,NONE\n");
-    EXPECT_EQ(no_print->printFinalResult("SCH,", list), "SCH,NONE\n");
-    EXPECT_EQ(no_print->printFinalResult("DEL,", list), "DEL,NONE\n");
+    string result;
+    result = schCmd.processCommand(DB, ParsedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"phoneNum","1111"} });
+    EXPECT_EQ(result, "SCH,NONE\n");
 }
-*/
+
+TEST_F(PrintTest, DetailPrintCase) {
+    string result, answer = "";
+    result = schCmd.processCommand(DB, ParsedCmd{ CmdType::SCH,true,false,false,false,false,false,false,false,{"cl","CL1"} });
+    answer = "SCH,08123556,WN XV,CL1,010-7986-5047,20100614,PRO\n";
+    answer += "SCH,17111236,VSID TVO,CL1,010-3669-1077,20120718,PRO\n";
+    EXPECT_EQ(result, answer);
+
+}

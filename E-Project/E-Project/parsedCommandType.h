@@ -24,6 +24,17 @@ enum class EmInfo {
     CERTI
 };
 
+struct optionList
+{
+    bool searchforFirstName;
+    bool searchforLastName;
+    bool searchforMiddlePhoneNumber;
+    bool searchforLastPhoneNumber;
+    bool searchforBirthdayYear;
+    bool searchforBirthdayMonth;
+    bool searchforBirthdayDay;
+};
+
 class ParsedCmd {
 public:
     ParsedCmd() {
