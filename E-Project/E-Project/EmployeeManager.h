@@ -12,9 +12,9 @@ public:
 	EmployeeManager() {
 		io = new IoManager();
 		registerCmd(CmdType::ADD, &add);
-		registerCmd(CmdType::DEL, &add);
-		registerCmd(CmdType::SCH, &add);
-		registerCmd(CmdType::MOD, &add);
+		registerCmd(CmdType::DEL, &del);
+		registerCmd(CmdType::SCH, &sch);
+		registerCmd(CmdType::MOD, &mod);
 	}
 
 	~EmployeeManager() {
