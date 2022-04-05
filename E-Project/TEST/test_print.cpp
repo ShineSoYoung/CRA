@@ -6,23 +6,6 @@
 #include "../E-Project/datamanager.h"
 #include "../E-Project/ioManager.h"
 
-TEST(IO_Test, InputTest_getParsedCmd) {
-    ParsedCmd cmd;
-    ParsedCmd fake;
-    Parser parser;
-    vector<string> strs;
-    cmd = parser.parse("ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV");
-    strs.push_back("15123099");
-    strs.push_back("VXIHXOTH JHOP");
-    strs.push_back("CL3");
-    strs.push_back("010-3112-2609");
-    strs.push_back("19771211");
-    strs.push_back("ADV");
-    fake = { CmdType::ADD, false, false, false, false, false, false, false, false, strs };
-    EXPECT_EQ(true, (cmd == fake));
-}
-
-
 class PrintTest : public ::testing::Test
 {
 public:
