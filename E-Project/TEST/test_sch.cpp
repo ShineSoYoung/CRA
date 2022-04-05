@@ -17,7 +17,6 @@ protected:
         addCmd.processCommand(DB, parser.parse("ADD, , , ,17000002,홍 길순,CL2,010-1111-2244,19900306,ADV"));
         addCmd.processCommand(DB, parser.parse("ADD, , , ,17000054,APKEWER JAG,CL1,010-3333-2243,19670504,ADV"));
         addCmd.processCommand(DB, parser.parse("ADD, , , ,90020002,FDJKA GJKD,CL1,010-3333-2243,19780401,ADV"));
-        addCmd.processCommand(DB, parser.parse("ADD, , , ,17000002,ZXKWI QKW,CL1,010-3333-2243,19870426,ADV"));
         addCmd.processCommand(DB, parser.parse("ADD, , , ,01000002,DSKFDSK FDS,CL1,010-3333-2243,19890416,ADV"));
         addCmd.processCommand(DB, parser.parse("ADD, , , ,90000342,AGBDSFSD DS,CL1,010-3333-2243,19950416,ADV"));
         addCmd.processCommand(DB, parser.parse("ADD, , , ,12000023,AS FDSFC,CL1,010-3333-2243,19970716,ADV"));
@@ -30,7 +29,6 @@ protected:
         delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,17000002"));
         delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,17000054"));
         delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,90020002"));
-        delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,17000002"));
         delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,01000002"));
         delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,90000342"));
         delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,12000023"));

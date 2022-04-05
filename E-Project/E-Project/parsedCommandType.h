@@ -115,6 +115,7 @@ struct Employee {
     string phoneNum; //전화번호
     string birthday; //생년월일
     string certi; //CERTI
+    bool deleted;
 };
 
 #endif

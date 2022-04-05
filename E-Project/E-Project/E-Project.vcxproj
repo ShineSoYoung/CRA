@@ -146,14 +146,12 @@
     <ClInclude Include="addCommand.h" />
     <ClInclude Include="command.h" />
     <ClInclude Include="parsedCommandType.h" />
-    <ClInclude Include="compareMachine.h" />
     <ClInclude Include="datamanager.h" />
     <ClInclude Include="deleteCommand.h" />
     <ClInclude Include="ioManager.h" />
     <ClInclude Include="modifyCommand.h" />
     <ClInclude Include="resultprinter.h" />
     <ClInclude Include="searchCommand.h" />
-    <ClInclude Include="searchEngine.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />
