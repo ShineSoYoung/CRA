@@ -23,13 +23,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="searchEngine.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="parsedCommandType.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="compareMachine.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="resultprinter.h">

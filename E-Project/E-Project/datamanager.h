@@ -6,8 +6,6 @@
 #include <map>
 #include <unordered_map>
 
-#include "searchEngine.h"
-
 using namespace stdext;
 
 typedef unordered_multimap<string, Employee*> EmployeeHashMap;
@@ -16,13 +14,37 @@ typedef pair<EmployeeHashMap::iterator, EmployeeHashMap::iterator> EmployeeRange
 const int MINIMUM_ENTRY_COUNT = 100000;
 const int EXTRA_ROOM_ENTRY_COUNT = 50000;
 
+const int BIRTHDAY_YEAR_OFFSET = 0;
+const int BIRTHDAY_YEAR_LENGTH = 4;
+const int BIRTHDAY_MONTH_OFFSET = 4;
+const int BIRTHDAY_MONTH_LENGTH = 2;
+const int BIRTHDAY_DAY_OFFSET = 6;
+const int BIRTHDAY_DAY_LENGTH = 2;
+
+const int PHONENUMBER_MIDDLE_OFFSET = 4;
+const int PHONENUMBER_MIDDLE_LENGTH = 4;
+const int PHONENUMBER_LAST_OFFSET = 9;
+const int PHONENUMBER_LAST_LENGTH = 4;
+
 class datamanager
 {
 public:
     datamanager()
     {
         employeeList.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
-        searchengine = searchEngine();
+        employeeNumberHashMap.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
+        NameHashMap.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
+        FirstNameHashMap.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
+        LastNameHashMap.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
+        CareerLevelHashMap.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
+        PhoneNumberHashMap.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
+        MiddlePhoneNumberHashMap.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
+        LastPhoneNumberHashMap.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
+        BirthdayHashMap.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
+        BirthdayYearHashMap.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
+        BirthdayMonthHashMap.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
+        BirthdayDayHashMap.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
+        CertiHashMap.reserve(MINIMUM_ENTRY_COUNT + EXTRA_ROOM_ENTRY_COUNT);
     }
 
     void add_data(const Employee em)
@@ -84,12 +106,12 @@ private:
         LastNameHashMap.insert(EmployeeHashMap::value_type(em->name.substr(em->name.find(' ') + 1, em->name.length() - em->name.find(' ')), em));
         CareerLevelHashMap.insert(EmployeeHashMap::value_type(em->cl, em));
         PhoneNumberHashMap.insert(EmployeeHashMap::value_type(em->phoneNum, em));
-        MiddlePhoneNumberHashMap.insert(EmployeeHashMap::value_type(em->phoneNum.substr(4, 4), em));
-        LastPhoneNumberHashMap.insert(EmployeeHashMap::value_type(em->phoneNum.substr(9, 4), em));
+        MiddlePhoneNumberHashMap.insert(EmployeeHashMap::value_type(em->phoneNum.substr(PHONENUMBER_MIDDLE_OFFSET, PHONENUMBER_MIDDLE_LENGTH), em));
+        LastPhoneNumberHashMap.insert(EmployeeHashMap::value_type(em->phoneNum.substr(PHONENUMBER_LAST_OFFSET, PHONENUMBER_LAST_LENGTH), em));
         BirthdayHashMap.insert(EmployeeHashMap::value_type(em->birthday, em));
-        BirthdayYearHashMap.insert(EmployeeHashMap::value_type(em->birthday.substr(0, 4), em));
-        BirthdayMonthHashMap.insert(EmployeeHashMap::value_type(em->birthday.substr(4, 2), em));
-        BirthdayDayHashMap.insert(EmployeeHashMap::value_type(em->birthday.substr(6, 2), em));
+        BirthdayYearHashMap.insert(EmployeeHashMap::value_type(em->birthday.substr(BIRTHDAY_YEAR_OFFSET, BIRTHDAY_YEAR_LENGTH), em));
+        BirthdayMonthHashMap.insert(EmployeeHashMap::value_type(em->birthday.substr(BIRTHDAY_MONTH_OFFSET, BIRTHDAY_MONTH_LENGTH), em));
+        BirthdayDayHashMap.insert(EmployeeHashMap::value_type(em->birthday.substr(BIRTHDAY_DAY_OFFSET, BIRTHDAY_DAY_LENGTH), em));
         CertiHashMap.insert(EmployeeHashMap::value_type(em->certi, em));
     }
 
@@ -159,7 +181,6 @@ private:
     }
 
     vector<Employee*> employeeList;
-    searchEngine searchengine;
 
     EmployeeHashMap employeeNumberHashMap;
     EmployeeHashMap NameHashMap;
