@@ -1,13 +1,13 @@
 ﻿#ifndef __SEARCH_COMMAND__
 #define __SEARCH_COMMAND__
 
-#include "commandClassType.h"
+#include "parsedCommandType.h"
 #include "command.h"
 
 class searchCommand : public OptionalCommand
 {
 public:
-    virtual string processCommand(datamanager& DB, const CmdParam command) override
+    virtual string processCommand(datamanager& DB, const ParsedCmd command) override
     {
         vector<Employee*> findArray = DB.search_data(command.strs[findColumn], command.strs[findValue], makeOptionList(command));
         selectPrinter(findArray, command.printFlag);

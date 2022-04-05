@@ -14,7 +14,7 @@ class Command
 {
 public:
     Command() {}
-    virtual string processCommand(datamanager& DB, const CmdParam command) = 0;
+    virtual string processCommand(datamanager& DB, const ParsedCmd command) = 0;
 protected:
 
 };
@@ -37,7 +37,7 @@ protected:
         else printer = new defaultResultPrinter();
     }
 
-    vector<bool> makeOptionList(CmdParam command)
+    vector<bool> makeOptionList(ParcedCmd command)
     {
         vector<bool> optionlist;
         optionlist.push_back(command.firstNameFlag);

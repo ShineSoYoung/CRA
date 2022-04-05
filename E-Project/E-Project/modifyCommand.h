@@ -1,13 +1,13 @@
 ﻿#ifndef __MODIFY_COMMAND__
 #define __MODIFY_COMMAND__
 
-#include "commandClassType.h"
+#include "parsedCommandType.h"
 #include "command.h"
 
 class modifyCommand : public OptionalCommand
 {
 public:
-    virtual string processCommand(datamanager& DB, const CmdParam command) override
+    virtual string processCommand(datamanager& DB, const ParsedCmd command) override
     {
         if (isValidModCmd(command) == false) 
             return "";
@@ -22,8 +22,8 @@ public:
 
 private:
 
-    bool isValidModCmd(CmdParam command) {
-        if (command.strs[targetColumn] == "employeeNum")
+    bool isValidModCmd(const ParsedCmd command) {
+        if (command.strs[2] == "employeeNum")
             return false;
 
         return true;

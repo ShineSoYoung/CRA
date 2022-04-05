@@ -2,7 +2,7 @@
 #ifndef __ADD_COMMAND__
 #define __ADD_COMMAND__
 
-#include "commandClassType.h"
+#include "parsedCommandType.h"
 #include "command.h"
 
 const int validStringNum = 6;
@@ -10,7 +10,7 @@ const int validStringNum = 6;
 class addCommand : public NoneOptionalCommand
 {
 public:
-    virtual string processCommand(datamanager& DB, const CmdParam command) override
+    virtual string processCommand(datamanager& DB, const ParsedCmd command) override
     {
         if ((isValidAddCmd(command) == true) &&
             (isSameEmployeeNum(DB, command.strs[static_cast<int>(EmInfo::EMPLOYEE_NUM)]) == false))
@@ -19,7 +19,7 @@ public:
     }
 private:
 
-    bool isValidAddCmd(CmdParam command) {
+    bool isValidAddCmd(ParcedCmd command) {
         int idx = 0;
         for (int i = 0; i < command.strs.size(); i++) {
 
@@ -45,7 +45,7 @@ private:
         return (0 < findArray.size());
     }
 
-    void addData(datamanager& DB, CmdParam command)
+    void addData(datamanager& DB, ParcedCmd command)
     {
         Employee e;
         e.employeeNum = command.strs[static_cast<int>(EmInfo::EMPLOYEE_NUM)];

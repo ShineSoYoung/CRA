@@ -26,9 +26,12 @@ public:
 	void run() {
 		if (io->isInputFileOpen()) {
 			while (!io->isInputFileEnd()) {
-				CmdParam cmdParam = io->getDataByLine();
+				char buf[256] = { 0, };
+				io->getDataByLine(buf, 256);
+				if (io->isValid(buf) == false) break;
 
-				switch (cmdParam.cmd) {
+				ParcedCmd parcedCmd = io->getParcedCmd(buf);
+				switch (parcedCmd.cmd) {
 				case CmdType::ADD:
 					command = new addCommand();
 					break;				
@@ -44,7 +47,7 @@ public:
 				}
 
 				string result;
-				result = command->processCommand(DB, cmdParam);
+				result = command->processCommand(DB, parcedCmd);
 				if (!result.empty()) io->printStringToFile(result);
 
 				delete command;

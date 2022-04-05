@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 #include "../E-Project/main.cpp"
 #include "../E-Project/ioManager.h"
-#include "../E-Project/commandClassType.h"
+#include "../E-Project/parsedCommandType.h"
 
 TEST(IO_Test, InputTest) {
     char* tmp[20] = { "15123099", "VXIHXOTH JHOP", "CL3", "010-3112-2609", "19771211", "ADV" };
@@ -10,9 +10,9 @@ TEST(IO_Test, InputTest) {
         strs.push_back(tmp[i]);
     }
 
-    CmdParam fake(CmdType::ADD, false, false, false, false, false, false, false, false, strs);
+    ParsedCmd fake(CmdType::ADD, false, false, false, false, false, false, false, false, strs);
     Parser parser;
-    CmdParam cmd = parser.parse("ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV");
+    ParsedCmd cmd = parser.parse("ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV");
     
     EXPECT_EQ(true, (cmd == fake));
 }

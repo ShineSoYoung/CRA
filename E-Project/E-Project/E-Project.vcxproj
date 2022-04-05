@@ -145,7 +145,7 @@
   <ItemGroup>
     <ClInclude Include="addCommand.h" />
     <ClInclude Include="command.h" />
-    <ClInclude Include="commandClassType.h" />
+    <ClInclude Include="parcedCommandType.h" />
     <ClInclude Include="compareMachine.h" />
     <ClInclude Include="datamanager.h" />
     <ClInclude Include="deleteCommand.h" />
@@ -160,9 +160,6 @@
     <Text Include="official_sample_input.txt" />
     <Text Include="official_sample_output.txt" />
     <Text Include="output.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\.editorconfig" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
