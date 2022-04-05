@@ -15,7 +15,6 @@ class Command
 public:
     Command() {}
     virtual bool checkCommandIsValid(datamanager& DB, const ParsedCmd command) = 0;
-    virtual vector<Employee*> getTargetEntryVector(datamanager& DB, const ParsedCmd command) = 0;
     virtual string processCommand(datamanager& DB, const ParsedCmd command) = 0;
 protected:
 
@@ -52,6 +51,16 @@ protected:
         return list;
     }
 
+    vector<Employee*> findTargetArray(datamanager& DB, const ParsedCmd command)
+    {
+        return DB.search_data(command.strs[findColumn], command.strs[findValue], makeOptionList(command));
+    }
+    string printCommandResult(string commandType, vector<Employee*> findArray, const ParsedCmd command)
+    {
+        selectPrinter(findArray, command.printFlag);
+        return printer->printFinalResult(commandType + ",", findArray);
+    }
+    
     resultPrinter* printer;
 
     noResultPrinter noPrinter;

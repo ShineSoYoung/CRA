@@ -46,7 +46,7 @@ public:
 					break;
 				}
 
-				string result;
+				string result = "";
 				if (command->checkCommandIsValid(DB, ParsedCmd))
 					result = command->processCommand(DB, ParsedCmd);
 				if (!result.empty()) io->printStringToFile(result);

@@ -5,71 +5,60 @@
 #include "parsedCommandType.h"
 #include "command.h"
 
-const int validStringNum = 6;
+const int validParametersCount = 6;
 
 class addCommand : public NoneOptionalCommand
 {
 public:
     virtual bool checkCommandIsValid(datamanager& DB, const ParsedCmd command) override
     {
-        return ((isValidAddCmd(command) == true) &&
-            (isSameEmployeeNum(DB, command.strs[static_cast<int>(EmInfo::EMPLOYEE_NUM)]) == false));
+        if (isParameterCountIsValid(command.strs) == false) return false;
+        if (isParameterHasEmptyEntry(command.strs) == true) return false;
+        if (isEmployeeNumAlreayExist(DB, command.strs[static_cast<int>(EmInfo::EMPLOYEE_NUM)]) == true) return false;
+        return true;
     }
-    virtual vector<Employee*> getTargetEntryVector(datamanager& DB, const ParsedCmd command)
+    virtual string processCommand(datamanager& DB, const ParsedCmd command) override
     {
-        Employee* em = new Employee();
-        vector<Employee*> result;
-        em->employeeNum = command.strs[static_cast<int>(EmInfo::EMPLOYEE_NUM)];
-        em->name = command.strs[static_cast<int>(EmInfo::NAME)];
-        em->cl = command.strs[static_cast<int>(EmInfo::CARRER_LEVEL)];
-        em->phoneNum = command.strs[static_cast<int>(EmInfo::PHONE_NUM)];
-        em->birthday = command.strs[static_cast<int>(EmInfo::BIRTH_DAY)];
-        em->certi = command.strs[static_cast<int>(EmInfo::CERTI)];
-        return result;
-    }
-    virtual string processCommand(datamanager& DB, vector<Employee*> targetVector) override
-    {
-        addData(DB, targetVector);
+        addData(DB, command);
         return "";
     }
 private:
+    bool isParameterCountIsValid(vector<string> parameters)
+    {
+        return (parameters.size() == validParametersCount);
+    }
 
-    bool isValidAddCmd(const ParsedCmd command) {
-        if (command.strs.size() != validStringNum)
-            return false;
-        for (string data : command.strs) {
+    bool isParameterHasEmptyEntry(vector<string> parameters) {
+        for (string data : parameters) {
             if (true == isEmptyData(data)) {
-                return false;
+                return true;
             }
         }
-
-        return true;
+        return false;
     }
-
     bool isEmptyData(string data)
     {
-        return data == "";
+        return data == "_";
     }
 
-    bool isSameEmployeeNum(datamanager& DB, string employeeNum)
+    bool isEmployeeNumAlreayExist(datamanager& DB, string employeeNum)
     {
         optionList dummyOptionList = {false, false, false, false, false, false, false};
         vector<Employee*> findArray = DB.search_data("employeeNum", employeeNum, dummyOptionList);
         return (0 < findArray.size());
     }
 
-    void addData(datamanager& DB, vector<Employee*> targetVector)
+    void addData(datamanager& DB, const ParsedCmd command)
     {
         Employee e;
-        e.employeeNum = targetVector[0]->employeeNum;
-        e.name = targetVector[0]->name;
-        e.cl = targetVector[0]->cl;
-        e.phoneNum = targetVector[0]->phoneNum;
-        e.birthday = targetVector[0]->birthday;
-        e.certi = targetVector[0]->certi;
-        DB.add_data(e);
+        e.employeeNum = command.strs[static_cast<int>(EmInfo::EMPLOYEE_NUM)];
+        e.name = command.strs[static_cast<int>(EmInfo::NAME)];
+        e.cl = command.strs[static_cast<int>(EmInfo::CARRER_LEVEL)];
+        e.phoneNum = command.strs[static_cast<int>(EmInfo::PHONE_NUM)];
+        e.birthday = command.strs[static_cast<int>(EmInfo::BIRTH_DAY)];
+        e.certi = command.strs[static_cast<int>(EmInfo::CERTI)];
 
-        delete targetVector[0];
+        DB.add_data(e);
     }
 
 };

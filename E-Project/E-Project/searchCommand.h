@@ -13,10 +13,8 @@ public:
     }
     virtual string processCommand(datamanager& DB, const ParsedCmd command) override
     {
-        vector<Employee*> findArray = DB.search_data(command.strs[findColumn], command.strs[findValue], makeOptionList(command));
-        selectPrinter(findArray, command.printFlag);
-        string result = printer->printFinalResult("SCH,", findArray);
-        return result;
+        vector<Employee*> findArray = findTargetArray(DB, command);
+        return printCommandResult("SCH", findArray, command);
     }
 
 private:

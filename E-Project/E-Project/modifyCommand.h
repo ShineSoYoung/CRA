@@ -13,9 +13,8 @@ public:
     }
     virtual string processCommand(datamanager& DB, const ParsedCmd command) override
     {
-        vector<Employee*> findArray = DB.search_data(command.strs[findColumn], command.strs[findValue], makeOptionList(command));
-        selectPrinter(findArray, command.printFlag);
-        string result = printer->printFinalResult("MOD,", findArray);
+        vector<Employee*> findArray = findTargetArray(DB, command);
+        string result = printCommandResult("MOD", findArray, command);
         DB.modify_data(findArray, command.strs[targetColumn], command.strs[targetValue]);
         return result;
     }
