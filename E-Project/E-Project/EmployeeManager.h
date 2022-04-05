@@ -21,11 +21,6 @@ public:
 		delete io;
 	}
 
-	void registerCmd(CmdType cmdType, Command* cmd)
-	{
-		command[(int)cmdType] = cmd;
-	}
-
 	void setIoFiles() {
 		io->openIoFiles("input.txt", "output.txt");
 	}
@@ -51,6 +46,11 @@ public:
 	}
 
 private:
+	void registerCmd(CmdType cmdType, Command* cmd)
+	{
+		command[(int)cmdType] = cmd;
+	}
+
 	IoManager* io = nullptr;
 	Command* command[MAX_NUM_OF_CMD];
 	datamanager DB;
