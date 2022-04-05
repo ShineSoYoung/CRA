@@ -128,10 +128,6 @@ public:
 		outputFile << str;
 	}
 
-	void printString(string str) {
-		cout << str;
-	}
-
 	void getDataByLine (char* buf, int n) {
 		inputFile.getline(buf, n);	
 	}
