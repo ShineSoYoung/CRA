@@ -19,7 +19,7 @@ public:
     }
 private:
 
-    bool isValidAddCmd(ParcedCmd command) {
+    bool isValidAddCmd(const ParsedCmd command) {
         int idx = 0;
         for (int i = 0; i < command.strs.size(); i++) {
 
@@ -45,7 +45,7 @@ private:
         return (0 < findArray.size());
     }
 
-    void addData(datamanager& DB, ParcedCmd command)
+    void addData(datamanager& DB, const ParsedCmd command)
     {
         Employee e;
         e.employeeNum = command.strs[static_cast<int>(EmInfo::EMPLOYEE_NUM)];

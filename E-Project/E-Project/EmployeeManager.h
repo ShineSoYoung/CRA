@@ -30,8 +30,8 @@ public:
 				io->getDataByLine(buf, 256);
 				if (io->isValid(buf) == false) break;
 
-				ParcedCmd parcedCmd = io->getParcedCmd(buf);
-				switch (parcedCmd.cmd) {
+				ParsedCmd ParsedCmd = io->getParsedCmd(buf);
+				switch (ParsedCmd.cmd) {
 				case CmdType::ADD:
 					command = new addCommand();
 					break;				
@@ -47,7 +47,7 @@ public:
 				}
 
 				string result;
-				result = command->processCommand(DB, parcedCmd);
+				result = command->processCommand(DB, ParsedCmd);
 				if (!result.empty()) io->printStringToFile(result);
 
 				delete command;

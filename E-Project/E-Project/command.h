@@ -37,7 +37,7 @@ protected:
         else printer = new defaultResultPrinter();
     }
 
-    vector<bool> makeOptionList(ParcedCmd command)
+    vector<bool> makeOptionList(const ParsedCmd command)
     {
         vector<bool> optionlist;
         optionlist.push_back(command.firstNameFlag);

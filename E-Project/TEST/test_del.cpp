@@ -246,9 +246,9 @@ protected:
 };
 
 TEST_F(DeleteMultipleTest, delete_multiple_entries) {
-    string result = delCmd.processCommand(DB, CmdParam{ CmdType::DEL,false,false,false,false,false,false,false,false,{"cl","CL4"} });
+    string result = delCmd.processCommand(DB, ParsedCmd{ CmdType::DEL,false,false,false,false,false,false,false,false,{"cl","CL4"} });
     EXPECT_EQ(result, "DEL,12\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::DEL,false,false,false,false,false,false,false,false,{"cl", "CL4"} });
+    result = schCmd.processCommand(DB, ParsedCmd{ CmdType::DEL,false,false,false,false,false,false,false,false,{"cl", "CL4"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 }

@@ -5,8 +5,6 @@
 #include <string>
 #include <algorithm>
 
-#include "parcedCommandType.h"
-
 const int MAX_NUM_OF_PRINT_ENTRY = 5;
 
 class resultPrinter
