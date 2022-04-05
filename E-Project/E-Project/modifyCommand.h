@@ -7,11 +7,12 @@
 class modifyCommand : public OptionalCommand
 {
 public:
+    virtual bool checkCommandIsValid(datamanager& DB, const ParsedCmd command) override
+    {
+        return (command.strs[targetColumn] != "employeeNum");
+    }
     virtual string processCommand(datamanager& DB, const ParsedCmd command) override
     {
-        if (isValidModCmd(command) == false) 
-            return "";
-
         vector<Employee*> findArray = DB.search_data(command.strs[findColumn], command.strs[findValue], makeOptionList(command));
         selectPrinter(findArray, command.printFlag);
         string result = printer->printFinalResult("MOD,", findArray);
@@ -21,13 +22,6 @@ public:
     }
 
 private:
-
-    bool isValidModCmd(const ParsedCmd command) {
-        if (command.strs[2] == "employeeNum")
-            return false;
-
-        return true;
-    }
 };
 
 #endif

@@ -47,7 +47,8 @@ public:
 				}
 
 				string result;
-				result = command->processCommand(DB, ParsedCmd);
+				if (command->checkCommandIsValid(DB, ParsedCmd))
+					result = command->processCommand(DB, ParsedCmd);
 				if (!result.empty()) io->printStringToFile(result);
 
 				delete command;

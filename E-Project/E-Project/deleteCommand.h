@@ -7,6 +7,10 @@
 class deleteCommand : public OptionalCommand
 {
 public:
+    virtual bool checkCommandIsValid(datamanager& DB, const ParsedCmd command) override
+    {
+        return true;
+    }
     virtual string processCommand(datamanager& DB, const ParsedCmd command) override
     {
         vector<Employee*> findArray = DB.search_data(command.strs[findColumn], command.strs[findValue], makeOptionList(command));

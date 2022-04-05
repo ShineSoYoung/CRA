@@ -14,6 +14,8 @@ class Command
 {
 public:
     Command() {}
+    virtual bool checkCommandIsValid(datamanager& DB, const ParsedCmd command) = 0;
+    virtual vector<Employee*> getTargetEntryVector(datamanager& DB, const ParsedCmd command) = 0;
     virtual string processCommand(datamanager& DB, const ParsedCmd command) = 0;
 protected:
 
