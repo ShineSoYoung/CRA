@@ -12,13 +12,9 @@ class addCommand : public NoneOptionalCommand
 public:
     virtual string processCommand(datamanager& DB, CmdParam command) override
     {
-        if (isValidAddCmd(command) == false)
-            return "FAIL";
-
-        if (isSameEmployeeNum(DB, command.strs[0]) == true)
-            return "FAIL";
-
-        addData(DB, command);
+        if ((isValidAddCmd(command) == true) &&
+            (isSameEmployeeNum(DB, command.strs[0]) == false))
+            addData(DB, command);        
         return "";
     }
 private:
