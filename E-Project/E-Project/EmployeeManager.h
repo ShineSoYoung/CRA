@@ -33,24 +33,22 @@ public:
 				ParsedCmd ParsedCmd = io->getParsedCmd(buf);
 				switch (ParsedCmd.cmd) {
 				case CmdType::ADD:
-					command = new addCommand();
+					command = &add;
 					break;				
 				case CmdType::DEL:
-					command = new deleteCommand();
+					command = &del;
 					break;				
 				case CmdType::SCH:
-					command = new searchCommand();
+					command = &sch;
 					break;				
 				case CmdType::MOD:
-					command = new modifyCommand();
+					command = &mod;
 					break;
 				}
 
 				string result;
 				result = command->processCommand(DB, ParsedCmd);
 				if (!result.empty()) io->printStringToFile(result);
-
-				delete command;
 			}
 		}
 	}
@@ -59,4 +57,9 @@ private:
 	IoManager* io = nullptr;
 	Command* command = nullptr;
 	datamanager DB;
+
+	addCommand add;
+	deleteCommand del;
+	searchCommand sch;
+	modifyCommand mod;
 };

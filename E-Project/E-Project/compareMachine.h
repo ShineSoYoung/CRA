@@ -7,134 +7,134 @@
 class Comparemachine
 {
 public:
-    virtual bool isSatifiedEntry(Employee* em, string value) = 0;
+    virtual bool isSatifiedEntry(const Employee* em, const string value) = 0;
 private:
 };
 
-class ComparemachineWithEmployeeNumber : public Comparemachine
+class EmployeeNumberComparemachine : public Comparemachine
 {
 public:
-    virtual bool isSatifiedEntry(Employee* em, string value) override
+    virtual bool isSatifiedEntry(const Employee* em, const string value) override
     {
         return (value == em->employeeNum);
     }
 private:
 };
 
-class ComparemachineWithName : public Comparemachine
+class NameComparemachine : public Comparemachine
 {
 public:
-    virtual bool isSatifiedEntry(Employee* em, string value) override
+    virtual bool isSatifiedEntry(const Employee* em, const string value) override
     {
         return (em->name == value);
     }
 private:
 };
 
-class ComparemachineWithFirstName : public ComparemachineWithName
+class FirstNameComparemachine : public NameComparemachine
 {
 public:
-    virtual bool isSatifiedEntry(Employee* em, string value) override
+    virtual bool isSatifiedEntry(const Employee* em, const string value) override
     {
         return (em->name.substr(0, em->name.find(' ')) == value);
     }
 private:
 };
 
-class ComparemachineWithLastName : public ComparemachineWithName
+class LastNameComparemachine : public NameComparemachine
 {
 public:
-    virtual bool isSatifiedEntry(Employee* em, string value) override
+    virtual bool isSatifiedEntry(const Employee* em, const string value) override
     {
         return (em->name.substr(em->name.find(' ') + 1, em->name.length() - em->name.find(' ')) == value);
     }
 private:
 };
 
-class ComparemachineWithCL : public Comparemachine
+class CareerLevelComparemachine : public Comparemachine
 {
 public:
-    virtual bool isSatifiedEntry(Employee* em, string value) override
+    virtual bool isSatifiedEntry(const Employee* em, const string value) override
     {
         return (em->cl == value);
     }
 private:
 };
 
-class ComparemachineWithPhoneNumber : public Comparemachine
+class PhoneNumberComparemachine : public Comparemachine
 {
 public:
-    virtual bool isSatifiedEntry(Employee* em, string value) override
+    virtual bool isSatifiedEntry(const Employee* em, const string value) override
     {
         return (em->phoneNum == value);
     }
 private:
 };
 
-class ComparemachineWithPhoneNumberOnlyMiddle : public Comparemachine
+class MiddlePhoneNumberComparemachine : public Comparemachine
 {
 public:
-    virtual bool isSatifiedEntry(Employee* em, string value) override
+    virtual bool isSatifiedEntry(const Employee* em, const string value) override
     {
         return (em->phoneNum.substr(4, 4) == value);
     }
 private:
 };
 
-class ComparemachineWithPhoneNumberOnlyLast : public Comparemachine
+class LastPhoneNumberComparemachine : public Comparemachine
 {
 public:
-    virtual bool isSatifiedEntry(Employee* em, string value) override
+    virtual bool isSatifiedEntry(const Employee* em, const string value) override
     {
         return (em->phoneNum.substr(9, 4) == value);
     }
 private:
 };
 
-class ComparemachineWithBirthday : public Comparemachine
+class BirthdayComparemachine : public Comparemachine
 {
 public:
-    virtual bool isSatifiedEntry(Employee* em, string value) override
+    virtual bool isSatifiedEntry(const Employee* em, const string value) override
     {
         return (em->birthday == value);
     }
 private:
 };
 
-class ComparemachineWithBirthdayOnlyYear : public Comparemachine
+class BirthdayYearComparemachine : public Comparemachine
 {
 public:
-    virtual bool isSatifiedEntry(Employee* em, string value) override
+    virtual bool isSatifiedEntry(const Employee* em, const string value) override
     {
         return (em->birthday.substr(0, 4) == value);
     }
 private:
 };
 
-class ComparemachineWithBirthdayOnlyMonth : public Comparemachine
+class BirthdayMonthComparemachine : public Comparemachine
 {
 public:
-    virtual bool isSatifiedEntry(Employee* em, string value) override
+    virtual bool isSatifiedEntry(const Employee* em, const string value) override
     {
         return (em->birthday.substr(4, 2) == value);
     }
 private:
 };
 
-class ComparemachineWithBirthdayOnlyDay : public Comparemachine
+class BirthdayDayComparemachine : public Comparemachine
 {
 public:
-    virtual bool isSatifiedEntry(Employee* em, string value) override
+    virtual bool isSatifiedEntry(const Employee* em, const string value) override
     {
         return (em->birthday.substr(6, 2) == value);
     }
 private:
 };
 
-class ComparemachineWithCerti : public Comparemachine
+class CertiComparemachine : public Comparemachine
 {
 public:
-    virtual bool isSatifiedEntry(Employee* em, string value) override
+    virtual bool isSatifiedEntry(const Employee* em, const string value) override
     {
         return (em->certi == value);
     }
