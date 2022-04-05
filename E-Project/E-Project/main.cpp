@@ -1,11 +1,4 @@
-﻿#include <stdio.h>
-#include <vector>
-#include <sstream>
-#include <string>
-
-#include "EmployeeManager.h"
-#include "parsedCommandType.h"
-#include "ioManager.h"
+﻿#include "EmployeeManager.h"
 
 using namespace std;
 
