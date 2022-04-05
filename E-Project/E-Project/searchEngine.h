@@ -9,7 +9,7 @@
 class searchEngine
 {
 public:
-    vector<Employee*> search(vector<Employee*> list, string column, string value, vector<bool> optionlist)
+    vector<Employee*> search(vector<Employee*> list, string column, string value, const optionList optionlist)
     {
         selectCompareMachine(column, optionlist);
         vector<Employee*> findArray;
@@ -21,7 +21,7 @@ public:
         return findArray;
     }
 private:
-    void selectCompareMachine(string column, vector<bool>  optionlist)
+    void selectCompareMachine(string column, const optionList optionlist)
     {
         if ("employeeNum" == column)
         {
@@ -29,11 +29,11 @@ private:
         }
         else if ("name" == column)
         {
-            if (optionlist[0])
+            if (optionlist.searchforFirstName)
             {
                 compare = new ComparemachineWithFirstName();
             }
-            else if (optionlist[1])
+            else if (optionlist.searchforLastName)
             {
                 compare = new ComparemachineWithLastName();
             }
@@ -48,11 +48,11 @@ private:
         }
         else if ("phoneNum" == column)
         {
-            if (optionlist[2])
+            if (optionlist.searchforMiddlePhoneNumber)
             {
                 compare = new ComparemachineWithPhoneNumberOnlyMiddle();
             }
-            else if (optionlist[3])
+            else if (optionlist.searchforLastPhoneNumber)
             {
                 compare = new ComparemachineWithPhoneNumberOnlyLast();
             }
@@ -63,15 +63,15 @@ private:
         }
         else if ("birthday" == column)
         {
-            if (optionlist[4])
+            if (optionlist.searchforBirthdayYear)
             {
                 compare = new ComparemachineWithBirthdayOnlyYear();
             }
-            else if (optionlist[5])
+            else if (optionlist.searchforBirthdayMonth)
             {
                 compare = new ComparemachineWithBirthdayOnlyMonth();
             }
-            else if (optionlist[6])
+            else if (optionlist.searchforBirthdayDay)
             {
                 compare = new ComparemachineWithBirthdayOnlyDay();
             }
