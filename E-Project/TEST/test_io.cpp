@@ -1,5 +1,4 @@
-﻿#include "pch.h"
-#include "../E-Project/main.cpp"
+﻿#include "../E-Project/main.cpp"
 #include "../E-Project/ioManager.h"
 #include "../E-Project/parsedCommandType.h"
 
@@ -46,6 +45,7 @@ TEST_F(IOTest, ParceDel) {
     ParsedCmd subject = parser.parse("DEL, , , ,employeeNum,18115040");
     EXPECT_EQ(true, (subject == fake));
 }
+
 TEST_F(IOTest, ParceDelWithSingleOpt) {
     vector<string> strs;
     ParsedCmd fake;
@@ -182,5 +182,156 @@ TEST_F(IOTest, ParceDelWithMultiOpts) {
     /* printFlag & dateFlag */
     fake.set(CmdType::DEL, true, false, false, false, false, false, false, true, strs);
     subject = parser.parse("DEL,-p,-d, ,birthday,12");
+    EXPECT_EQ(true, (subject == fake));
+}
+
+TEST_F(IOTest, ParceMod) {
+    char* buf[20] = { "employeeNum", "08123556", "birthday", "20110706" };
+    vector<string> strs;
+    for (int i = 0; buf[i]; i++) {
+        strs.push_back(buf[i]);
+    }
+    ParsedCmd fake(CmdType::MOD, false, false, false, false, false, false, false, false, strs);
+    ParsedCmd subject = parser.parse("MOD, , , ,employeeNum,08123556,birthday,20110706");
+    EXPECT_EQ(true, (subject == fake));
+}
+
+TEST_F(IOTest, ParceModWithSingleOpt) {
+    vector<string> strs;
+    ParsedCmd fake;
+    ParsedCmd subject;
+
+    /* printFlag */
+    char* bufPrint[20] = { "employeeNum", "08123556", "birthday", "20110706" };
+    for (int i = 0; bufPrint[i]; i++) {
+        strs.push_back(bufPrint[i]);
+    }
+    fake.set(CmdType::MOD, true, false, false, false, false, false, false, false, strs);
+    subject = parser.parse("MOD,-p, , , employeeNum, 08123556, birthday, 20110706");
+    bool result = (subject == fake);
+    EXPECT_EQ(true, result);
+
+    /* Name */
+    strs.clear();
+    char* bufName[20] = { "name", "FBN LDEXRI", "birthday", "20110706" };
+    for (int i = 0; bufName[i]; i++) {
+        strs.push_back(bufName[i]);
+    }
+    /* firstNameFlag */
+    fake.set(CmdType::MOD, false, true, false, false, false, false, false, false, strs);
+    subject = parser.parse("MOD, ,-f, ,name,LDEXRI, birthday, 20110706");
+    result = (subject == fake);
+    EXPECT_EQ(true, result);
+
+    /* lastNameFlag */
+    fake.set(CmdType::MOD, false, false, true, false, false, false, false, false, strs);
+    subject = parser.parse("MOD, ,-l, ,name,LDEXRI");
+    EXPECT_EQ(true, (subject == fake));
+
+    /* Number */
+    strs.clear();
+    char* bufNumber[20] = { "phoneNum", "1234", "birthday", "20110706" };
+    for (int i = 0; bufNumber[i]; i++) {
+        strs.push_back(bufNumber[i]);
+    }
+    /* midNumFlag */
+    fake.set(CmdType::MOD, false, false, false, true, false, false, false, false, strs);
+    subject = parser.parse("MOD, ,-m, ,phoneNum,1234, birthday, 20110706");
+    EXPECT_EQ(true, (subject == fake));
+
+    /* lastNumFlag */
+    fake.set(CmdType::MOD, false, false, false, false, true, false, false, false, strs);
+    subject = parser.parse("MOD, ,-l, ,phoneNum,1234, birthday, 20110706");
+    EXPECT_EQ(true, (subject == fake));
+
+    /* Date */
+    /* yearFlag */
+    strs.clear();
+    char* bufYear[20] = { "birthday", "2003", "certi", "PRO"};
+    for (int i = 0; bufYear[i]; i++) {
+        strs.push_back(bufYear[i]);
+    }
+    fake.set(CmdType::MOD, false, false, false, false, false, true, false, false, strs);
+    subject = parser.parse("MOD, ,-y, ,birthday,2003,certi,PRO");
+    EXPECT_EQ(true, (subject == fake));
+
+    /* monthFlag */
+    strs.clear();
+    char* bufMonthDay[20] = { "birthday", "12", "certi", "PRO" };
+    for (int i = 0; bufMonthDay[i]; i++) {
+        strs.push_back(bufMonthDay[i]);
+    }
+    fake.set(CmdType::MOD, false, false, false, false, false, false, true, false, strs);
+    subject = parser.parse("MOD, ,-m, ,birthday,12,certi,PRO");
+    EXPECT_EQ(true, (subject == fake));
+
+    /* dateFlag */
+    fake.set(CmdType::MOD, false, false, false, false, false, false, false, true, strs);
+    subject = parser.parse("MOD, ,-d, ,birthday,12,certi,PRO");
+    EXPECT_EQ(true, (subject == fake));
+}
+
+TEST_F(IOTest, ParceModWithMultiOpts) {
+    vector<string> strs;
+    ParsedCmd fake;
+    ParsedCmd subject;
+
+    /* Name */
+    strs.clear();
+    char* bufName[20] = { "name", "FBN LDEXRI", "birthday", "20110706" };
+    for (int i = 0; bufName[i]; i++) {
+        strs.push_back(bufName[i]);
+    }
+    /* printFlag & firstNameFlag */
+    fake.set(CmdType::MOD, true, true, false, false, false, false, false, false, strs);
+    subject = parser.parse("MOD,-p,-f, ,name,LDEXRI, birthday, 20110706");
+    result = (subject == fake);
+    EXPECT_EQ(true, result);
+
+    /* printFlag & lastNameFlag */
+    fake.set(CmdType::MOD, true, false, true, false, false, false, false, false, strs);
+    subject = parser.parse("MOD,-p,-l, ,name,LDEXRI");
+    EXPECT_EQ(true, (subject == fake));
+
+    /* Number */
+    strs.clear();
+    char* bufNumber[20] = { "phoneNum", "1234", "birthday", "20110706" };
+    for (int i = 0; bufNumber[i]; i++) {
+        strs.push_back(bufNumber[i]);
+    }
+    /* printFlag & midNumFlag */
+    fake.set(CmdType::MOD, true, false, false, true, false, false, false, false, strs);
+    subject = parser.parse("MOD,-p,-m, ,phoneNum,1234, birthday, 20110706");
+    EXPECT_EQ(true, (subject == fake));
+
+    /* printFlag & lastNumFlag */
+    fake.set(CmdType::MOD, true, false, false, false, true, false, false, false, strs);
+    subject = parser.parse("MOD,-p,-l, ,phoneNum,1234, birthday, 20110706");
+    EXPECT_EQ(true, (subject == fake));
+
+    /* Date */
+    /* printFlag & yearFlag */
+    strs.clear();
+    char* bufYear[20] = { "birthday", "2003", "certi", "PRO" };
+    for (int i = 0; bufYear[i]; i++) {
+        strs.push_back(bufYear[i]);
+    }
+    fake.set(CmdType::MOD, true, false, false, false, false, true, false, false, strs);
+    subject = parser.parse("MOD,-p,-y, ,birthday,2003,certi,PRO");
+    EXPECT_EQ(true, (subject == fake));
+
+    /* printFlag & monthFlag */
+    strs.clear();
+    char* bufMonthDay[20] = { "birthday", "12", "certi", "PRO" };
+    for (int i = 0; bufMonthDay[i]; i++) {
+        strs.push_back(bufMonthDay[i]);
+    }
+    fake.set(CmdType::MOD, true, false, false, false, false, false, true, false, strs);
+    subject = parser.parse("MOD,-p,-m, ,birthday,12,certi,PRO");
+    EXPECT_EQ(true, (subject == fake));
+
+    /* printFlag & dateFlag */
+    fake.set(CmdType::MOD, false, false, false, false, false, false, false, true, strs);
+    subject = parser.parse("MOD,-p,-d, ,birthday,12,certi,PRO");
     EXPECT_EQ(true, (subject == fake));
 }
