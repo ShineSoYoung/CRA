@@ -6,6 +6,37 @@
 #include "../E-Project/datamanager.h"
 #include "../E-Project/ioManager.h"
 
+class ModBufFixTest : public ::testing::Test
+{
+public:
+protected:
+    virtual void SetUp() override
+    {
+        addCmd.processCommand(DB, parser.parse("ADD, , , ,09123597,KVAXH CC,CL3,010-6361-8374,19780907,ADV"));
+    }
+
+    virtual void TearDown() override
+    {
+        delCmd.processCommand(DB, parser.parse("DEL, , , ,employeeNum,09123597"));
+    }
+
+    Parser parser;
+    datamanager DB;
+    addCommand addCmd;
+    modifyCommand modCmd;
+    deleteCommand delCmd;
+};
+
+TEST_F(ModBufFixTest, mod_bug_fix_p_l) {
+    string result = modCmd.processCommand(DB, ParsedCmd{ CmdType::MOD,true,false,true,false,false,false,false,false,{"name", "CC", "phoneNum", "010-6350-3766"} });
+
+    string expectResult = "MOD,09123597,KVAXH CC,CL3,010-6361-8374,19780907,ADV\n";
+    EXPECT_EQ(result, expectResult);
+
+    result = modCmd.processCommand(DB, ParsedCmd{ CmdType::MOD,false,false,false,false,false,false,false,false,{"phoneNum", "010-6361-8374", "name", "A B"} });
+    EXPECT_EQ(result, "MOD,NONE\n");
+}
+
 class ModTest : public ::testing::Test
 {
 public:
