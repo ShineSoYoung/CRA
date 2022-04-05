@@ -7,11 +7,14 @@
 class deleteCommand : public OptionalCommand
 {
 public:
+    virtual bool checkCommandIsValid(datamanager& DB, const ParsedCmd command) override
+    {
+        return true;
+    }
     virtual string processCommand(datamanager& DB, const ParsedCmd command) override
     {
-        vector<Employee*> findArray = DB.search_data(command.strs[findColumn], command.strs[findValue], makeOptionList(command));
-        selectPrinter(findArray, command.printFlag);
-        string result = printer->printFinalResult("DEL,", findArray);
+        vector<Employee*> findArray = findTargetArray(DB, command);
+        string result = printCommandResult("DEL", findArray, command);
         DB.delete_data(findArray);
         return result;
     }

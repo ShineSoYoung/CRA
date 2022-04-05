@@ -46,8 +46,9 @@ public:
 					break;
 				}
 
-				string result;
-				result = command->processCommand(DB, ParsedCmd);
+				string result = "";
+				if (command->checkCommandIsValid(DB, ParsedCmd))
+					result = command->processCommand(DB, ParsedCmd);
 				if (!result.empty()) io->printStringToFile(result);
 			}
 		}

@@ -1,7 +1,9 @@
 ﻿#include "gtest/gtest.h"
-#include "../E-Project/main.cpp"
 #include "../E-Project/ioManager.h"
 #include "../E-Project/parsedCommandType.h"
+#include "../E-Project/addCommand.h"
+#include "../E-Project/searchCommand.h"
+#include "../E-Project/deleteCommand.h"
 
 class IOTest : public ::testing::Test
 {
@@ -25,7 +27,7 @@ protected:
     deleteCommand delCmd;
 };
 
-TEST_F(IOTest, ParceADD) {
+TEST_F(IOTest, parseADD) {
     char* buf[20] = { "15123099", "VXIHXOTH JHOP", "CL3", "010-3112-2609", "19771211", "ADV" };
     vector<string> strs;
     for (int i = 0; buf[i]; i++) {
@@ -36,7 +38,7 @@ TEST_F(IOTest, ParceADD) {
     EXPECT_EQ(true, (subject == fake));
 }
 
-TEST_F(IOTest, ParceDel) {
+TEST_F(IOTest, parseDel) {
     char* buf[20] = { "employeeNum", "18115040"};
     vector<string> strs;
     for (int i = 0; buf[i]; i++) {
@@ -47,7 +49,7 @@ TEST_F(IOTest, ParceDel) {
     EXPECT_EQ(true, (subject == fake));
 }
 
-TEST_F(IOTest, ParceDelWithSingleOpt) {
+TEST_F(IOTest, parseDelWithSingleOpt) {
     vector<string> strs;
     ParsedCmd fake;
     ParsedCmd subject;
@@ -122,7 +124,7 @@ TEST_F(IOTest, ParceDelWithSingleOpt) {
     EXPECT_EQ(true, (subject == fake));
 }
 
-TEST_F(IOTest, ParceDelWithMultiOpts) {
+TEST_F(IOTest, parseDelWithMultiOpts) {
     vector<string> strs;
     ParsedCmd fake;
     ParsedCmd subject;
@@ -186,7 +188,7 @@ TEST_F(IOTest, ParceDelWithMultiOpts) {
     EXPECT_EQ(true, (subject == fake));
 }
 
-TEST_F(IOTest, ParceMod) {
+TEST_F(IOTest, parseMod) {
     char* buf[20] = { "employeeNum", "08123556", "birthday", "20110706" };
     vector<string> strs;
     for (int i = 0; buf[i]; i++) {
@@ -197,7 +199,7 @@ TEST_F(IOTest, ParceMod) {
     EXPECT_EQ(true, (subject == fake));
 }
 
-TEST_F(IOTest, ParceModWithSingleOpt) {
+TEST_F(IOTest, parseModWithSingleOpt) {
     vector<string> strs;
     ParsedCmd fake;
     ParsedCmd subject;
@@ -270,7 +272,7 @@ TEST_F(IOTest, ParceModWithSingleOpt) {
     EXPECT_EQ(true, (subject == fake));
 }
 
-TEST_F(IOTest, ParceModWithMultiOpts) {
+TEST_F(IOTest, parseModWithMultiOpts) {
     vector<string> strs;
     ParsedCmd fake;
     ParsedCmd subject;

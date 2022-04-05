@@ -5,38 +5,43 @@
 #include "parsedCommandType.h"
 #include "command.h"
 
-const int validStringNum = 6;
+const int validParametersCount = 6;
 
 class addCommand : public NoneOptionalCommand
 {
 public:
+    virtual bool checkCommandIsValid(datamanager& DB, const ParsedCmd command) override
+    {
+        if (isParameterCountIsValid(command.strs) == false) return false;
+        if (isParameterHasEmptyEntry(command.strs) == true) return false;
+        if (isEmployeeNumAlreayExist(DB, command.strs[static_cast<int>(EmInfo::EMPLOYEE_NUM)]) == true) return false;
+        return true;
+    }
     virtual string processCommand(datamanager& DB, const ParsedCmd command) override
     {
-        if ((isValidAddCmd(command) == true) &&
-            (isSameEmployeeNum(DB, command.strs[static_cast<int>(EmInfo::EMPLOYEE_NUM)]) == false))
-            addData(DB, command);        
+        addData(DB, command);
         return "";
     }
 private:
+    bool isParameterCountIsValid(vector<string> parameters)
+    {
+        return (parameters.size() == validParametersCount);
+    }
 
-    bool isValidAddCmd(const ParsedCmd command) {
-        if (command.strs.size() != validStringNum)
-            return false;
-        for (string data : command.strs) {
+    bool isParameterHasEmptyEntry(vector<string> parameters) {
+        for (string data : parameters) {
             if (true == isEmptyData(data)) {
-                return false;
+                return true;
             }
         }
-
-        return true;
+        return false;
     }
-
     bool isEmptyData(string data)
     {
-        return data == "";
+        return data == "_";
     }
 
-    bool isSameEmployeeNum(datamanager& DB, string employeeNum)
+    bool isEmployeeNumAlreayExist(datamanager& DB, string employeeNum)
     {
         optionList dummyOptionList = {false, false, false, false, false, false, false};
         vector<Employee*> findArray = DB.search_data("employeeNum", employeeNum, dummyOptionList);
