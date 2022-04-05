@@ -2,7 +2,7 @@
 #ifndef __ADD_COMMAND__
 #define __ADD_COMMAND__
 
-#include "parcedCommandType.h"
+#include "parsedCommandType.h"
 #include "command.h"
 
 const int validStringNum = 6;
@@ -10,20 +10,16 @@ const int validStringNum = 6;
 class addCommand : public NoneOptionalCommand
 {
 public:
-    virtual string processCommand(datamanager& DB, ParcedCmd command) override
+    virtual string processCommand(datamanager& DB, const ParsedCmd command) override
     {
-        if (isValidAddCmd(command) == false)
-            return "FAIL";
-
-        if (isSameEmployeeNum(DB, command.strs[0]) == true)
-            return "FAIL";
-
-        addData(DB, command);
+        if ((isValidAddCmd(command) == true) &&
+            (isSameEmployeeNum(DB, command.strs[static_cast<int>(EmInfo::EMPLOYEE_NUM)]) == false))
+            addData(DB, command);        
         return "";
     }
 private:
 
-    bool isValidAddCmd(ParcedCmd command) {
+    bool isValidAddCmd(const ParsedCmd command) {
         int idx = 0;
         for (int i = 0; i < command.strs.size(); i++) {
 
@@ -49,15 +45,15 @@ private:
         return (0 < findArray.size());
     }
 
-    void addData(datamanager& DB, ParcedCmd command)
+    void addData(datamanager& DB, const ParsedCmd command)
     {
         Employee e;
-        e.employeeNum = command.strs[0];
-        e.name = command.strs[1];
-        e.cl = command.strs[2];
-        e.phoneNum = command.strs[3];
-        e.birthday = command.strs[4];
-        e.certi = command.strs[5];
+        e.employeeNum = command.strs[static_cast<int>(EmInfo::EMPLOYEE_NUM)];
+        e.name = command.strs[static_cast<int>(EmInfo::NAME)];
+        e.cl = command.strs[static_cast<int>(EmInfo::CARRER_LEVEL)];
+        e.phoneNum = command.strs[static_cast<int>(EmInfo::PHONE_NUM)];
+        e.birthday = command.strs[static_cast<int>(EmInfo::BIRTH_DAY)];
+        e.certi = command.strs[static_cast<int>(EmInfo::CERTI)];
 
         DB.add_data(e);
     }

@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 
-#include "parcedCommandType.h"
 #include "compareMachine.h"
 
 class searchEngine

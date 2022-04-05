@@ -1,28 +1,28 @@
 ﻿#ifndef __MODIFY_COMMAND__
 #define __MODIFY_COMMAND__
 
-#include "parcedCommandType.h"
+#include "parsedCommandType.h"
 #include "command.h"
 
 class modifyCommand : public OptionalCommand
 {
 public:
-    virtual string processCommand(datamanager& DB, ParcedCmd command) override
+    virtual string processCommand(datamanager& DB, const ParsedCmd command) override
     {
-        if (isValidModCmd(command) == false)
-            return "FAIL";
+        if (isValidModCmd(command) == false) 
+            return "";
 
-        vector<Employee*> findArray = DB.search_data(command.strs[0], command.strs[1], makeOptionList(command));
+        vector<Employee*> findArray = DB.search_data(command.strs[findColumn], command.strs[findValue], makeOptionList(command));
         selectPrinter(findArray, command.printFlag);
         string result = printer->printFinalResult("MOD,", findArray);
-        DB.modify_data(findArray, command.strs[2], command.strs[3]);
+        DB.modify_data(findArray, command.strs[targetColumn], command.strs[targetValue]);
         releasePrinter();
         return result;
     }
 
 private:
 
-    bool isValidModCmd(ParcedCmd command) {
+    bool isValidModCmd(const ParsedCmd command) {
         if (command.strs[2] == "employeeNum")
             return false;
 

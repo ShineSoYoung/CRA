@@ -11,16 +11,6 @@
 const int MINIMUM_ENTRY_COUNT = 100000;
 const int EXTRA_ROOM_ENTRY_COUNT = 50000;
 
-enum class EmInfo{
-
-    EMPLOYEE_NUM = 0,
-    NAME,
-    CARRER_LEVEL,
-    PHONE_NUM,
-    BIRTH_DAY,
-    CERTI
-};
-
 class datamanager
 {
 public:
@@ -30,7 +20,7 @@ public:
         searchengine = searchEngine();
     }
 
-    void add_data(Employee em)
+    void add_data(const Employee em)
     {
         Employee* e = new Employee();
         e->employeeNum = em.employeeNum;
@@ -42,11 +32,11 @@ public:
 
         employeeList.push_back(e);
     }
-    vector<Employee*> search_data(string column, string value, vector<bool> optionlist)
+    vector<Employee*> search_data(const string column, const string value, vector<bool> optionlist)
     {
         return searchengine.search(employeeList, column, value, optionlist);
     }
-    void modify_data(vector<Employee*> modifyingdata, string column, string value)
+    void modify_data(vector<Employee*> modifyingdata, const string column, const string value)
     {
         map<string, EmInfo> columnMap{
             {"employeeNum", EmInfo::EMPLOYEE_NUM },

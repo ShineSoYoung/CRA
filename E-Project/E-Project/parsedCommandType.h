@@ -14,9 +14,19 @@ enum class CmdType {
     MOD,
 };
 
-class ParcedCmd {
+enum class EmInfo {
+
+    EMPLOYEE_NUM = 0,
+    NAME,
+    CARRER_LEVEL,
+    PHONE_NUM,
+    BIRTH_DAY,
+    CERTI
+};
+
+class ParsedCmd {
 public:
-    ParcedCmd() {
+    ParsedCmd() {
         cmd = CmdType::UNKHOWN;
         printFlag = false;
         firstNameFlag = false;
@@ -29,7 +39,7 @@ public:
         strs.clear();
     }
 
-    ParcedCmd(CmdType cmd, bool printFlag, bool firstNameFlag, bool lastNameFlag, 
+    ParsedCmd(CmdType cmd, bool printFlag, bool firstNameFlag, bool lastNameFlag, 
         bool midNumFlag, bool lastNumFlag, bool yearFlag, bool monthFlag, bool dateFlag, vector<string> strs) {
         this->cmd = cmd;
         this->printFlag = printFlag;
@@ -43,7 +53,7 @@ public:
         this->strs = strs;
     }
 
-    bool operator == (const ParcedCmd& comp) {
+    bool operator == (const ParsedCmd& comp) {
         if (cmd != comp.cmd) return false;
         else if (printFlag != comp.printFlag) return false;
         else if (firstNameFlag != comp.firstNameFlag) return false;

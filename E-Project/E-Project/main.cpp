@@ -4,7 +4,7 @@
 #include <string>
 
 #include "EmployeeManager.h"
-#include "parcedCommandType.h"
+#include "parsedCommandType.h"
 #include "ioManager.h"
 
 using namespace std;
