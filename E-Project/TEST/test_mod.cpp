@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+﻿#include "gtest/gtest.h"
 #include "../E-Project/deleteCommand.h"
 #include "../E-Project/addCommand.h"
 #include "../E-Project/modifyCommand.h"
