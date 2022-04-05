@@ -2,7 +2,7 @@
 #define __COMPARE_MACHINE__
 
 #include <string>
-#include "parcedCommandType.h"
+#include "parsedCommandType.h"
 
 class Comparemachine
 {
