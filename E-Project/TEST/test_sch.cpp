@@ -45,138 +45,138 @@ protected:
 };
 
 TEST_F(SchTest, sch_none) {
-    EXPECT_EQ(schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"employeeNum","1700333"} }), "SCH,NONE\n");
-    EXPECT_EQ(schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"name","이 순신"} }), "SCH,NONE\n");
-    EXPECT_EQ(schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"phoneNum","013-2222-3333"} }), "SCH,NONE\n");
-    EXPECT_EQ(schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"cl","CL6"} }), "SCH,NONE\n");
-    EXPECT_EQ(schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"certi","GOLD"} }), "SCH,NONE\n");
-    EXPECT_EQ(schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"birthday","15930303"} }), "SCH,NONE\n");
+    EXPECT_EQ(schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"employeeNum","1700333"} }), "SCH,NONE\n");
+    EXPECT_EQ(schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"name","이 순신"} }), "SCH,NONE\n");
+    EXPECT_EQ(schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"phoneNum","013-2222-3333"} }), "SCH,NONE\n");
+    EXPECT_EQ(schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"cl","CL6"} }), "SCH,NONE\n");
+    EXPECT_EQ(schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"certi","GOLD"} }), "SCH,NONE\n");
+    EXPECT_EQ(schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"birthday","15930303"} }), "SCH,NONE\n");
 }
 
 
 TEST_F(SchTest, sch_with_name) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"name", "HIBONG HWANG"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"name", "HIBONG HWANG"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"name", "홍 길동"} });
+    result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"name", "홍 길동"} });
     EXPECT_EQ(result, "SCH,1\n");
 }
 
 TEST_F(SchTest, sch_with_cl) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"cl", "CL4"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"cl", "CL4"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"cl", "CL2"} });
+    result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"cl", "CL2"} });
     EXPECT_EQ(result, "SCH,2\n");
 }
 
 TEST_F(SchTest, sch_with_birthday) {
-    EXPECT_EQ(schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"birthday","19900302"} }), "SCH,2\n");
-    EXPECT_EQ(schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"birthday","19900306"} }), "SCH,1\n");
+    EXPECT_EQ(schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"birthday","19900302"} }), "SCH,2\n");
+    EXPECT_EQ(schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"birthday","19900306"} }), "SCH,1\n");
 }
 
 TEST_F(SchTest, sch_with_phonenumber) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"phoneNum", "010-4567-5678"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"phoneNum", "010-4567-5678"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,false,false,false,false,{"phoneNum", "010-1111-2222"} });
+    result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,false,false,false,false,{"phoneNum", "010-1111-2222"} });
     EXPECT_EQ(result, "SCH,1\n");
 }
 
 TEST_F(SchTest, sch_with_name_option_p) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,false,{"name", "HIBONG HWANG"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,false,false,false,{"name", "HIBONG HWANG"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,false,{"name", "홍 길동"} });
+    result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,false,false,false,{"name", "홍 길동"} });
     EXPECT_EQ(result, "SCH,17000000,홍 길동,CL2,010-1111-2222,19900302,ADV\n");
 }
 
 TEST_F(SchTest, sch_with_cl_option_p) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,false,{"cl", "CL4"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,false,false,false,{"cl", "CL4"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,false,{"cl", "CL2"} });
+    result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,false,false,false,{"cl", "CL2"} });
     EXPECT_EQ(result, "SCH,17000000,홍 길동,CL2,010-1111-2222,19900302,ADV\nSCH,17000002,홍 길순,CL2,010-1111-2244,19900306,ADV\n");
 }
 
 TEST_F(SchTest, sch_with_phonenumber_option_p) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,false,{"phoneNum", "010-4567-5678"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,false,false,false,{"phoneNum", "010-4567-5678"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,false,{"phoneNum", "010-1111-2244"} });
+    result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,false,false,false,{"phoneNum", "010-1111-2244"} });
     EXPECT_EQ(result, "SCH,17000002,홍 길순,CL2,010-1111-2244,19900306,ADV\n");
 }
 
 TEST_F(SchTest, sch_with_birthday_option_p) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,false,{"birthday", "20210101"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,false,false,false,{"birthday", "20210101"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,false,{"birthday", "19900306"} });
+    result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,false,false,false,{"birthday", "19900306"} });
     EXPECT_EQ(result, "SCH,17000002,홍 길순,CL2,010-1111-2244,19900306,ADV\n");
 }
 
 TEST_F(SchTest, sch_with_name_option_f) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,true,false,false,false,false,false,false,{"name", "HIBONG"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,true,false,false,false,false,false,false,{"name", "HIBONG"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,true,false,false,false,false,false,false,{"name", "홍"} });
+    result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,true,false,false,false,false,false,false,{"name", "홍"} });
     EXPECT_EQ(result, "SCH,3\n");
 }
 
 TEST_F(SchTest, sch_with_name_option_l) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,true,false,false,false,false,false,{"name", "HWANG"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,true,false,false,false,false,false,{"name", "HWANG"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,true,false,false,false,false,false,{"name", "길동"} });
+    result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,true,false,false,false,false,false,{"name", "길동"} });
     EXPECT_EQ(result, "SCH,17000000,홍 길동,CL2,010-1111-2222,19900302,ADV\n");
 }
 
 TEST_F(SchTest, sch_with_phonenumber_option_m) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,true,false,false,false,false,{"phoneNum","7894"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,true,false,false,false,false,{"phoneNum","7894"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,true,false,false,false,false,{"phoneNum","1111"} });
+    result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,true,false,false,false,false,{"phoneNum","1111"} });
     EXPECT_EQ(result, "SCH,17000000,홍 길동,CL2,010-1111-2222,19900302,ADV\nSCH,17000001,홍 길훈,CL3,010-1111-2233,19900302,PRO\nSCH,17000002,홍 길순,CL2,010-1111-2244,19900306,ADV\n");
 }
 
 TEST_F(SchTest, sch_with_phonenumber_option_l) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,false,false,false,false,true,false,false,false,{"phoneNum","7894"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,false,false,false,false,true,false,false,false,{"phoneNum","7894"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,true,false,false,false,{"phoneNum","2244"} });
+    result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,true,false,false,false,{"phoneNum","2244"} });
     EXPECT_EQ(result, "SCH,17000002,홍 길순,CL2,010-1111-2244,19900306,ADV\n");
 }
 
 TEST_F(SchTest, sch_with_birthday_option_y) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,true,false,false,{"birthday","2000"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,true,false,false,{"birthday","2000"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,true,false,false,{"birthday","1990"} });
+    result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,true,false,false,{"birthday","1990"} });
     EXPECT_EQ(result, "SCH,17000000,홍 길동,CL2,010-1111-2222,19900302,ADV\nSCH,17000001,홍 길훈,CL3,010-1111-2233,19900302,PRO\nSCH,17000002,홍 길순,CL2,010-1111-2244,19900306,ADV\n");
 }
 
 TEST_F(SchTest, sch_with_birthday_option_m) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,true,false,{"birthday","08"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,false,true,false,{"birthday","08"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,true,false,{"birthday","03"} });
+    result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,false,true,false,{"birthday","03"} });
     EXPECT_EQ(result, "SCH,17000000,홍 길동,CL2,010-1111-2222,19900302,ADV\nSCH,17000001,홍 길훈,CL3,010-1111-2233,19900302,PRO\nSCH,17000002,홍 길순,CL2,010-1111-2244,19900306,ADV\n");
 }
 
 TEST_F(SchTest, sch_with_birthday_option_d) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,true,{"birthday","20"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,false,false,true,{"birthday","20"} });
     EXPECT_EQ(result, "SCH,NONE\n");
 
-    result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,true,{"birthday","06"} });
+    result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,false,false,true,{"birthday","06"} });
     EXPECT_EQ(result, "SCH,17000002,홍 길순,CL2,010-1111-2244,19900306,ADV\n");
 }
 
 TEST_F(SchTest, sch_with_same_cl_option_p) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,false,{"cl","CL1"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,false,false,false,{"cl","CL1"} });
     EXPECT_EQ(result, "SCH,90000342,AGBDSFSD DS,CL1,010-3333-2243,19950416,ADV\nSCH,90020002,FDJKA GJKD,CL1,010-3333-2243,19780401,ADV\nSCH,01000002,DSKFDSK FDS,CL1,010-3333-2243,19890416,ADV\nSCH,12000012,AXCXZV DSFQW,CL1,010-3333-2243,19960116,ADV\nSCH,12000023,AS FDSFC,CL1,010-3333-2243,19970716,ADV\n");
 }
 
 TEST_F(SchTest, sch_with_same_certi_option_p) {
-    string result = schCmd.processCommand(DB, CmdParam{ CmdType::SCH,true,false,false,false,false,false,false,false,{"certi","ADV"} });
+    string result = schCmd.processCommand(DB, ParcedCmd{ CmdType::SCH,true,false,false,false,false,false,false,false,{"certi","ADV"} });
     EXPECT_EQ(result, "SCH,90000342,AGBDSFSD DS,CL1,010-3333-2243,19950416,ADV\nSCH,90020002,FDJKA GJKD,CL1,010-3333-2243,19780401,ADV\nSCH,01000002,DSKFDSK FDS,CL1,010-3333-2243,19890416,ADV\nSCH,12000012,AXCXZV DSFQW,CL1,010-3333-2243,19960116,ADV\nSCH,12000023,AS FDSFC,CL1,010-3333-2243,19970716,ADV\n");
 }

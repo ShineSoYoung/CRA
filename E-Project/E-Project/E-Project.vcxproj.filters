@@ -26,7 +26,7 @@
     <ClInclude Include="searchEngine.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="commandClassType.h">
+    <ClInclude Include="parcedCommandType.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="compareMachine.h">
@@ -70,10 +70,5 @@
     <Text Include="official_sample_output.txt">
       <Filter>리소스 파일</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\.editorconfig">
-      <Filter>리소스 파일</Filter>
-    </None>
   </ItemGroup>
 </Project>
