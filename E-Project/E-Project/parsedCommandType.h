@@ -53,6 +53,21 @@ public:
         this->strs = strs;
     }
 
+    void set(CmdType cmd, bool printFlag, bool firstNameFlag, bool lastNameFlag,
+            bool midNumFlag, bool lastNumFlag, bool yearFlag, bool monthFlag, 
+            bool dateFlag, vector<string> strs) {
+        this->cmd = cmd;
+        this->printFlag = printFlag;
+        this->firstNameFlag = firstNameFlag;
+        this->lastNameFlag = lastNameFlag;
+        this->midNumFlag = midNumFlag;
+        this->lastNumFlag = lastNumFlag;
+        this->yearFlag = yearFlag;
+        this->monthFlag = monthFlag;
+        this->dateFlag = dateFlag;
+        this->strs = strs;
+    }
+
     bool operator == (const ParsedCmd& comp) {
         if (cmd != comp.cmd) return false;
         else if (printFlag != comp.printFlag) return false;
