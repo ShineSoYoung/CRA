@@ -7,10 +7,6 @@
 class searchCommand : public OptionalCommand
 {
 public:
-    virtual bool checkCommandIsValid(datamanager& DB, const ParsedCmd command) override
-    {
-        return true;
-    }
     virtual string processCommand(datamanager& DB, const ParsedCmd command) override
     {
         vector<Employee*> findArray = findTargetArray(DB, command);

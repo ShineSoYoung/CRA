@@ -19,9 +19,6 @@ public:
     }
     virtual string processCommand(datamanager& DB, const ParsedCmd command) override
     {
-        if (!checkCommandIsValid(DB, command))
-            return "FAIL";
-
         addData(DB, command);
         return "";
     }
