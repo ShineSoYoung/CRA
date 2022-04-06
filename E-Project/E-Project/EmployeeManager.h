@@ -36,7 +36,13 @@ public:
 				ParsedCmd ParsedCmd = io->getParsedCmd(buf);
 
 				string result;
-				result = command[(int)ParsedCmd.cmd]->processCommand(DB, ParsedCmd);
+				if (command[(int)ParsedCmd.cmd]->checkCommandIsValid(DB, ParsedCmd)) {
+					result = command[(int)ParsedCmd.cmd]->processCommand(DB, ParsedCmd);
+				}
+				else {
+					result = "FAIL";
+				}
+				
 				if (!result.empty()) io->printStringToFile(result);
 			}
 		}

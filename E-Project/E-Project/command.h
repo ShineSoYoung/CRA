@@ -14,7 +14,10 @@ class Command
 {
 public:
     Command() {}
-    virtual bool checkCommandIsValid(datamanager& DB, const ParsedCmd command) = 0;
+    virtual bool checkCommandIsValid(datamanager& DB, const ParsedCmd command)
+    {
+        return true;
+    }
     virtual string processCommand(datamanager& DB, const ParsedCmd command) = 0;
 protected:
 
