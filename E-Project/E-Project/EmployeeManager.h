@@ -6,6 +6,7 @@
 #include "modifyCommand.h"
 
 const int MAX_NUM_OF_CMD = 5;
+const int MAX_NUM_INPUT_LINE_SIZE = 256;
 
 class EmployeeManager {
 public:
@@ -21,19 +22,15 @@ public:
 		delete io;
 	}
 
-	void setIoFiles() {
-		io->openIoFiles("input.txt", "output.txt");
-	}
-
-	void setIoFiles(string inputFileName, string outputFileName) {
+	void setIoFiles(const char* inputFileName, const char* outputFileName) {
 		io->openIoFiles(inputFileName, outputFileName);
 	}
 
 	void run() {
 		if (io->isInputFileOpen()) {
 			while (!io->isInputFileEnd()) {
-				char buf[256] = { 0, };
-				io->getDataByLine(buf, 256);
+				char buf[MAX_NUM_INPUT_LINE_SIZE] = { 0, };
+				io->getDataByLine(buf, MAX_NUM_INPUT_LINE_SIZE);
 				if (io->isValid(buf) == false) break;
 
 				ParsedCmd ParsedCmd = io->getParsedCmd(buf);

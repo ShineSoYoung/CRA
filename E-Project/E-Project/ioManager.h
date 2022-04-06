@@ -12,7 +12,7 @@ using namespace std;
 
 class Validator {
 public:
-	bool isValid(char* buf) {
+	bool isValid(const char* buf) {
 		if (!buf[0]) {
 			return false;
 		}
@@ -100,9 +100,20 @@ public:
 		if (outputFile.is_open()) outputFile.close();
 	}
 
-	void openIoFiles(string inputFileName, string outputFileName) {
-		inputFile.open(inputFileName, ios::in);
-		outputFile.open(outputFileName, ios::out);
+	void openIoFiles(const char* inputFileName, const char* outputFileName) {
+		if (isValid(inputFileName)) {
+			inputFile.open(inputFileName, ios::in);
+		}
+		else {
+			exit(EXIT_FAILURE);
+		}
+
+		if (isValid(outputFileName)) {
+			outputFile.open(outputFileName, ios::out);
+		}
+		else {
+			exit(EXIT_FAILURE);
+		}
 	}
 
 	bool isInputFileOpen() {
@@ -117,10 +128,6 @@ public:
 		outputFile << str;
 	}
 
-	void printString(string str) {
-		cout << str;
-	}
-
 	void getDataByLine (char* buf, int n) {
 		inputFile.getline(buf, n);	
 	}
@@ -129,7 +136,7 @@ public:
 		return parser->parse(buf);
 	}
 
-	bool isValid(char* buf) {
+	bool isValid(const char* buf) {
 		return validator->isValid(buf);
 	}
 
